@@ -14,17 +14,17 @@ export class HttpStatusFilter implements ExceptionFilter {
     const status = exception instanceof HttpException?exception.getStatus():HttpStatus.INTERNAL_SERVER_ERROR
     
     // 1.根据状态码 status 从枚举类型 HttpStatusCode 中获取对应的提示信息 tip
-    // 2.如果异常抛出时需要返回数据，请使用 meta 属性来表示数据信息
+    // 2.如果异常抛出时需要返回数据，请使用 error 属性来表示数据信息
     if(
       (exception.getResponse() as any).tip ||
-      (exception.getResponse() as any).meta
+      (exception.getResponse() as any).error
     ) {
       response.status(status).json({
         code: status,
         message: HttpStatusCode[status],
         data: {
           tip: (exception.getResponse() as any).tip,
-          meta: (exception.getResponse() as any).meta
+          error: (exception.getResponse() as any).error
         }
       })
     } else response.status(status).json({
