@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 枚举 - 员工职位
+enum Role {
+  USER
+  ADMIN
+}
+
+// 员工
+model User {
+  id       Int     @id @default(autoincrement())
+  username String
+  password String
+  phone    String  @db.VarChar(11)
+  role     Role    @default(USER)
+  move     Move[]
+  order    Order[]
+}
+
+// 汽车产品
+model Product {
+  id             Int              @id @default(autoincrement())
+  name           String
+  model          String
+  price          Float            @db.Double
+  introduce      String           @db.Text
+  inventory      Inventory[]
+  supplyRelation SupplyRelation[]
+  move           Move[]
+  order          Order[]
+}
+
+// 供应商
+model Supplier {
+  id             Int              @id @default(autoincrement())
+  name           String
+  phone          String           @db.VarChar(11)
+  company        String
+  supplyRelation SupplyRelation[]
+}
+
+// 供应关系
+model SupplyRelation {
+  id         Int      @id @default(autoincrement())
+  quantity   BigInt
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplierId Int
+}
+
+// 库存
+model Inventory {
+  id           Int     @id @default(autoincrement())
+  product      Product @relation(fields: [productId], references: [id])
+  productId    Int
+  location     String
+  outboundMove Move[]  @relation("OutboundInventory")
+  intboundMove Move[]  @relation("InboundInventory")
+}
+
+// 调仓记录
+model Move {
+  id         Int       @id @default(autoincrement())
+  product    Product   @relation(fields: [productId], references: [id])
+  productId  Int
+  operator   User      @relation(fields: [operatorId], references: [id])
+  operatorId Int
+  outbound   Inventory @relation("OutboundInventory", fields: [outboundId], references: [id])
+  outboundId Int
+  inbound    Inventory @relation("InboundInventory", fields: [inboundId], references: [id])
+  inboundId  Int
+}
+
+// 订单
+model Order {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+}
