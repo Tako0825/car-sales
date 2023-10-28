@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './common/jwt/jwt.strategy';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { JwtStrategy } from './common/jwt/jwt.strategy';
         }
       }
     }),
-    CommonModule, 
+    CommonModule,
+    AuthModule,
 ],
   controllers: [],
   providers: [JwtStrategy],
