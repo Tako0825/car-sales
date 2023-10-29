@@ -1,10 +1,11 @@
 import { PassportStrategy } from "@nestjs/passport"
-import { PrismaService } from "src/common/prisma/prisma.service"
+import { PrismaService } from "../prisma/prisma.service";
 import { Strategy, ExtractJwt } from "passport-jwt"
+import { User } from "@prisma/client";
 
 export class JwtStrategy extends PassportStrategy(Strategy,"jwt") {
     constructor(
-        private prisma = new PrismaService()
+        private prisma = new PrismaService(),
     ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -13,15 +14,13 @@ export class JwtStrategy extends PassportStrategy(Strategy,"jwt") {
     }
 
     // 通过身份验证后, 执行 validate() 方法返回用户信息
-    async validate(payload: any) {
+    async validate(payload: any):Promise<User> {
         // 根据 openid 查询用户信息
-        const { id } = payload.params;
-        const user = await this.prisma.user.findFirst({
+        const { phone } = payload.params;
+        return await this.prisma.user.findUnique({
             where: {
-                id
+                phone
             }
         });
-        // 返回用户信息
-        return user;
     }
 }

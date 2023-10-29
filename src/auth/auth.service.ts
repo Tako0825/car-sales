@@ -2,17 +2,18 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
-import { CommonService } from 'src/common/common.service';
 import { createHash } from 'crypto';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly prisma:PrismaService,
-        private readonly commonService:CommonService
+        private prisma: PrismaService,
+        private jwt:JwtService
     ) {}
 
-    // 服务 - 注册
+    // SERVICE - REGISTER(注册)
     async register(registerDto:RegisterDto) {
         let { username, password, phone, role } = registerDto
         try {
@@ -51,12 +52,11 @@ export class AuthService {
         }
     } 
 
-    
-    // 服务 - 登录
+    // SERVICE - LOGIN(登录)
     async login(loginDto:LoginDto) {
-        const { phone, password } = loginDto
+        const { phone, password: loginPassword } = loginDto
         try {
-            let user = await this.prisma.user.findUnique({
+            const { username, password, role } = await this.prisma.user.findUnique({
                 where: {
                     phone
                 },
@@ -67,11 +67,24 @@ export class AuthService {
                     role: true
                 }
             })
-            const hash = createHash("sha256").update(password).digest("hex")
-            if(hash === user.password) {
+            const hash = createHash("sha256").update(loginPassword).digest("hex")
+            if(hash === password) {
+                // GENERATE TOKEN
+                const token = await this.jwt.signAsync({
+                    params: {
+                        phone,
+                        hash
+                    },
+                    sign: process.env.SECRET_OR_KEY
+                })
                 return {
                     tip: "登录成功",
-                    user
+                    user: {
+                        username,
+                        phone,
+                        role
+                    },
+                    token
                 }
             }
         }catch(error) {
@@ -84,5 +97,18 @@ export class AuthService {
             tip: '登录失败',
             error: '电话号码与密码不匹配'
         }, HttpStatus.UNPROCESSABLE_ENTITY)
+    }
+
+    // SEVICE - AUTOMATIC LOGIN(自动登录)
+    async autoLogin(user:User) {
+        const { username, phone, role } = user
+        return {
+            tip: "自动登录成功",
+            user: {
+                username,
+                phone,
+                role
+            }
+        }
     }
 }
