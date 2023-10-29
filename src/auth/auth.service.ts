@@ -3,6 +3,7 @@ import { RegisterDto } from './dto/register.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { CommonService } from 'src/common/common.service';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
             let user = await this.prisma.user.create({
                 data: {
                     username,
-                    password,
+                    password: createHash("sha256").update(password).digest("hex"),
                     phone,
                     role
                 },
@@ -66,7 +67,8 @@ export class AuthService {
                     role: true
                 }
             })
-            if(password===user.password) {
+            const hash = createHash("sha256").update(password).digest("hex")
+            if(hash === user.password) {
                 return {
                     tip: "登录成功",
                     user
@@ -75,12 +77,12 @@ export class AuthService {
         }catch(error) {
             throw new HttpException({
                 tip: '登录失败',
-                meta: '未知错误'
+                error: '未知错误'
             }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
         throw new HttpException({
             tip: '登录失败',
-            meta: '电话号码与密码不匹配'
+            error: '电话号码与密码不匹配'
         }, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 }

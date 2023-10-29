@@ -10,6 +10,7 @@ export class RegisterDto implements Partial<User> {
     @IsNotEmpty({ message: "员工密码不允许为空" })
     password: string
     @Validate(ConfirmedRule, { message: "密码与确认密码不相同" })
+    @IsNotEmpty({ message: "确认密码不允许为空" })
     passwordConfirmed: string
     @Validate(PhoneRule, { message: "员工电话格式不符 (以“1”开头共11位数字组合)" })
     phone: string
