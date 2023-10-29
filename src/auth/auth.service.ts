@@ -42,7 +42,7 @@ export class AuthService {
                 }
             })) {
                 throw new HttpException({
-                    tip: "电话号码与密码不匹配",
+                    tip: "该电话号码已被注册",
                 }, HttpStatus.UNPROCESSABLE_ENTITY)
             }
             throw new HttpException({
