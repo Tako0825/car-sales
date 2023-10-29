@@ -6,6 +6,7 @@ import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '@prisma/client';
 
+// CONTROLLER - AUTH
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

@@ -3,6 +3,7 @@ import { CommonModule } from './common/common.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './common/jwt/jwt.strategy';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     CommonModule,
     AuthModule,
+    UserModule,
 ],
   controllers: [],
   providers: [JwtStrategy],

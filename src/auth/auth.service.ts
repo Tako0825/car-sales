@@ -25,8 +25,8 @@ export class AuthService {
                     role
                 },
                 select: {
+                    id: true,
                     username: true,
-                    password: true,
                     phone: true,
                     role: true
                 }
@@ -56,11 +56,12 @@ export class AuthService {
     async login(loginDto:LoginDto) {
         const { phone, password: loginPassword } = loginDto
         try {
-            const { username, password, role } = await this.prisma.user.findUnique({
+            const { id, username, password, role } = await this.prisma.user.findUnique({
                 where: {
                     phone
                 },
                 select: {
+                    id: true,
                     username: true,
                     password: true,
                     phone: true,
@@ -80,6 +81,7 @@ export class AuthService {
                 return {
                     tip: "登录成功",
                     user: {
+                        id,
                         username,
                         phone,
                         role
@@ -89,22 +91,22 @@ export class AuthService {
             }
         }catch(error) {
             throw new HttpException({
-                tip: '登录失败',
-                error: '未知错误'
+                tip: 'PRISMA 未知错误',
+                error
             }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
         throw new HttpException({
-            tip: '登录失败',
-            error: '电话号码与密码不匹配'
+            tip: '电话号码与密码不匹配',
         }, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 
     // SEVICE - AUTOMATIC LOGIN(自动登录)
     async autoLogin(user:User) {
-        const { username, phone, role } = user
+        const { id, username, phone, role } = user
         return {
             tip: "自动登录成功",
             user: {
+                id,
                 username,
                 phone,
                 role
