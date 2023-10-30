@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
+import { SupplyModule } from './supply/supply.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     ProductModule,
     SupplierModule,
     WarehouseModule,
+    SupplyModule,
 ],
   controllers: [],
   providers: [JwtStrategy],

@@ -98,7 +98,7 @@ export class WarehouseService {
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
     try {
       const result = await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 WAREHOUSE -前置条件: 删除 SUPPLYRELATION & MOVE
+        // 1.删除 WAREHOUSE -前置条件: 删除 SUPPLY & MOVE
         await prisma.move.deleteMany({
           where: {
             OR: [
@@ -111,7 +111,7 @@ export class WarehouseService {
             ]
           }
         })
-        await prisma.supplyRelation.deleteMany({
+        await prisma.supply.deleteMany({
           where: {
             warehouseId: id
           }

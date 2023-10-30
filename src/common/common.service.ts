@@ -7,17 +7,22 @@ export class CommonService {
     constructor(private prisma:PrismaService) {}
 
     async getEntityById<T>(model: PrismaModel, id: number): Promise<T> {
-        const entity = await (this.prisma[model] as any).findUnique({
-            where: {
-                id
+        try {
+            const entity = await (this.prisma[model] as any).findUnique({
+                where: {
+                    id
+                }
+            })
+            if(!entity) {
+                throw new Error()
             }
-        })
-        if(!entity) {
+            else return entity
+        }
+        catch(error) {
             throw new HttpException({
                 tip: "请提供有效的 id",
                 id
             }, HttpStatus.UNPROCESSABLE_ENTITY)
         }
-        else return entity
     }
 }

@@ -31,7 +31,7 @@ model Product {
   model          String
   price          Float            @db.Double
   introduce      String           @db.Text
-  supplyRelation SupplyRelation[]
+  supply Supply[]
   move           Move[]
   order          Order[]
 }
@@ -42,13 +42,13 @@ model Supplier {
   name           String
   phone          String           @unique @db.VarChar(11)
   company        String
-  supplyRelation SupplyRelation[]
+  supply Supply[]
 }
 
 // 供应关系
-model SupplyRelation {
+model Supply {
   id         Int      @id @default(autoincrement())
-  quantity   BigInt
+  quantity   Int
   supplier   Supplier @relation(fields: [supplierId], references: [id])
   supplierId Int
   product    Product  @relation(fields: [productId], references: [id])
@@ -63,7 +63,7 @@ model Warehouse {
   location     String
   outboundMove Move[]  @relation("OutboundWareHouse")
   intboundMove Move[]  @relation("InboundWareHouse")
-  supplyRelation SupplyRelation[]
+  supply Supply[]
 }
 
 // 调仓记录

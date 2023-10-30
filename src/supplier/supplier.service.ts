@@ -102,8 +102,8 @@ export class SupplierService {
     await this.commonService.getEntityById<Supplier>(PrismaModel.supplier, id)
     try {
       const result = await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 SUPPLIER -前置条件: 删除 SUPPLYRELATION
-        await prisma.supplyRelation.deleteMany({
+        // 1.删除 SUPPLIER -前置条件: 删除 SUPPLY
+        await prisma.supply.deleteMany({
           where: {
             supplierId: id
           }
