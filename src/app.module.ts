@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './common/jwt/jwt.strategy';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
     CommonModule,
     AuthModule,
     UserModule,
+    ProductModule,
 ],
   controllers: [],
   providers: [JwtStrategy],

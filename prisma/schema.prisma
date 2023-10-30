@@ -31,7 +31,6 @@ model Product {
   model          String
   price          Float            @db.Double
   introduce      String           @db.Text
-  inventory      Inventory[]
   supplyRelation SupplyRelation[]
   move           Move[]
   order          Order[]
@@ -56,14 +55,12 @@ model SupplyRelation {
   supplierId Int
 }
 
-// 库存
-model Inventory {
+// 仓库
+model WareHouse {
   id           Int     @id @default(autoincrement())
-  product      Product @relation(fields: [productId], references: [id])
-  productId    Int
   location     String
-  outboundMove Move[]  @relation("OutboundInventory")
-  intboundMove Move[]  @relation("InboundInventory")
+  outboundMove Move[]  @relation("OutboundWareHouse")
+  intboundMove Move[]  @relation("InboundWareHouse")
 }
 
 // 调仓记录
@@ -73,9 +70,9 @@ model Move {
   productId  Int
   operator   User      @relation(fields: [operatorId], references: [id])
   operatorId Int
-  outbound   Inventory @relation("OutboundInventory", fields: [outboundId], references: [id])
+  outbound   WareHouse @relation("OutboundWareHouse", fields: [outboundId], references: [id])
   outboundId Int
-  inbound    Inventory @relation("InboundInventory", fields: [inboundId], references: [id])
+  inbound    WareHouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
   inboundId  Int
 }
 
