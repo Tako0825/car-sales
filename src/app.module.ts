@@ -9,6 +9,7 @@ import { SupplierModule } from './supplier/supplier.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 import { SupplyModule } from './supply/supply.module';
 import { OrderModule } from './order/order.module';
+import { MoveModule } from './move/move.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { OrderModule } from './order/order.module';
     WarehouseModule,
     SupplyModule,
     OrderModule,
+    MoveModule,
 ],
   controllers: [],
   providers: [JwtStrategy],
