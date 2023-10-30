@@ -1,9 +1,9 @@
 export enum PrismaModel {
     user = "user",
     product = "product",
+    warehouse = "warehouse",
     supplier = "supplier",
     suppliyRelation = "supplyRelation",
-    inventory = "inventory",
     move = "move",
     order = "order"
 }

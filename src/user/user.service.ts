@@ -78,7 +78,7 @@ export class UserService {
         }
       })
       return {
-        tip: "成功更新用户信息",
+        tip: "成功修改用户信息",
         user
       }
     }catch(error) {

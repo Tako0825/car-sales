@@ -17,8 +17,6 @@ export class ProductService {
   async create(createProductDto: CreateProductDto) {
     const { name, model, price, introduce } = createProductDto
     try {
-      console.log(createProductDto);
-      
       const product = await this.prisma.product.create({
         data: {
           name,
@@ -76,9 +74,6 @@ export class ProductService {
   async update(id: number, updateProductDto: UpdateProductDto) {
     await this.commonService.getEntityById<Product>(PrismaModel.product, id)
     const { name, model, price, introduce } = updateProductDto
-    console.log(updateProductDto);
-    console.log(typeof updateProductDto.price);
-    
     try {
       const product = await this.prisma.product.update({
         where: {
@@ -92,7 +87,7 @@ export class ProductService {
         }
       })
       return {
-        tip: "成功更新产品信息",
+        tip: "成功修改产品信息",
         product
       }
     }
