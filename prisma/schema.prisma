@@ -26,44 +26,45 @@ model User {
 
 // 汽车产品
 model Product {
-  id             Int              @id @default(autoincrement())
-  name           String
-  model          String
-  price          Float            @db.Double
-  introduce      String           @db.Text
-  supply Supply[]
-  move           Move[]
-  order          Order[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  model     String
+  price     Float    @db.Double
+  introduce String   @db.Text
+  supply    Supply[]
+  move      Move[]
+  order     Order[]
 }
 
 // 供应商
 model Supplier {
-  id             Int              @id @default(autoincrement())
-  name           String
-  phone          String           @unique @db.VarChar(11)
-  company        String
-  supply Supply[]
+  id      Int      @id @default(autoincrement())
+  name    String
+  phone   String   @unique @db.VarChar(11)
+  company String
+  supply  Supply[]
 }
 
 // 供应关系
 model Supply {
-  id         Int      @id @default(autoincrement())
-  quantity   Int
-  supplier   Supplier @relation(fields: [supplierId], references: [id])
-  supplierId Int
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  Int
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  supplier    Supplier  @relation(fields: [supplierId], references: [id])
+  supplierId  Int
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   Int
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
   warehouseId Int
 }
 
 // 仓库
 model Warehouse {
-  id           Int     @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   location     String
-  outboundMove Move[]  @relation("OutboundWareHouse")
-  intboundMove Move[]  @relation("InboundWareHouse")
-  supply Supply[]
+  outboundMove Move[]   @relation("OutboundWareHouse")
+  intboundMove Move[]   @relation("InboundWareHouse")
+  supply       Supply[]
+  order        Order[]
 }
 
 // 调仓记录
@@ -81,9 +82,11 @@ model Move {
 
 // 订单
 model Order {
-  id        Int     @id @default(autoincrement())
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
+  id          Int       @id @default(autoincrement())
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   Int
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId Int
 }
