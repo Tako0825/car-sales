@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { SupplierModule } from './supplier/supplier.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SupplierModule } from './supplier/supplier.module';
     UserModule,
     ProductModule,
     SupplierModule,
+    WarehouseModule,
 ],
   controllers: [],
   providers: [JwtStrategy],

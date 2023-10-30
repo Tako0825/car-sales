@@ -40,7 +40,7 @@ model Product {
 model Supplier {
   id             Int              @id @default(autoincrement())
   name           String
-  phone          String           @db.VarChar(11)
+  phone          String           @unique @db.VarChar(11)
   company        String
   supplyRelation SupplyRelation[]
 }
@@ -49,18 +49,21 @@ model Supplier {
 model SupplyRelation {
   id         Int      @id @default(autoincrement())
   quantity   BigInt
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  Int
   supplier   Supplier @relation(fields: [supplierId], references: [id])
   supplierId Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId Int
 }
 
 // 仓库
-model WareHouse {
+model Warehouse {
   id           Int     @id @default(autoincrement())
   location     String
   outboundMove Move[]  @relation("OutboundWareHouse")
   intboundMove Move[]  @relation("InboundWareHouse")
+  supplyRelation SupplyRelation[]
 }
 
 // 调仓记录
@@ -70,9 +73,9 @@ model Move {
   productId  Int
   operator   User      @relation(fields: [operatorId], references: [id])
   operatorId Int
-  outbound   WareHouse @relation("OutboundWareHouse", fields: [outboundId], references: [id])
+  outbound   Warehouse @relation("OutboundWareHouse", fields: [outboundId], references: [id])
   outboundId Int
-  inbound    WareHouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
+  inbound    Warehouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
   inboundId  Int
 }
 

@@ -6,6 +6,7 @@ import { PageDto } from 'src/common/dto/page.dto';
 import { Validation } from 'src/common/validation/validation';
 import { AuthGuard } from '@nestjs/passport';
 
+// CONTROLLER - SUPPLIER
 @Controller('supplier')
 @UseGuards(AuthGuard("jwt"))
 export class SupplierController {
