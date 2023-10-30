@@ -3,6 +3,6 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 @ValidatorConstraint()
 export class PhoneRule implements ValidatorConstraintInterface {
     validate(value: any, validationArguments?: ValidationArguments): boolean | Promise<boolean> {
-        return /^1\d{10}$/.test(value)
+        return /^1\d{10}$/.test(value) || !value
     }
 }

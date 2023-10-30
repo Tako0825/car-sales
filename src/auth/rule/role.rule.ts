@@ -4,6 +4,6 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 @ValidatorConstraint()
 export class RoleRule implements ValidatorConstraintInterface {
     validate(value: any, validationArguments?: ValidationArguments): boolean | Promise<boolean> {
-        return value in $Enums.Role
+        return value in $Enums.Role || !value
     }
 }
