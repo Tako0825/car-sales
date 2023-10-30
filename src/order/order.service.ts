@@ -128,8 +128,8 @@ export class OrderService {
   async update(id: number, updateOrderDto: UpdateOrderDto) {
     const { userId, productId, warehouseId } = updateOrderDto
     await this.commonService.getEntityById<Order>(PrismaModel.order, id)
-    await this.commonService.getEntityById<Product>(PrismaModel.product, productId)
     await this.commonService.getEntityById<User>(PrismaModel.user, userId)
+    await this.commonService.getEntityById<Product>(PrismaModel.product, productId)
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, warehouseId)
     try {
       const order = await this.prisma.order.update({

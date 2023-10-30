@@ -21,7 +21,6 @@ export class CommonService {
         catch(error) {
             throw new HttpException({
                 tip: "请提供有效的 id",
-                id
             }, HttpStatus.UNPROCESSABLE_ENTITY)
         }
     }
