@@ -1,0 +1,27 @@
+<template>
+    <!-- 搜索栏 -->
+    <div class="w-80">
+        <el-input 
+            v-model="input" 
+            placeholder="You can search here" 
+            maxlength="20"
+            size="medium"
+        >
+            <template slot="prepend"><i class="el-icon-search transform scale-150"></i></template>
+        </el-input>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            input: ""
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

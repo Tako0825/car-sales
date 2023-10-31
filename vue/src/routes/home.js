@@ -7,7 +7,7 @@ export default [
       {
         path: "",
         name: "dashboard",
-        component: () => import("@/views/home/main-area/DashboardView.vue"),
+        component: () => import("@/layouts/home/DashboardArea.vue"),
       }
     ]
   },
@@ -19,7 +19,7 @@ export default [
       {
         path: "",
         name: "user",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -31,7 +31,7 @@ export default [
       {
         path: "",
         name: "product",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -43,7 +43,7 @@ export default [
       {
         path: "",
         name: "warehouse",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -55,7 +55,7 @@ export default [
       {
         path: "",
         name: "supplier",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -67,7 +67,7 @@ export default [
       {
         path: "",
         name: "order",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -79,7 +79,7 @@ export default [
       {
         path: "",
         name: "supply",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },
@@ -91,7 +91,7 @@ export default [
       {
         path: "",
         name: "move",
-        component: () => import("@/views/home/main-area/UserView.vue"),
+        component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
   },

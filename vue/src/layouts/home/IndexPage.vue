@@ -1,9 +1,9 @@
 <template>
   <div class="content w-full h-full overflow-hidden flex gap-1">
-    <LeftMenu/>
+    <LeftMenuVue/>
     <main class="w-full h-full flex flex-col">
-      <TopNav/>
-      <article class=" w-full h-full">
+      <TopNavVue/>
+      <article class="w-full h-full p-8">
         <router-view></router-view>
       </article>
     </main>
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import LeftMenu from '@/views/home/left-menu/IndexView.vue'
-import TopNav from "@/views/home/top-nav/IndexView.vue"
+import LeftMenuVue from './LeftMenu.vue'
+import TopNavVue from './TopNav.vue'
 export default {
   name: "HomePage",
   components: {
-    LeftMenu, TopNav
+    LeftMenuVue, TopNavVue
   }
 }
 </script>

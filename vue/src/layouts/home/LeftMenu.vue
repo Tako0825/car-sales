@@ -1,8 +1,8 @@
 <template>
   <!-- 侧边菜单 -->
   <el-menu 
-      default-active="1" 
-      class="el-menu-vertical-demo content w-72 h-full flex flex-col font-bold" 
+      default-active="/" 
+      class="el-menu-vertical-demo content w-72 h-full flex flex-col font-bold select-none" 
       :collapse="isCollapse"
       text-color="#72767c"
       :router="true"
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import LogoSectionVue from './LogoSection.vue'
-import CollapseControlVue from './CollapseControl.vue'
-import MenuOptionsVue from './MenuOptions.vue'
+import LogoSectionVue from '@/views/home/left-menu/LogoSection.vue'
+import CollapseControlVue from '@/views/home/left-menu/CollapseControl.vue'
+import MenuOptionsVue from '@/views/home/left-menu/MenuOptions.vue'
 export default {
   components: {
     LogoSectionVue, CollapseControlVue, MenuOptionsVue
