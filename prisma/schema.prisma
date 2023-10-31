@@ -55,6 +55,7 @@ model Supply {
   productId   Int
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
   warehouseId Int
+  createtime  DateTime  @default(now())
 }
 
 // 仓库
@@ -78,6 +79,7 @@ model Move {
   outboundId Int
   inbound    Warehouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
   inboundId  Int
+  createtime  DateTime  @default(now())
 }
 
 // 订单
@@ -89,4 +91,5 @@ model Order {
   userId      Int
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
   warehouseId Int
+  createtime  DateTime  @default(now())
 }

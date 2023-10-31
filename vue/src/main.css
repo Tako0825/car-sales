@@ -1,1 +1,16 @@
-@import "tailwindcss/tailwind.css"
+@import "tailwindcss/tailwind.css";
+
+* {
+    box-sizing: border-box;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    vertical-align: middle;
+}

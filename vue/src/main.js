@@ -1,12 +1,15 @@
 import Vue from 'vue';
-import ElementUI from 'element-ui';
 import App from './App.vue';
-import "./main.css"
+import RegisterPlugins from './plugins';
+import { router } from './plugins/router';
 
+// IGNORE WARNING(忽略警告)
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
-
-new Vue({
+// PLUGINS(注册插件)
+RegisterPlugins()
+const app = new Vue({
+  router,
   render: h => h(App),
-}).$mount('#app')
+})
+app.$mount('#app')

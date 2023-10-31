@@ -7,7 +7,11 @@ module.exports = {
       'component',
       {
         libraryName: 'element-ui',
-        styleLibraryName: '~theme'
+        styleLibraryName: '~theme',
+        components: [
+          "ElMenu",
+          "ElMenuItem"
+        ]
       }
     ]
   ]

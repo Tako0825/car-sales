@@ -1,12 +1,7 @@
 <template>
-  <el-row>
-    <el-button>默认按钮</el-button>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="success">成功按钮</el-button>
-    <el-button type="info">信息按钮</el-button>
-    <el-button type="warning">警告按钮</el-button>
-    <el-button type="danger">危险按钮</el-button>
-  </el-row>
+  <div id="app" class="w-screen h-screen m-auto">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -16,5 +11,11 @@ export default {
 </script>
 
 <style>
+  @import "./main.css";
 
+  #app {
+    min-width: 960px;
+    max-width: 1920px;
+    background-color: #f5f5f5;
+  }
 </style>
