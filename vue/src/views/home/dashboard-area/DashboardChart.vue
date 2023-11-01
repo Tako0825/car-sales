@@ -1,5 +1,8 @@
 <template>
-    <div ref="chart" class="w-full h-full"></div>
+    <div 
+        ref="chart" 
+        class="w-full h-full"
+    ></div>
 </template>
 
 <script>
@@ -11,20 +14,22 @@ import { SVGRenderer } from 'echarts/renderers';
 echarts.use([TitleComponent, GaugeChart, SVGRenderer]);
 export default {
     name: "DashboardChart",
+    props: [
+        "title", "value", "rate", "color", "isActived", "index"
+    ],
     mounted() {
         this.InitChart()
     },
-    props: [
-        "title", "value", "rate", "color"
-    ],
-    methods: {
-        InitChart() {
-            let dom =  this.$refs.chart
-            var chart = echarts.init(dom, null, {
-                renderer: 'svg'
-            });
-            let option = {
-                backgroundColor: '#fff',
+    data() {
+        return {
+            fontSize: 20,
+            base: "transparent"
+        }
+    },
+    computed: {
+        option() {
+            return {
+                backgroundColor: this.base,
                 title: {
                     show: true,
                     // 仪表盘标题
@@ -33,7 +38,7 @@ export default {
                     left: 'center',
                     textStyle: {
                         color: '#242731',
-                        fontSize: 24,
+                        fontSize: this.fontSize,
                         fontFamily: 'DM Sans',
                     }
                 },
@@ -47,7 +52,7 @@ export default {
                                     [this.rate, this.color],
                                     [1, "#f4f5f9"]
                                 ],
-                                width: 24
+                                width: this.fontSize
                             }
                         },
                         axisLabel: {
@@ -70,7 +75,7 @@ export default {
                             },
                             offsetCenter: [0,20],
                             textStyle: {
-                                fontSize: 24,
+                                fontSize: this.fontSize,
                                 fontWeight: 700,
                                 color: '#242731'
                             }
@@ -81,14 +86,22 @@ export default {
                         data: [
                             {
                             "name": "",
-                            // 仪表盘数值
-                            "value": this.value,
+                                // 仪表盘数值
+                                "value": this.value,
                             }
                         ]
                     }
                 ]
             }
-            option && chart.setOption(option)
+        }
+    },
+    methods: {
+        InitChart() {
+            let dom =  this.$refs.chart
+            var chart = echarts.init(dom, null, {
+                renderer: 'svg'
+            });
+            this.option && chart.setOption(this.option)
         }
     }
 }

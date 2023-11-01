@@ -14,3 +14,19 @@ ul {
 img {
     vertical-align: middle;
 }
+
+/* 适用于 Webkit 浏览器（Chrome、Safari等） */
+::-webkit-scrollbar {
+    width: .4rem;
+    height: .4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: .4rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    display: initial;
+    background-color: #555;
+}

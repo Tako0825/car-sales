@@ -3,7 +3,7 @@
     <LeftMenuVue/>
     <main class="w-full h-full flex flex-col">
       <TopNavVue/>
-      <article class="w-full h-full p-8">
+      <article class="w-full h-full p-8 overflow-y-auto">
         <router-view></router-view>
       </article>
     </main>
