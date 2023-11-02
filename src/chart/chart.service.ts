@@ -16,7 +16,7 @@ export class ChartService {
             `
             return {
                 tip: "成功获取营业额",
-                income: result[0].income
+                total: result[0].income
             }
         }
         catch(error) {
@@ -31,7 +31,67 @@ export class ChartService {
         try {
             return {
                 tip: "成功获取成交量",
-                sales: await this.prisma.order.count()
+                total: await this.prisma.order.count()
+            }
+        }
+        catch(error) {
+            throw new HttpException({
+                tip: "PRISMA 未知错误"
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    // SERVICE - GET WAREHOUSE TOTAL(获取仓库数)
+    async getWarehouses() {
+        try {
+            return {
+                tip: "成功获取仓库数",
+                total: await this.prisma.warehouse.count()
+            }
+        }
+        catch(error) {
+            throw new HttpException({
+                tip: "PRISMA 未知错误"
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    // SERVICE - GET USERS TOTAL(获取员工数)
+    async getUsers() {
+        try {
+            return {
+                tip: "成功获取员工数",
+                total: await this.prisma.user.count()
+            }
+        }
+        catch(error) {
+            throw new HttpException({
+                tip: "PRISMA 未知错误"
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    // SERVICE - GET USERS RANKING(获取员工流水排行)
+    async getUserRanking() {
+        try {
+            const result = await this.prisma.$queryRaw`
+                select result.userId,result.username,round(sum(result.price),2) as price
+                from (
+                    select o.userId,u.username,p.price
+                    from \`order\` as o
+                    inner join product as p
+                    on o.productId=p.id
+                    inner join user as u
+                    on o.userId=u.id
+                ) as result
+                group by userId
+                order by price
+                desc
+                limit 7
+            `
+            return {
+                tip: "成功获取员工数",
+                result
             }
         }
         catch(error) {
