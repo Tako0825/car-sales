@@ -10,6 +10,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
 import { SupplyModule } from './supply/supply.module';
 import { OrderModule } from './order/order.module';
 import { MoveModule } from './move/move.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MoveModule } from './move/move.module';
     SupplyModule,
     OrderModule,
     MoveModule,
+    StatisticsModule,
 ],
   controllers: [],
   providers: [JwtStrategy],

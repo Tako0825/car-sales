@@ -45,7 +45,7 @@ export default api = () => {
       return request(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/jtson',
           'Authorization': `Bearer ${config.token}`
         },
         body: JSON.stringify(data),
