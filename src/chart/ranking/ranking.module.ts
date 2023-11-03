@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { RankingService } from './ranking.service';
+import { RankingUserService } from './ranking.user.service';
 import { RankingController } from './ranking.controller';
+import { RankingCarService } from './ranking.car.service';
 
 @Module({
   controllers: [RankingController],
-  providers: [RankingService],
+  providers: [RankingUserService, RankingCarService],
 })
 export class RankingModule {}
