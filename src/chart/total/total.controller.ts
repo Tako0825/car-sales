@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { TotalService } from './total.service';
 
-@Controller('total')
+@Controller('chart/total')
 export class TotalController {
   constructor(private readonly totalService: TotalService) {}
 
@@ -12,7 +12,7 @@ export class TotalController {
     }
   
     // API - GET SALES TOTAL(获取成交量)
-    @Get("sales")
+    @Get("sales")   
     async getSales() {
       return await this.totalService.getSales()
     }
