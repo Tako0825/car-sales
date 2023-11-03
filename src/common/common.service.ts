@@ -6,6 +6,7 @@ import { PrismaModel } from './enum/PrismaModel';
 export class CommonService {
     constructor(private prisma:PrismaService) {}
 
+    // TRY TO SELECT DATA BY ID
     async getEntityById<T>(model: PrismaModel, id: number): Promise<T> {
         try {
             const entity = await (this.prisma[model] as any).findUnique({
@@ -22,6 +23,19 @@ export class CommonService {
             throw new HttpException({
                 tip: "请提供有效的 id",
             }, HttpStatus.UNPROCESSABLE_ENTITY)
+        }
+    }
+
+    // TRY TO USE PRISMA
+    async handlePrismaExecution<T>(callback: () => Promise<T>) {
+        try {
+            return await callback()
+        }
+        catch(error) {
+            throw new HttpException({
+                tip: "PRISMA 发生错误",
+                error: error.message
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }
