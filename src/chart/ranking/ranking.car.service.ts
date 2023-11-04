@@ -48,10 +48,10 @@ export class RankingCarService {
                         const result:Array<{ currentyear: number, total: BigInt }> = await this.prisma.$queryRaw`
                             SELECT o.productId,YEAR(o.createtime) AS currentyear,CONVERT(COUNT(*), SIGNED) AS total
                             FROM \`order\` AS o 
-                            INNER JOIN product
-                            ON o.productId = product.id
-                            GROUP BY product.id,currentyear
-                            HAVING currentyear >= ${currentYear - year + 1}
+                            INNER JOIN product 
+                            ON o.productId = product.id 
+                            GROUP BY product.id,currentyear 
+                            HAVING currentyear >= ${currentYear - year + 1} 
                             AND o.productId = ${item}
                         `
                         source[index] = source[index].map((jtem, jndex) => {
@@ -64,6 +64,7 @@ export class RankingCarService {
                         })
                     })
                     await Promise.all(promise)
+
                     resolve({
                         tip: "成功获取汽车热销榜",
                         idList,

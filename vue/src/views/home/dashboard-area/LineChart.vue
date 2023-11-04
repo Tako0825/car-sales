@@ -14,6 +14,7 @@ import {
 import { LineChart } from 'echarts/charts';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { SVGRenderer } from 'echarts/renderers';
+import api from '@/api/api';
 
 echarts.use([
   DatasetComponent,
@@ -27,13 +28,17 @@ echarts.use([
   UniversalTransition
 ]);
 export default {
-    mounted() {
+    async mounted() {
+        const data = await api.get("/api/chart/ranking/car")
+        console.log(data);
         this.InitChart()
     },
     data() {
         return {
             xName: "年份",
             yName: "销量",
+            xList: new Array(),
+            yList: new Array(),
             products: [
                 "比亚迪-秦",
                 "比亚迪-汉",
@@ -81,6 +86,7 @@ export default {
         option() {
             const datasetWithFilters = []
             const seriesList = []
+
             // 数据聚合
             echarts.util.each(this.products, function (product) {
                 let datasetId = 'dataset_' + product;

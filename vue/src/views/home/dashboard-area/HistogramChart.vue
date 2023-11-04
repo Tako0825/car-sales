@@ -18,11 +18,12 @@ echarts.use([
 ]);
 export default {
     async mounted() {
-        const data = await api.get("/api/chart/ranking/user")
-        const { xList, yList, source } = data
+        const { xList, yList, source } = await api.get("/api/chart/ranking/user")
         this.xList = xList
-        this.yList = yList
-        this.source = source
+        this.yList = yList.reverse()
+        source.map((item, index) => {
+            this.source[index] = item.reverse()
+        })
         this.InitChart()
     },
     data() {

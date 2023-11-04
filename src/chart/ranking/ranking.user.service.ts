@@ -56,11 +56,15 @@ export class RankingUserService {
                             ON o.userId = user.id 
                             GROUP BY o.userId,currentyear 
                             HAVING currentyear >= ${currentYear - year + 1} 
-                            AND currentyear <= ${currentYear} 
                             AND o.userId = ${item}
                         `
-                        // 数据聚合
-                        // ...
+                        // todo - 在这里进行数据聚合
+                        result.forEach(item => {
+                            // 计算年份在source数组中的索引
+                            const yearIndex = item.currentyear - (currentYear - year + 1);
+                            // 将每年的销售额数据按顺序添加到相应年份的位置
+                            source[yearIndex][index] = item.total;
+                        });
                     })
                     await Promise.all(promise)
                     
