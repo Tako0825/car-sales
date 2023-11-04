@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import RegisterPlugins from './plugins';
 import { router } from './plugins/router';
+import "../theme/message.css"
 
 // IGNORE WARNING(忽略警告)
 Vue.config.productionTip = false

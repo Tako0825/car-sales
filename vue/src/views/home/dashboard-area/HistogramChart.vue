@@ -7,6 +7,7 @@ import echarts from "@/plugins/echarts"
 import { TooltipComponent,GridComponent,LegendComponent } from 'echarts/components';
 import { BarChart } from 'echarts/charts';
 import { SVGRenderer } from 'echarts/renderers';
+import api from "@/api/api"
 
 echarts.use([
   TooltipComponent,
@@ -16,26 +17,25 @@ echarts.use([
   SVGRenderer
 ]);
 export default {
-    mounted() {
+    async mounted() {
+        const data = await api.get("/api/chart/ranking/user")
+        const { xList, yList, source } = data
+        this.xList = xList
+        this.yList = yList
+        this.source = source
         this.InitChart()
     },
     data() {
         return {
-            yList: ["曹操", "刘备", "孙权", "关羽", "张飞"],
-            xList: [2014, 2015, 2016, 2017, 2018, 2019, 2020],
-            sourse: [
-                [320, 302, 301, 334, 390, 330, 320],
-                [120, 132, 101, 134, 90, 230, 210],
-                [220, 182, 191, 234, 290, 330, 310],
-                [150, 212, 201, 154, 190, 330, 410],
-                [820, 832, 901, 934, 1290, 1330, 1320]
-            ]
+            yList: new Array(),
+            xList: new Array(),
+            source: new Array()
         }
     },
     computed: {
         option() {
             const seriesList = []
-            this.sourse.map((item, index) => {
+            this.source.map((item, index) => {
                 seriesList.push({
                     name: this.xList[index],
                     type: 'bar',
@@ -46,7 +46,7 @@ export default {
                     emphasis: {
                         focus: 'series'
                     },
-                    data: this.sourse[index]
+                    data: this.source[index]
                 })
             })
             return {

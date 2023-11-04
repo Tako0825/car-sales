@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     i {
         color: #72767c!important;
     }

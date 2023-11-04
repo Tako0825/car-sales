@@ -15,51 +15,61 @@
  *      .then(data => {})
  *      .catch(error => {})
 */
+import { Message } from "element-ui";
+
+const DEVELOPMENT_SERVER = "localhost"
+const port = 3000
 async function request(url, options = {}) {
-  const response = await fetch(`${process.env.DEVELOPMENT_SERVER}/${url}`, options);
-
-  if (!response.ok) {
-    throw new Error(`请求失败, 状态码为: ${response.status}`);
+  const response = await fetch(`http://${DEVELOPMENT_SERVER}:${port}${url}`, options);
+  const { code, message, data } = await response.json()
+  if(response.ok) {
+    Message.success(data.tip)
   }
-
-  return response.json();
+  else {
+    Message.error(`${message} - status: ${code}`)
+  }
+  return data;
 }
 
-export default api = () => {
-  return {
-    get: async (url) => {
-      return request(url);
-    },
-    post: async (url, data, config) => {
-      return request(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${config.token}`
-        },
-        body: JSON.stringify(data),
-      });
-    },
+export default {
+  get: async (url, config) => {
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config?.token}`
+      }
+    })
+  },
+  post: async (url, data, config) => {
+    return request(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config?.token}`
+      },
+      body: JSON.stringify(data),
+    })
+  },
 
-    patch: async (url, data, config) => {
-      return request(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/jtson',
-          'Authorization': `Bearer ${config.token}`
-        },
-        body: JSON.stringify(data),
-      });
-    },
+  patch: async (url, data, config) => {
+    return request(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/jtson',
+        'Authorization': `Bearer ${config?.token}`
+      },
+      body: JSON.stringify(data),
+    })
+  },
 
-    delete: async (url, config) => {
-      return request(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${config.token}`
-        }
-      })
-    } 
-  }
+  delete: async (url, config) => {
+    return request(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config?.token}`
+      }
+    })
+  } 
 }
