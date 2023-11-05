@@ -8,7 +8,7 @@
         :key="index" 
         class="flex-1 h-full pt-5 flex flex-col justify-around items-center gap-4 overflow-hidden bg-white rounded-lg relative transition duration-300 hover:bg-purple-400"
       >
-        <i :class="dashboard.icon" class="text-3xl"></i>
+        <i :class="dashboard.icon" class="text-3xl" :style="{ 'color': dashboard.color }"></i>
         <component
           v-if="dataReady"
           :is="dashboard.component"

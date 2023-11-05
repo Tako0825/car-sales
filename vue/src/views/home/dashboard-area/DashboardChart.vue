@@ -15,7 +15,6 @@ export default {
         "title", "value", "rate", "color", "isActived", "index"
     ],
     mounted() {
-        console.log(this.value);
         this.InitChart()
     },
     data() {
