@@ -111,11 +111,11 @@ export default {
                     type: 'category',
                 },
                 yAxis: {
-                    show: false,
                     name: this.yName,
                     nameLocation: 'end'
                 },
                 grid: {
+                    right: 120,
                     bottom: 30
                 },
                 series: seriesList
