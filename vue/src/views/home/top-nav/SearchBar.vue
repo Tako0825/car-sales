@@ -1,6 +1,6 @@
 <template>
     <!-- 搜索栏 -->
-    <div class="w-80">
+    <main class="w-80">
         <el-input 
             v-model="input" 
             placeholder="You can search here" 
@@ -9,7 +9,7 @@
         >
             <template slot="prepend"><i class="el-icon-search transform scale-150"></i></template>
         </el-input>
-    </div>
+    </main>
 </template>
 
 <script>

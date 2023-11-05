@@ -10,12 +10,13 @@
       >
         <i :class="chart.icon" class="text-3xl"></i>
         <div class="w-full h-full">
-          <component 
+          <component
             :is="chart.component"
             :title="chart.title"
             :value="chart.value"
             :rate="chart.rate"
             :color="chart.color"
+            class="w-full h-full"
           />
         </div>
         <div class="w-full h-full absolute top-0 left-0 z-10 cursor-pointer"></div>
@@ -25,11 +26,11 @@
     <article class="w-full h-96 flex gap-6">
       <!-- 柱状图 -->
       <section class="flex-1 h-full bg-white rounded-lg">
-        <HistogramChart/>
+        <HistogramChart class="w-full h-full"/>
       </section>
       <!-- 折线图 -->
       <section class="flex-1 h-full bg-white rounded-lg">
-        <LineChart/>
+        <LineChart class="w-full h-full"/>
       </section>
     </article>
   </main>

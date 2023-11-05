@@ -14,58 +14,73 @@ export class RankingCarService {
     async getCarRanking() {
         return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
             const count = 7
-            const year = 5
+            const year = 10
             const currentYear = new Date().getFullYear()
             // Y轴刻度 - [..., 2020, 2021, ..., 至今]
             const yList = new Array(year).fill(0).map((item, index) => currentYear - year + index + 1)
-            
-            return new Promise((resolve) => {
-                // 以 currentYear 为基准, 取近 year 年以来销量最高的 count 台汽车产品
-                this.prisma.$queryRaw`
-                    SELECT product.id,product.name,product.model,count(*) as total
-                    FROM (
-                        SELECT *
-                        FROM \`order\`
-                        WHERE year(createtime) > ${ currentYear - year}
-                    ) AS a
-                    INNER JOIN product
-                    ON a.productId = product.id
-                    GROUP BY product.id
-                    ORDER BY total DESC
-                    LIMIT ${count}
-                `
-                .then(async (result: Array<{ id: number,name: string,model: string }>) => {
-                    // 近 year 年以来销量最高的 count 台汽车的 “id” 列表
-                    const idList = result.map(item => item.id)
-                    // 近 year 年以来销量最高的 count 台汽车的 “名称+型号” 列表
-                    const xList = result.map(item => `${item.name}-${item.model}`)
-                    // 近 year 年以来销量最高的 count 台汽车的 “每年营业额” 列表
-                    const source:Array<number[]> = new Array(xList.length).fill(new Array(yList.length).fill(0))
-                    
-                    // 根据 Echarts 折线图所需数据结构, 将以上数据聚合到 source 当中
-                    const promise = idList.map(async (item,index) => {
-                        // 上榜汽车在相应年份的销量
-                        const result:Array<{ currentyear: number, total: BigInt }> = await this.prisma.$queryRaw`
-                            SELECT o.productId,YEAR(o.createtime) AS currentyear,CONVERT(COUNT(*), SIGNED) AS total
-                            FROM \`order\` AS o 
-                            INNER JOIN product 
-                            ON o.productId = product.id 
-                            GROUP BY product.id,currentyear 
-                            HAVING currentyear >= ${currentYear - year + 1} 
-                            AND o.productId = ${item}
-                        `
-                    })
-                    await Promise.all(promise)
+            const products:Array<{ id: number, fullname: string }> = await this.prisma.$queryRaw`
+                SELECT product.id,
+                CONCAT(product.name,'-',product.model) AS fullname
+                FROM \`order\` AS o 
+                INNER JOIN product 
+                ON o.productId = product.id
+                WHERE year(o.createtime) > ${currentYear - year}
+                GROUP BY o.productId
+                ORDER BY count(*) DESC, productId ASC
+                LIMIT ${count}
+            `
+            // 近 year 年以来销量最高的 count 台汽车的 “id” 列表
+            const idList = products.map(product => product.id)
+            // 近 year 年以来销量最高的 count 台汽车的 “全称” 列表
+            const xList = products.map(product => product.fullname)
 
-                    resolve({
-                        tip: "成功获取汽车热销榜",
-                        idList,
-                        xList,
-                        yList,
-                        source
-                    })
-                })
+            interface ISource {
+                productId: number
+                product: string
+                currentyear: number
+                sales: string
+            }
+
+            // 近 year 年以来销量最高的 count 台汽车的 “每年销量” 列表
+            const result:Array<ISource> = await this.prisma.$queryRaw`
+                SELECT sub1.productId,
+                sub1.product,
+                sub1.currentyear,
+                CONCAT(sub1.yearsales, '') AS sales
+                FROM (
+                    SELECT o.productId,
+                    CONCAT(product.name,"-",product.model) AS product,
+                    YEAR(o.createtime) AS currentyear,
+                    count(*) AS yearsales
+                    FROM \`order\` AS o 
+                    INNER JOIN product 
+                    ON o.productId = product.id
+                    GROUP BY o.productId, currentyear
+                ) AS sub1
+                INNER JOIN (
+                    SELECT o.productId, count(*) AS sales
+                    FROM \`order\` AS o 
+                    WHERE year(o.createtime) > ${currentYear - year}
+                    GROUP BY o.productId
+                    ORDER BY sales DESC, productId ASC
+                    LIMIT ${count}
+                ) AS sub2
+                ON sub1.productId = sub2.productId
+                HAVING sub1.currentyear > ${currentYear - year}
+                ORDER BY currentyear, sales DESC, productId ASC
+            `
+            const source:Array<[any, any, any]> = [["sales", "product", "year"]]
+            result.map(item => {
+                source.push([ +item.sales, item.product, item.currentyear ])
             })
+
+            return {
+                tip: "成功获取汽车热销榜",
+                idList,
+                xList,
+                yList,
+                source
+            }
         })
     }
 }
