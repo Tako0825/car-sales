@@ -54,14 +54,6 @@ export class RankingCarService {
                             HAVING currentyear >= ${currentYear - year + 1} 
                             AND o.productId = ${item}
                         `
-                        source[index] = source[index].map((jtem, jndex) => {
-                            for(let ktem of result) {
-                                if(ktem.currentyear === currentYear - year + 1 + jndex) {
-                                    return Number(ktem.total.toString())
-                                }
-                            }
-                            return 0
-                        })
                     })
                     await Promise.all(promise)
 

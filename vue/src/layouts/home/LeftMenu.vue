@@ -34,12 +34,6 @@ export default {
 }
 </script>
 
-<style scoped>
-    i {
-        color: #72767c!important;
-    }
+<style>
 
-    .is-active i {
-        color: #a162f7!important;
-    }
 </style>
