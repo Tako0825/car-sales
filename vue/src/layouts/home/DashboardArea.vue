@@ -81,7 +81,7 @@ export default {
         },
         {
           icon: "el-icon-s-marketing text-3xl",
-          title: "汽车成交量(万单)",
+          title: "汽车成交量",
           value: this.sales,
           rate: 0.52,
           color: "#ff7e86",

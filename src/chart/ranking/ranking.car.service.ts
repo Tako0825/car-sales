@@ -54,21 +54,21 @@ export class RankingCarService {
 						IFNULL(o.yearsales, 0) AS yearsales
 						FROM product AS p
 						CROSS JOIN (
-						SELECT DISTINCT YEAR(createtime) AS year
-						FROM \`order\`
+						    SELECT DISTINCT YEAR(createtime) AS year
+						    FROM \`order\`
 						) AS y
 						LEFT JOIN (
-						SELECT productId, YEAR(createtime) AS year, COUNT(*) AS yearsales
-						FROM \`order\`
-						GROUP BY productId, year
+						    SELECT productId, YEAR(createtime) AS year, COUNT(*) AS yearsales
+						    FROM \`order\`
+						    GROUP BY productId, year
 						) AS o
 						ON p.id = o.productId AND y.year = o.year
 						ORDER BY p.id, y.year
 					) AS sub1
 					INNER JOIN (
-							SELECT o.productId, count(*) AS sales
+							SELECT o.productId, COUNT(*) AS sales
 							FROM \`order\` AS o 
-							WHERE year(o.createtime) > 2013
+							WHERE YEAR(o.createtime) > 2013
 							GROUP BY o.productId
 							ORDER BY sales DESC, productId ASC
 							LIMIT 7
@@ -81,8 +81,6 @@ export class RankingCarService {
             result.map(item => {
                 source.push([ +item.sales, item.product, item.currentyear ])
             })
-            console.log(source);
-            
 
             return {
                 tip: "成功获取汽车热销榜",
