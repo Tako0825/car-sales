@@ -1,6 +1,6 @@
 <template>
 <main class="relative flex flex-col items-center gap-6">    
-    <el-table :data="source" v-loading="!dataReady"  class="rounded-xl font-bold w-full">
+    <el-table :data="getSource" v-loading="!dataReady"  class="rounded-xl font-bold w-full">
     <!-- 第 1 列: 头像 & 姓名 -->
     <el-table-column prop="username" label="头像和姓名">
         <template slot-scope="scope">
@@ -33,55 +33,48 @@
     <el-pagination
     v-if="dataReady"
     layout="prev, pager, next"
-    :current-page="page"
+    :current-page="getPage"
     @current-change="handleCurrentChange"
-    :page-size="pageSize"
-    :total="userTotal"
+    :page-size="getPageSize"
+    :total="getUserTotal"
     >
     </el-pagination>
 </main>
 </template>
 
 <script>
-import api from '@/api/api';
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
     async created() {
-        await this.httpGetUser(this.page, this.pageSize)
+        const { userList: source, userTotal } = await this.fetchSource()
+        this.setSource(source)
+        this.setUserTotal(userTotal)
         this.dataReady = true
     },  
     data() {
         return {
             dataReady: false,
-            source: new Array(),
-            page: 1,
-            pageSize: 15,
-            userTotal: 0
         }
     },
     computed: {
         ...mapGetters([
-            "getPage", "getPageSize", "getSource"
+            "getPage", "getPageSize", "getSource", "getUserTotal"
         ])
     },
     methods: {
         ...mapMutations([
-            "setPage", "setPageSize", "setSource"
+            "setPage", "setPageSize", "setSource", "setUserTotal"
         ]),
         ...mapActions([
             "fetchSource"
         ]),
-        handleCurrentChange(newValue) {
-            this.page = newValue
-            this.httpGetUser(newValue, this.pageSize)
-            },
-            async httpGetUser(page, pageSize) {
+        async handleCurrentChange(newPage) {
             this.dataReady = false
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxMjM0NTY3ODkwMCIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjQwMjk4LCJleHAiOjE3MDE4MzIyOTh9.OK9p2QDdpmV1up-kBBDXfHs51aBOLgGyX4bO-NnzGkg"
-            const { userList, userTotal } = await api.get(`/api/user?page=${page}&pageSize=${pageSize}`, { token })
-            this.userTotal = userTotal
-            this.source = userList
+            this.setPage(newPage)
+            const { userList: source, userTotal } = await this.fetchSource()
+            this.setSource(source)
+            this.setUserTotal(userTotal)
             this.dataReady = true
         }
     }
