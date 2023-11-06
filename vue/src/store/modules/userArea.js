@@ -9,7 +9,7 @@ export default {
             userTotal: 0,
             // 下列状态可设置默认值
             page: 1,
-            pageSize: 15
+            pageSize: 10
         }
     },
     getters: {
