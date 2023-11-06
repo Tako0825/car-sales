@@ -1,5 +1,6 @@
 <template>
-<main class="relative flex flex-col items-center gap-6">    
+<main class="relative flex flex-col items-center gap-6">   
+    <!-- 用户列表 -->
     <el-table :data="getSource" v-if="getSource.length" v-loading="!dataReady"  class="rounded-xl font-bold w-full">
         <!-- 第 1 列: 头像 & 姓名 -->
         <el-table-column prop="username" label="头像和姓名">
@@ -23,8 +24,8 @@
         <!-- 第 5 列: 查看 & 编辑 -->
         <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+                <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
+                <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -56,7 +57,7 @@ export default {
     },  
     data() {
         return {
-            dataReady: false,
+            dataReady: false
         }
     },
     computed: {
@@ -66,7 +67,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setPage", "setPageSize", "setSource", "setUserTotal"
+            "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible"
         ]),
         ...mapActions([
             "fetchSource"
@@ -79,6 +80,14 @@ export default {
             this.setUserTotal(userTotal)
             await sleep()
             this.dataReady = true
+        },
+        handleDetail(user) {
+            console.log(user);
+            this.setDialogTableVisible(true)
+        },
+        handleEdit(user) {
+            console.log(user);
+            this.setDialogFormVisible(true)
         }
     }
 }
