@@ -1,11 +1,11 @@
 <template>
     <!-- 顶部导航 -->
-    <div class="w-full h-16 px-8 bg-white flex justify-between items-center select-none">
+    <main>
         <!-- 搜索栏 -->
         <SearchBarVue/>
         <!-- 用户栏 -->
         <UserBarVue/>
-    </div>
+    </main>
 </template>
 
 <script>

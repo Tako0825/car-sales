@@ -32,7 +32,6 @@
 
     <!-- 分页 -->
     <el-pagination
-        v-if="dataReady"
         layout="prev, pager, next"
         :current-page="getPage"
         @current-change="handleCurrentChange"

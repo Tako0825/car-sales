@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="pb-10">
     <UserTableVue/>
   </main>
 </template>

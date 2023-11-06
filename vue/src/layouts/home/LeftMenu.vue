@@ -2,7 +2,6 @@
   <!-- 侧边菜单 -->
   <el-menu 
       default-active="/" 
-      class="el-menu-vertical-demo content w-72 h-full flex flex-col font-bold select-none" 
       :collapse="isCollapse"
       text-color="#72767c"
       :router="true"
