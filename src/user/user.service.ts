@@ -5,6 +5,7 @@ import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { User } from '@prisma/client';
 import { createHash } from 'crypto';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class UserService {
@@ -15,30 +16,35 @@ export class UserService {
 
   // SERVICE - PAGING QUERY USER(分页查询用户)
   async findPage(page: number, pageSize: number) {
-    // 用户总数
-    const userTotal = await this.prisma.user.count()
-    // 分页总数
-    const pageTotal = Math.ceil(userTotal / pageSize)
-    // 当前页数据
-    const userList =  await this.prisma.user.findMany({
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-      select: {
-        username: true,
-        phone: true,
-        role: true
+    return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+      // 用户总数
+      const userTotal = await this.prisma.user.count()
+      // 分页总数
+      const pageTotal = Math.ceil(userTotal / pageSize)
+      // 当前页数据
+      const userList =  await this.prisma.user.findMany({
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        select: {
+          avatar: true,
+          username: true,
+          phone: true,
+          joined_date: true,
+          address: true,
+          role: true,
+        }
+      })
+      // 当前页数据数目
+      const count = userList.length
+      return {
+        tip: `成功获取第 ${page} 页共 ${count} 条数据`,
+        page,
+        count,
+        pageTotal,
+        userTotal,
+        userList
       }
     })
-    // 当前页数据数目
-    const count = userList.length
-    return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
-      page,
-      count,
-      pageTotal,
-      userTotal,
-      userList
-    }
   }
 
   // SERVICE - QUERY SPECIFIED USER(查询指定的用户)

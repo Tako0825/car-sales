@@ -15,13 +15,16 @@ enum Role {
 
 // 员工
 model User {
-  id       Int     @id @default(autoincrement())
-  username String
-  password String
-  phone    String  @unique @db.VarChar(11)
-  role     Role    @default(USER)
-  move     Move[]
-  order    Order[]
+  id         Int      @id @default(autoincrement())
+  username   String
+  password   String
+  phone      String   @unique @db.VarChar(11)
+  role       Role     @default(USER)
+  address    String   @default("这个家伙很神秘, 还没有留下任何地址哦~")
+  avatar     String   @default("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png")
+  joined_date DateTime @default(now())
+  move       Move[]
+  order      Order[]
 }
 
 // 汽车产品
@@ -79,7 +82,7 @@ model Move {
   outboundId Int
   inbound    Warehouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
   inboundId  Int
-  createtime  DateTime  @default(now())
+  createtime DateTime  @default(now())
 }
 
 // 订单

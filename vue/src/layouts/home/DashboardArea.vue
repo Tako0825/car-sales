@@ -6,7 +6,7 @@
       <section
         v-for="(dashboard,index) in dashboards" 
         :key="index" 
-        class="flex-1 h-full pt-5 flex flex-col justify-around items-center gap-4 overflow-hidden bg-white rounded-lg relative transition duration-300 hover:bg-purple-400"
+        class="flex-1 h-full pt-5 flex flex-col justify-around items-center gap-4 overflow-hidden bg-white rounded-xl relative transition duration-300 hover:bg-purple-400"
       >
         <i :class="dashboard.icon" class="text-3xl" :style="{ 'color': dashboard.color }"></i>
         <component
@@ -24,12 +24,12 @@
     <!-- 块行容器 -->
     <article class="w-full h-auto flex gap-6 select-none">
       <!-- 柱状图 -->
-      <section class="flex-1 h-auto bg-white rounded-lg py-10 flex flex-col gap-10">
+      <section class="flex-1 h-auto bg-white rounded-xl py-10 flex flex-col gap-10">
         <h1 class="text-left font-bold text-xl pl-10">员工销售榜 (近 5 年榜单, 前 7 名数据)</h1>
         <HistogramChart class="w-full h-96"/>
       </section>
       <!-- 折线图 -->
-      <section class="flex-1 h-auto bg-white rounded-lg py-10 flex flex-col gap-10">
+      <section class="flex-1 h-auto bg-white rounded-xl py-10 flex flex-col gap-10">
         <h1 class="text-left font-bold text-xl pl-10">汽车热销榜 (近 10 年榜单, 前 7 名数据)</h1>
         <LineChart class="w-full h-96"/>
       </section>
