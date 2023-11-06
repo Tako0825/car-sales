@@ -14,8 +14,12 @@ export default {
             user: null,
             dialogTableVisible: false,
             dialogFormVisible: false,
-            // TOKEN
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxODU3NjY5NDM2NiIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjU1NDc0LCJleHAiOjE3MDE4NDc0NzR9.9ivnO8lYXlw9ews3ioPj3QjIc8Ij2ef7mLawPx6bhfw"
+            // ----- SKYWORTH TOKEN - ADMIN -----
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxMTExMTExMTExMSIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjgzMTQ5LCJleHAiOjE3MDE4NzUxNDl9.R4rJQ0fTZJ4Boa1gnmDj6QuLRMZiSO75QfD-6VWaNjE",
+            // ----- SKYWORTH TOKEN - USER ------
+            // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxMjM0NTY3ODkwMCIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjgxNjg1LCJleHAiOjE3MDE4NzM2ODV9.55c8CWU1Qkl8OSARjsAjbfp5wLDYJMX7uxneNfP7kk8",
+            // ----- LENOVO TOKEN -----
+            // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxODU3NjY5NDM2NiIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjU1NDc0LCJleHAiOjE3MDE4NDc0NzR9.9ivnO8lYXlw9ews3ioPj3QjIc8Ij2ef7mLawPx6bhfw",
         }
     },
     getters: {
@@ -45,14 +49,15 @@ export default {
         async fetchUser({ state }, payload) {
             const response = await api.get(`/api/user/${payload}`, { token: state.token })
             const user = response.user
-            user.date = new Date(user.joined_date).getDate()
+            user.date = new Date(user.joined_date).getTime()
             user.time = new Date(user.joined_date).getTime()
             return user
         },
         // 请求接口 - 修改指定用户
         async updateUser({ state }, payload) {
-            const response = await api.patch(`api/user/${payload.id}`, payload.data , { token: state.token })
-            console.log("###", response);
+            console.log(`/api/user/${payload.id}`);
+            console.log(payload.data);
+            await api.patch(`/api/user/${payload.id}`, payload.data , { token: state.token })
         }
     }
 }

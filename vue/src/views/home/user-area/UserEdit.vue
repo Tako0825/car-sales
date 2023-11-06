@@ -5,6 +5,7 @@
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
         center
+        width="600px"
     >
         <el-form ref="form" v-if="getUser" :model="getUser" label-width="80px" label-position="left">
             <el-form-item label="姓名">
@@ -55,16 +56,37 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible"
+            "setDialogFormVisible", "setSource"
         ]),
         ...mapActions([
-            "fetchUser", "updateUser"
+            "fetchSource", "fetchUser", "updateUser"
         ]),
         async handleUserChange() {
-            const id = this.getUser.id
-            console.log(id);
-            console.log(this.getUser);
+            const user = this.getUser
+            const { id, username, phone, role, address } = user
+            // 合并表单中的日期与时间
+            const date = new Date(user.date)
+            const time = new Date(user.time)
+            const year = date.getFullYear()
+            const month = date.getMonth()
+            const day = date.getDate()
+            const hours = time.getHours()
+            const minutes = time.getMinutes()
+            const seconds = time.getSeconds()
+            const datetime = new Date(year, month, day, hours, minutes, seconds)
+            await this.updateUser({
+                id,
+                data: {
+                    username,
+                    phone,
+                    role,
+                    datetime,
+                    address
+                }
+            })
             this.setDialogFormVisible(false)
+            const { userList } = await this.fetchSource()
+            this.setSource(userList)
         }
     }
 }

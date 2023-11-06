@@ -1,9 +1,9 @@
 <template>
 <main class="relative flex flex-col items-center gap-6">   
     <!-- 用户列表 -->
-    <el-table :data="getSource" v-if="getSource.length" v-loading="!dataReady"  class="rounded-xl font-bold w-full">
+    <el-table header-cell-class-name="text-black" :data="getSource" v-if="getSource.length" v-loading="!dataReady" class="rounded-xl font-bold w-full">
         <!-- 第 1 列: 头像 & 姓名 -->
-        <el-table-column prop="username" label="头像和姓名">
+        <el-table-column prop="username" label="用户" min-width="150">
             <template slot-scope="scope">
             <section class="flex gap-6 items-center">
                 <el-avatar :src="scope.row.avatar"></el-avatar>
@@ -12,17 +12,17 @@
             </template>
         </el-table-column>
         <!-- 第 2 列: 电话 -->
-        <el-table-column prop="phone" label="电话"></el-table-column>
+        <el-table-column prop="phone" label="电话" min-width="120"></el-table-column>
         <!-- 第 3 列: 住址 -->
-        <el-table-column prop="address" label="住址"></el-table-column>
-        <!-- 第 4 列: 入职时间 -->
-        <el-table-column>
+        <el-table-column prop="address" label="住址"  min-width="200"></el-table-column>
+        <!-- 第 4 列: 入职日期 -->
+        <el-table-column label="入职日期"  min-width="120">
             <template slot-scope="scope">
             <p>{{ new Date(scope.row.joined_date).toLocaleDateString() }}</p>
             </template>
         </el-table-column>
         <!-- 第 5 列: 查看 & 编辑 -->
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column fixed="right" label="操作" min-width="120">
             <template slot-scope="scope">
                 <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
                 <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
@@ -38,6 +38,7 @@
         @current-change="handleCurrentChange"
         :page-size="getPageSize"
         :total="getUserTotal"
+        :hide-on-single-page="true"
     >
     </el-pagination>
 </main>

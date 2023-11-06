@@ -56,7 +56,7 @@ export default {
     return request(url, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/jtson',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${config?.token}`
       },
       body: JSON.stringify(data),
