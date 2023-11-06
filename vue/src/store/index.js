@@ -1,5 +1,9 @@
-export const store = {
-    modules: {
+import userArea from "./modules/userArea";
 
+export default () => {
+    return {
+        modules: {
+            userArea
+        }
     }
 }

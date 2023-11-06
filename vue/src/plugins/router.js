@@ -4,9 +4,8 @@ import routes from "@/routes/index"
 
 export const RegisterRouter = () => {
     Vue.use(VueRouter)
+    return new VueRouter({
+        mode: "history",
+        routes: routes()
+    })
 }
-
-export const router = new VueRouter({
-    mode: "history",
-    routes: routes()
-})

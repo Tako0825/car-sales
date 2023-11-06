@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { store } from '@/store'
+import getStore from '@/store/index'
 
 export const RegisterStore = () => {
     Vue.use(Vuex)
+    return new Vuex.Store(getStore())
 }
-
-export const store = new Vuex.Store(store)

@@ -44,7 +44,8 @@
 
 <script>
 import api from '@/api/api';
-
+import { createNamespacedHelpers } from "vuex"
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
     async created() {
         await this.httpGetUser(this.page, this.pageSize)
@@ -56,21 +57,32 @@ export default {
             source: new Array(),
             page: 1,
             pageSize: 15,
-            userTotal: 0,
+            userTotal: 0
         }
     },
+    computed: {
+        ...mapGetters([
+            "getPage", "getPageSize", "getSource"
+        ])
+    },
     methods: {
+        ...mapMutations([
+            "setPage", "setPageSize", "setSource"
+        ]),
+        ...mapActions([
+            "fetchSource"
+        ]),
         handleCurrentChange(newValue) {
-        this.page = newValue
-        this.httpGetUser(newValue, this.pageSize)
-        },
-        async httpGetUser(page, pageSize) {
-        this.dataReady = false
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxMjM0NTY3ODkwMCIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjQwMjk4LCJleHAiOjE3MDE4MzIyOTh9.OK9p2QDdpmV1up-kBBDXfHs51aBOLgGyX4bO-NnzGkg"
-        const { userList, userTotal } = await api.get(`/api/user?page=${page}&pageSize=${pageSize}`, { token })
-        this.userTotal = userTotal
-        this.source = userList
-        this.dataReady = true
+            this.page = newValue
+            this.httpGetUser(newValue, this.pageSize)
+            },
+            async httpGetUser(page, pageSize) {
+            this.dataReady = false
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxMjM0NTY3ODkwMCIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjQwMjk4LCJleHAiOjE3MDE4MzIyOTh9.OK9p2QDdpmV1up-kBBDXfHs51aBOLgGyX4bO-NnzGkg"
+            const { userList, userTotal } = await api.get(`/api/user?page=${page}&pageSize=${pageSize}`, { token })
+            this.userTotal = userTotal
+            this.source = userList
+            this.dataReady = true
         }
     }
 }

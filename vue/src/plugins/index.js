@@ -1,7 +1,13 @@
 import { RegisterElement } from "./element";
 import { RegisterRouter } from "./router";
+import { RegisterStore } from "./store";
 
 export default function RegisterPlugins() {
-    RegisterRouter()
+    const store = RegisterStore()
+    const router = RegisterRouter()
     RegisterElement()
+    return {
+        store,
+        router
+    }
 }

@@ -14,13 +14,23 @@ export default {
         }
     },
     getters: {
-        // 获取 - 用户列表
+        getPage(state) {
+            return state.page
+        },
+        getPageSize(state) {
+            return state.pageSize
+        },
         getSource(state) {
             return state.source
         }
     },
     mutations: {
-        // 修改 - 用户列表
+        setPage(state, payload) {
+            state.page = payload
+        },
+        setPageSize(state, payload) {
+            state.pageSize = payload
+        },
         setSource(state, payload) {
             state.source = payload
         }

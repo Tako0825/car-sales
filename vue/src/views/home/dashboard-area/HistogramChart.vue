@@ -4,9 +4,9 @@
 
 <script>
 import echarts from "@/plugins/echarts"
-import { TooltipComponent,GridComponent,LegendComponent } from 'echarts/components';
-import { BarChart } from 'echarts/charts';
-import { SVGRenderer } from 'echarts/renderers';
+import { TooltipComponent,GridComponent,LegendComponent } from 'echarts/components'
+import { BarChart } from 'echarts/charts'
+import { SVGRenderer } from 'echarts/renderers'
 import api from "@/api/api"
 
 echarts.use([
@@ -15,7 +15,7 @@ echarts.use([
   LegendComponent,
   BarChart,
   SVGRenderer
-]);
+])
 export default {
     async mounted() {
         const { xList, yList, source } = await api.get("/api/chart/ranking/user")
