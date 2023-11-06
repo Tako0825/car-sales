@@ -62,31 +62,33 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getPage", "getPageSize", "getSource", "getUserTotal"
+            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal"
         ])
     },
     methods: {
         ...mapMutations([
-            "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible"
+            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible"
         ]),
         ...mapActions([
-            "fetchSource"
+            "fetchSource", "fetchUser"
         ]),
         async handleCurrentChange(newPage) {
             this.dataReady = false
             this.setPage(newPage)
-            const { userList: source, userTotal } = await this.fetchSource()
-            this.setSource(source)
+            const { userList, userTotal } = await this.fetchSource()
+            this.setSource(userList)
             this.setUserTotal(userTotal)
             await sleep()
             this.dataReady = true
         },
-        handleDetail(user) {
-            console.log(user);
+        async handleDetail({ id }) {
+            const user = await this.fetchUser(id)
+            this.setUser(user)
             this.setDialogTableVisible(true)
         },
-        handleEdit(user) {
-            console.log(user);
+        async handleEdit({ id }) {
+            const user = await this.fetchUser(id)
+            this.setUser(user)
             this.setDialogFormVisible(true)
         }
     }

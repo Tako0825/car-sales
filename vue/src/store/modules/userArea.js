@@ -11,11 +11,15 @@ export default {
             page: 1,
             pageSize: 10,
             // 用户详情 & 编辑卡片
+            user: null,
             dialogTableVisible: false,
             dialogFormVisible: false,
+            // TOKEN
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxODU3NjY5NDM2NiIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjU1NDc0LCJleHAiOjE3MDE4NDc0NzR9.9ivnO8lYXlw9ews3ioPj3QjIc8Ij2ef7mLawPx6bhfw"
         }
     },
     getters: {
+        getUser: state => state.user,
         getPage: state => state.page,
         getPageSize: state => state.pageSize,
         getUserTotal: state => state.userTotal,
@@ -24,6 +28,7 @@ export default {
         getDialogFormVisible: state => state.dialogFormVisible
     },
     mutations: {
+        setUser: (state, payload) => { state.user = payload },
         setPage: (state, payload) => { state.page = payload },
         setPageSize: (state, payload) => { state.pageSize = payload },
         setUserTotal: (state, payload) => { state.userTotal = payload },
@@ -34,9 +39,20 @@ export default {
     actions: {
         // 请求接口 - 分页获取用户信息
         async fetchSource({ state }) {
-            return await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbXMiOnsicGhvbmUiOiIxODU3NjY5NDM2NiIsImhhc2giOiIyNDBiZTUxOGZhYmQyNzI0ZGRiNmYwNGVlYjFkYTU5Njc0NDhkN2U4MzFjMDhjOGZhODIyODA5Zjc0YzcyMGE5In0sInNpZ24iOiJjYXJzYWxlIiwiaWF0IjoxNjk5MjU1NDc0LCJleHAiOjE3MDE4NDc0NzR9.9ivnO8lYXlw9ews3ioPj3QjIc8Ij2ef7mLawPx6bhfw"
-            })
+            return await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, { token: state.token })
+        },
+        // 请求接口 - 获取指定用户
+        async fetchUser({ state }, payload) {
+            const response = await api.get(`/api/user/${payload}`, { token: state.token })
+            const user = response.user
+            user.date = new Date(user.joined_date).getDate()
+            user.time = new Date(user.joined_date).getTime()
+            return user
+        },
+        // 请求接口 - 修改指定用户
+        async updateUser({ state }, payload) {
+            const response = await api.patch(`api/user/${payload.id}`, payload.data , { token: state.token })
+            console.log("###", response);
         }
     }
 }

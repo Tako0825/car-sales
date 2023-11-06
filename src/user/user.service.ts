@@ -4,7 +4,6 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { User } from '@prisma/client';
-import { createHash } from 'crypto';
 import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
@@ -26,12 +25,13 @@ export class UserService {
         skip: (page - 1) * pageSize,
         take: pageSize,
         select: {
+          id: true,
           avatar: true,
           username: true,
           phone: true,
           joined_date: true,
           address: true,
-          role: true,
+          role: true
         }
       })
       // 当前页数据数目
@@ -49,21 +49,24 @@ export class UserService {
 
   // SERVICE - QUERY SPECIFIED USER(查询指定的用户)
   async findOne(id: number) {
-    const { username, phone, role } = await this.commonService.getEntityById<User>(PrismaModel.user, id)
+    const { avatar, username, phone, role, joined_date, address } = await this.commonService.getEntityById<User>(PrismaModel.user, id)
     return {
       tip: `成功获取指定用户`,
       user: {
         id,
+        avatar,
         username,
         phone,
-        role
+        role,
+        joined_date,
+        address
       }
     }
   }
 
   // SERVICE - UPDATE USER(修改用户信息)
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const { username, password, phone, role } = updateUserDto
+    const { username, phone, role } = updateUserDto
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     try {
       const user = await this.prisma.user.update({
@@ -72,7 +75,6 @@ export class UserService {
         },
         data: {
           username,
-          password: createHash("sha256").update(password).digest("hex"),
           phone,
           role
         },

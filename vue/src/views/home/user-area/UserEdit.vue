@@ -1,26 +1,71 @@
 <template>
     <!-- 编辑用户信息 -->
-    <el-dialog title="编辑用户信息" :visible.sync="getDialogFormVisible">
+    <el-dialog 
+        title="编辑用户信息" 
+        :visible.sync="dialogFormVisible"
+        :close-on-click-modal="false"
+        center
+    >
+        <el-form ref="form" v-if="getUser" :model="getUser" label-width="80px" label-position="left">
+            <el-form-item label="姓名">
+                <el-input v-model="getUser.username" class="max-w-xs"></el-input>
+            </el-form-item>
+            <el-form-item label="电话">
+                <el-input v-model="getUser.phone" class="max-w-xs"></el-input>
+            </el-form-item>
+            <el-form-item label="职位">
+                <el-select v-model="getUser.role" placeholder="请选择职位">
+                    <el-option label="职员" value="USER"></el-option>
+                    <el-option label="管理员" value="ADMIN"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="入职时间">
+                <el-row class="flex justify-start max-w-md">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-6"></el-date-picker>
+                    <el-time-picker placeholder="选择时间" v-model="getUser.time"></el-time-picker>
+                </el-row>
+            </el-form-item>
+            <el-form-item label="家庭住址">
+                <el-input type="textarea" v-model="getUser.address" class="max-w-md"></el-input>
+            </el-form-item>
+        </el-form>
         <section slot="footer" class="dialog-footer">
             <el-button @click="setDialogFormVisible(false)">取 消</el-button>
-            <el-button @click="setDialogFormVisible(false)" type="primary">确 定</el-button>
+            <el-button @click="handleUserChange" type="primary">保 存</el-button>
         </section>
     </el-dialog>
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations } = createNamespacedHelpers("userArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
     computed: {
         ...mapGetters([
-            "getDialogFormVisible"
-        ])
+            "getDialogFormVisible", "getUser"
+        ]),
+        dialogFormVisible: {
+            get() {
+                return this.getDialogFormVisible
+            },
+            set(newValue) {
+                this.setDialogFormVisible(newValue)
+            }
+        }
     },
     methods: {
         ...mapMutations([
             "setDialogFormVisible"
-        ])
+        ]),
+        ...mapActions([
+            "fetchUser", "updateUser"
+        ]),
+        async handleUserChange() {
+            const id = this.getUser.id
+            console.log(id);
+            console.log(this.getUser);
+            this.setDialogFormVisible(false)
+        }
     }
 }
 </script>
