@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
@@ -63,7 +64,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getRegisterFormVisible"
+            "getRegisterFormVisible", "getUserTotal", "getPageSize"
         ]),
         registerFormVisible: {
             get() {
@@ -76,10 +77,10 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setRegisterFormVisible"
+            "setRegisterFormVisible", "setPage", "setSource", "setDataReady"
         ]),
         ...mapActions([
-            "registerUser"
+            "registerUser", "fetchSource"
         ]),
         async handleUserChange() {
             const { username, phone, password, passwordConfirmed, role, address } = this.form
@@ -102,7 +103,13 @@ export default {
                 address,
                 joined_date
             })
+            this.setDataReady(false)
+            await sleep()
+            this.setPage(Math.ceil(this.getUserTotal / this.getPageSize))
+            const { userList } = await this.fetchSource()
+            this.setSource(userList)
             this.setRegisterFormVisible(false)
+            this.setDataReady(true)
         }
     }
 }

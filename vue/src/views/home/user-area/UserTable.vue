@@ -1,8 +1,16 @@
 <template>
-<main class="relative flex flex-col items-center gap-6">   
+<main class="relative w-full flex flex-col items-center gap-6">   
     <!-- 用户列表 -->
-    <el-table header-cell-class-name="text-black" :data="getSource" v-if="getSource.length" v-loading="!dataReady" class="rounded-xl font-bold w-full">
-        <!-- 第 1 列: 头像 & 姓名 -->
+    <el-table 
+        header-cell-class-name="text-black" 
+        :data="getSource" 
+        style="width: 100%;"
+        v-if="getSource.length" 
+        v-loading="!getDataReady" 
+        class="rounded-xl font-bold w-full"
+        highlight-current-row
+    >
+        <!-- 第 1 列: 用户(头像 & 姓名) -->
         <el-table-column prop="username" label="用户" min-width="150">
             <template slot-scope="scope">
             <section class="flex gap-6 items-center">
@@ -13,7 +21,7 @@
         </el-table-column>
         <!-- 第 2 列: 电话 -->
         <el-table-column prop="phone" label="电话" min-width="120"></el-table-column>
-        <!-- 第 3 列: 住址 -->
+        <!-- 第 3 列: 家庭住址 -->
         <el-table-column prop="address" label="住址"  min-width="200"></el-table-column>
         <!-- 第 4 列: 入职日期 -->
         <el-table-column label="入职日期"  min-width="120">
@@ -21,11 +29,8 @@
             <p>{{ new Date(scope.row.joined_date).toLocaleDateString() }}</p>
             </template>
         </el-table-column>
-        <!-- 第 5 列: 查看 & 编辑 -->
-        <el-table-column fixed="right" label="操作" min-width="120">
-            <template slot="header">
-                <el-button type="success" @click="setRegisterFormVisible(true)">注册用户</el-button>
-            </template>
+        <!-- 第 5 列: 其他操作(详情 & 编辑) -->
+        <el-table-column fixed="right" label="其他操作" min-width="120">
             <template slot-scope="scope">
                 <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
                 <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
@@ -42,8 +47,7 @@
         :page-size="getPageSize"
         :total="getUserTotal"
         :hide-on-single-page="true"
-    >
-    </el-pagination>
+    ></el-pagination>
 </main>
 </template>
 
@@ -57,44 +61,42 @@ export default {
         this.setSource(userList)
         this.setUserTotal(userTotal)
         await sleep()
-        this.dataReady = true
+        this.setDataReady(true)
     },  
-    data() {
-        return {
-            dataReady: false
-        }
-    },
     computed: {
         ...mapGetters([
-            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal"
+            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal", "getDataReady"
         ])
     },
     methods: {
         ...mapMutations([
-            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible"
+            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser"
         ]),
+        // 处理页数切换
         async handleCurrentChange(newPage) {
-            this.dataReady = false
+            this.setDataReady(false)
             this.setPage(newPage)
             const { userList, userTotal } = await this.fetchSource()
             this.setSource(userList)
             this.setUserTotal(userTotal)
             await sleep()
-            this.dataReady = true
+            this.setDataReady(true)
         },
+        // 处理用户详情
         async handleDetail({ id }) {
             const user = await this.fetchUser(id)
             this.setUser(user)
             this.setDialogTableVisible(true)
         },
+        // 处理用户编辑
         async handleEdit({ id }) {
             const user = await this.fetchUser(id)
             this.setUser(user)
             this.setDialogFormVisible(true)
-        }
+        },
     }
 }
 </script>

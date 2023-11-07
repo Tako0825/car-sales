@@ -1,7 +1,7 @@
 <template>
-    <!-- 编辑用户信息 -->
+    <!-- 编辑员工信息 -->
     <el-dialog 
-        title="编辑用户信息" 
+        title="编辑员工信息" 
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
         center
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
@@ -56,7 +57,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible", "setSource"
+            "setDialogFormVisible", "setSource", "setDataReady"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser", "updateUser"
@@ -85,8 +86,11 @@ export default {
                 }
             })
             this.setDialogFormVisible(false)
+            this.setDataReady(false)
+            await sleep()
             const { userList } = await this.fetchSource()
             this.setSource(userList)
+            this.setDataReady(true)
         }
     }
 }

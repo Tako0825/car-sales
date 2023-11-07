@@ -25,13 +25,13 @@ export default [
   },
   {
     path: "/product",
-    meta: { auto: true, title: "产品总览", icon: "el-icon-shopping-cart-2"},
+    meta: { auto: true, title: "汽车总览", icon: "el-icon-shopping-cart-2"},
     component: () => import("@/layouts/home/IndexPage.vue"),
     children: [
       {
         path: "",
         name: "product",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/ProductArea.vue"),
       }
     ]
   },

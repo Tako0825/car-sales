@@ -26,7 +26,8 @@ async function request(url, options = {}) {
     Message.success(data.tip)
   }
   else {
-    Message.error(`${message} - status: ${code}`)
+    Message.error(data.tip)
+    console.log({ code, message, data });
   }
   return data;
 }
