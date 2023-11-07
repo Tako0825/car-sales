@@ -57,6 +57,7 @@ import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
     async created() {
+        this.setDataReady(false)
         const { userList, userTotal } = await this.fetchSource()
         this.setSource(userList)
         this.setUserTotal(userTotal)
@@ -79,9 +80,8 @@ export default {
         async handleCurrentChange(newPage) {
             this.setDataReady(false)
             this.setPage(newPage)
-            const { userList, userTotal } = await this.fetchSource()
+            const { userList } = await this.fetchSource()
             this.setSource(userList)
-            this.setUserTotal(userTotal)
             await sleep()
             this.setDataReady(true)
         },

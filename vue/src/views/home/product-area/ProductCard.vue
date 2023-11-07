@@ -1,5 +1,5 @@
 <template>
-    <main class="p-4 flex flex-col font-bold select-none">
+    <main @click="handleDetail" class="p-4 flex flex-col font-bold select-none">
         <h1 class="text-lg">{{ product.model }}</h1>
         <p style="color: #a162f7;">{{ product.name }}</p>
         <el-image
@@ -35,7 +35,7 @@ import image14 from "@/assets/product/product14.png"
 import image15 from "@/assets/product/product15.png"
 import image16 from "@/assets/product/product16.png"
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions } = createNamespacedHelpers("productArea")
+const { mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
     name: "ProductCard",
     props: [
@@ -64,9 +64,19 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            "setDialogTableVisible", "setProduct"
+        ]),
         ...mapActions([
-            "fetchSource"
-        ])
+            "fetchSource", "fetchProduct"
+        ]),
+        // 处理产品详情
+        async handleDetail() {
+            const { id } = this.product
+            const { product } = await this.fetchProduct(id)
+            this.setProduct(product)
+            this.setDialogTableVisible(true)
+        },
     }
 }
 </script>

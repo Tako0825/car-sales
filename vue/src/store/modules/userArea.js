@@ -50,8 +50,10 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取用户信息
-        async fetchSource({ state }) {
-            return await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, { token: state.token })
+        async fetchSource({ state, commit }) {
+            const response = await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, { token: state.token })
+            commit("setUserTotal", response.userTotal)
+            return response
         },
         // 请求接口 - 获取指定用户
         async fetchUser({ state }, payload) {
