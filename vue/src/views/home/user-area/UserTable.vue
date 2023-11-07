@@ -23,6 +23,9 @@
         </el-table-column>
         <!-- 第 5 列: 查看 & 编辑 -->
         <el-table-column fixed="right" label="操作" min-width="120">
+            <template slot="header">
+                <el-button type="success" @click="setRegisterFormVisible(true)">注册用户</el-button>
+            </template>
             <template slot-scope="scope">
                 <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
                 <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
@@ -68,7 +71,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible"
+            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser"

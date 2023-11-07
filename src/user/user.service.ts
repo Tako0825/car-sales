@@ -66,17 +66,15 @@ export class UserService {
 
   // SERVICE - UPDATE USER(修改用户信息)
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const { username, phone, role } = updateUserDto
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     try {
+      const { phone, username, role, address, joined_date } = updateUserDto
       const user = await this.prisma.user.update({
         where: {
           id
         },
         data: {
-          username,
-          phone,
-          role
+          phone, username, role, address, joined_date
         },
         select: {
           id: true,

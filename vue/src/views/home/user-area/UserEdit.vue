@@ -73,14 +73,14 @@ export default {
             const hours = time.getHours()
             const minutes = time.getMinutes()
             const seconds = time.getSeconds()
-            const datetime = new Date(year, month, day, hours, minutes, seconds)
+            const joined_date = new Date(year, month, day, hours, minutes, seconds)
             await this.updateUser({
                 id,
                 data: {
                     username,
                     phone,
                     role,
-                    datetime,
+                    joined_date,
                     address
                 }
             })

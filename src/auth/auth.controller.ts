@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, SetMetadata, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { Validation } from 'src/common/validation/validation';
 import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '@prisma/client';
+import { $Enums,User } from '@prisma/client';
+import { RoleGuard } from 'src/common/guard/role.guard';
 
 // CONTROLLER - AUTH
 @Controller('auth')
@@ -13,6 +14,8 @@ export class AuthController {
 
   // API - REGISTER(注册)
   @Post("register")
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(AuthGuard("jwt"), RoleGuard)
   @UsePipes(Validation)
   async register(@Body() registerDto:RegisterDto) {
     return await this.authService.register(registerDto)
