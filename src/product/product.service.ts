@@ -5,6 +5,7 @@ import { Product, User } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class ProductService {
@@ -40,25 +41,41 @@ export class ProductService {
 
   // SERVICE - PAGING QUERY PRODUCT(分页查询产品)
   async findPage(page: number, pageSize: number) {
-    // 产品总数
-    const productTotal = await this.prisma.product.count()
-    // 分页总数
-    const pageTotal = Math.ceil(productTotal / pageSize)
-    // 当前页数据
-    const productList =  await this.prisma.product.findMany({
-      skip: (page - 1) * pageSize,
-      take: pageSize
+    return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+      // 产品总数
+      const productTotal = await this.prisma.product.count()
+      // 分页总数
+      const pageTotal = Math.ceil(productTotal / pageSize)
+      // 当前页数据
+      const productList =  await this.prisma.product.findMany({
+        skip: (page - 1) * pageSize,
+        take: pageSize
+      })
+      // 当前页数据数目
+      const count = productList.length
+      // 并发收集汽车相应销量
+      let source = new Array()
+      const promise = productList.map(async (product, index) => {
+        const { id } = product
+        return {
+          ...product,
+          sales: await this.prisma.order.count({
+            where: {
+              productId: id
+            }
+          })
+        }
+      })
+      source = await Promise.all(promise)
+      return {
+        tip: `成功获取第 ${page} 页共 ${count} 条数据`,
+        page,
+        count,
+        pageTotal,
+        productTotal,
+        source
+      }
     })
-    // 当前页数据数目
-    const count = productList.length
-    return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
-      page,
-      count,
-      pageTotal,
-      productTotal,
-      productList
-    }
   }
 
   // SERVICE - QUERY SPECIFIED PRODUCT(查询指定的产品)

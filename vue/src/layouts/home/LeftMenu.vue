@@ -1,7 +1,7 @@
 <template>
   <!-- 侧边菜单 -->
   <el-menu 
-      default-active="/" 
+      :default-active="currentActive" 
       :collapse="isCollapse"
       text-color="#72767c"
       :router="true"
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       isCollapse: false,
+      currentActive: this.$route.path // 在组件创建时，根据当前路由来设置初始的菜单激活项
     }
   }
 }
