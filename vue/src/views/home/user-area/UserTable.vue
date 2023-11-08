@@ -9,6 +9,7 @@
         v-loading="!getDataReady" 
         class="rounded-xl font-bold w-full"
         highlight-current-row
+        @current-change="handleSelectedUser"
     >
         <!-- 第 1 列: 用户(头像 & 姓名) -->
         <el-table-column prop="username" label="用户" min-width="150">
@@ -34,6 +35,24 @@
             <template slot-scope="scope">
                 <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
                 <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
+                <span class="ml-2">
+                    <el-popconfirm
+                        confirm-button-text='确 定'
+                        cancel-button-text='取 消'
+                        icon="el-icon-info"
+                        icon-color="red"
+                        title="这是一段内容确定删除吗？"
+                        @confirm="handleDeleteUser(scope.row.id)"
+                    >
+                        <el-button 
+                            slot="reference" 
+                            v-show="scope.row.id===selectedId" 
+                            type="text"
+                            :style="{ 'color': '#ff6370' }"
+                            class="transition duration-1000"
+                        >删除</el-button>
+                    </el-popconfirm>
+                </span>
             </template>
         </el-table-column>
     </el-table>
@@ -57,6 +76,11 @@ import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
+    data() {
+        return {
+            selectedId: null
+        }
+    },
     async created() {
         this.setDataReady(false)
         const { userList, userTotal } = await this.fetchSource()
@@ -75,10 +99,11 @@ export default {
             "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource", "fetchUser"
+            "fetchSource", "fetchUser", "deleteUser"
         ]),
         // 处理页数切换
         async handleCurrentChange(newPage) {
+            this.selectedId = null
             this.setDataReady(false)
             this.setPage(newPage)
             const { userList } = await this.fetchSource()
@@ -98,6 +123,22 @@ export default {
             this.setUser(user)
             this.setDialogFormVisible(true)
         },
+        // 处理选中的用户
+        handleSelectedUser(value) {
+            if (value?.id) {
+                this.selectedId = value.id
+            }
+        },
+        // 处理删除用户
+        async handleDeleteUser(id) {
+            await this.deleteUser(id)
+            this.selectedId = null
+            this.setDataReady(false)
+            const { userList } = await this.fetchSource()
+            this.setSource(userList)
+            await sleep()
+            this.setDataReady(true)
+        }
     }
 }
 </script>

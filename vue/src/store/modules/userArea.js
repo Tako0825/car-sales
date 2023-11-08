@@ -75,6 +75,10 @@ export default {
         async isPhoneExisted({ state }, payload) {
             const response = await api.get(`/api/user/phone/${payload}`, { token: state.token })
             return response
-        }
+        },
+        // 请求接口 - 删除用户
+        async deleteUser({ state }, payload) {
+            await api.delete(`/api/user/${payload}`, { token: state.token })
+        }   
     }
 }
