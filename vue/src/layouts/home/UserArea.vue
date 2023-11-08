@@ -1,5 +1,6 @@
 <template>
   <main class="flex flex-col gap-6 pb-10">
+    <!-- 头部 -->
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">员工总览</h1>
       <el-button type="success" @click="setRegisterFormVisible(true)" size="medium">添加员工</el-button>

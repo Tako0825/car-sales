@@ -53,13 +53,13 @@ export class OrderService {
     })
     // 数据聚合
     const data = await Promise.all(orderList.map(async order => {
-      const { id, productId, userId, warehouseId } = order
+      const { id, productId, userId, warehouseId, createtime } = order
       const product = await this.prisma.product.findUnique({
         where: {
           id: productId
         }
       })
-      const user = await this.prisma.supplier.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: {
           id: userId
         }
@@ -71,9 +71,12 @@ export class OrderService {
       })
       return {
         id,
-        product,
-        user,
-        warehouse
+        brand: product.name,
+        model: product.model,
+        user: user.username,
+        phone: user.phone,
+        warehouse: warehouse.location,
+        createtime
       }
     }))
     

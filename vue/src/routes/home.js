@@ -43,7 +43,7 @@ export default [
       {
         path: "",
         name: "warehouse",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/WarehouseArea.vue"),
       }
     ]
   },
@@ -55,7 +55,7 @@ export default [
       {
         path: "",
         name: "supplier",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/SupplierArea.vue"),
       }
     ]
   },
@@ -67,7 +67,7 @@ export default [
       {
         path: "",
         name: "order",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/OrderArea.vue"),
       }
     ]
   },
@@ -79,7 +79,7 @@ export default [
       {
         path: "",
         name: "supply",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/SupplyArea.vue"),
       }
     ]
   },

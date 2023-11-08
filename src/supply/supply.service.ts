@@ -73,9 +73,10 @@ export class SupplyService {
       return {
         id,
         quantity,
-        supplier,
-        product,
-        warehouse
+        supplier: supplier.company,
+        brand: product.name,
+        model: product.model,
+        warehouse: warehouse.location
       }
     }))
     

@@ -1,17 +1,25 @@
 <template>
     <main @click="handleDetail" class="p-4 flex flex-col font-bold select-none">
+        <!-- 品牌 & 型号 -->
         <h1 class="text-lg">{{ product.model }}</h1>
         <p style="color: #a162f7;">{{ product.name }}</p>
         <el-image
             class="w-full flex-1"
             :src="images[Math.floor(Math.random() * (images.length))]"
             fit="cover"
-        ></el-image>
+        >
+            <!-- 加载图片失败 -->
+            <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline"></i>
+            </div>
+        </el-image>
         <section class="flex justify-between items-center">
+            <!-- 销量 -->
             <span class="flex items-center gap-1">
                 <i class="el-icon-goods" style="color: #a162f7; font-size: 30px;"></i>
                 <span class="text-sm">已售出: {{ product.sales }}</span>
             </span>
+            <!-- 售价 -->
             <span>￥{{ product.price }}万</span>
         </section>
     </main>
