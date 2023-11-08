@@ -37,7 +37,8 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-empty description="" v-else class="bg-white w-full rounded-xl"></el-empty>
+    <!-- 空状态 -->
+    <el-empty description="" v-else class="bg-white w-full h-96 rounded-xl"></el-empty>
 
     <!-- 分页 -->
     <el-pagination
