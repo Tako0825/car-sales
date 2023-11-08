@@ -4,7 +4,6 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { User } from '@prisma/client';
-import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class UserService {
@@ -15,7 +14,7 @@ export class UserService {
 
   // SERVICE - PAGING QUERY USER(分页查询用户)
   async findPage(page: number, pageSize: number) {
-    return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+    return await this.commonService.handlePrismaExecution<any>(async () => {
       // 用户总数
       const userTotal = await this.prisma.user.count()
       // 分页总数
@@ -37,7 +36,6 @@ export class UserService {
       // 当前页数据数目
       const count = userList.length
       return {
-        tip: `成功获取第 ${page} 页共 ${count} 条数据`,
         page,
         count,
         pageTotal,
@@ -62,6 +60,18 @@ export class UserService {
         address
       }
     }
+  }
+
+  // SERVICE - QUERY SPECIFIED USER BY PHONE(根据电话查询指定的用户)
+  async findOneByPhone(phone: string) {
+    return await this.commonService.handlePrismaExecution<any>(async () => {
+      const user = await this.prisma.user.findUnique({
+        where: {
+          phone
+        }
+      })
+      return user ? true : false
+    })
   }
 
   // SERVICE - UPDATE USER(修改用户信息)

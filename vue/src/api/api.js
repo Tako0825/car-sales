@@ -22,10 +22,12 @@ const port = 3000
 async function request(url, options = {}) {
   const response = await fetch(`http://${DEVELOPMENT_SERVER}:${port}${url}`, options);
   const { code, message, data } = await response.json()
-  if(response.ok) {
+  // 200 - 请求成功并弹出相应成功提示, 如果 data.tip 存在
+  if(response.ok && data.tip?.length) {
     Message.success(data.tip)
   }
-  else {
+  // !200 - 请求失败并弹出相应错误提示 
+  else if(!response.ok) {
     Message.error(data.tip)
     console.log({ code, message, data });
   }

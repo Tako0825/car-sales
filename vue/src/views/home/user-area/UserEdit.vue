@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
@@ -87,7 +86,6 @@ export default {
             })
             this.setDialogFormVisible(false)
             this.setDataReady(false)
-            await sleep()
             const { userList } = await this.fetchSource()
             this.setSource(userList)
             this.setDataReady(true)

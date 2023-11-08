@@ -30,6 +30,12 @@ export class UserController {
     return await this.userService.findOne(id);
   }
 
+  // API - QUERY SPECIFIED USER BY PHONE(根据电话查询指定的用户)
+  @Get('/phone/:phone')
+  async findOneByPhone(@Param('phone') phone: string) {
+    return await this.userService.findOneByPhone(phone);
+  }
+
   // API - UPDATE USER(修改用户信息)
   @Patch(':id')
   @SetMetadata("role", [$Enums.Role.ADMIN])

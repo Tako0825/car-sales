@@ -55,7 +55,7 @@ export class MoveService {
     })
     // 数据聚合
     const data = await Promise.all(moveList.map(async move => {
-      const { id, productId, operatorId, outboundId, inboundId } = move
+      const { id, productId, operatorId, outboundId, inboundId, createtime } = move
       const product = await this.prisma.product.findUnique({
         where: {
           id: productId
@@ -83,7 +83,8 @@ export class MoveService {
         operator: operator.username,
         phone: operator.phone,
         outbound: outbound.location,
-        inbound: inbound.location
+        inbound: inbound.location,
+        createtime
       }
     }))
     

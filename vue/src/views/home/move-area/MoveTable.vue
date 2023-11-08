@@ -47,6 +47,10 @@
                 prop="inbound"
                 label="调入仓库"
             ></el-table-column>
+            <el-table-column
+                prop="createtime"
+                label="调动时间"
+            ></el-table-column>
             <!-- 编辑 -->
             <el-table-column fixed="right" label="操作" width="120">
                 <template slot-scope="scope">

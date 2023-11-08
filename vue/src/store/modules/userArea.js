@@ -70,6 +70,11 @@ export default {
         // 请求接口 - 注册用户
         async registerUser({ state }, payload) {
             await api.post(`/api/auth/register`, payload, { token: state.token })
+        },
+        // 请求接口 - 判断电话是否已注册
+        async isPhoneExisted({ state }, payload) {
+            const response = await api.get(`/api/user/phone/${payload}`, { token: state.token })
+            return response
         }
     }
 }
