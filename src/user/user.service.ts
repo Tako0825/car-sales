@@ -86,17 +86,10 @@ export class UserService {
         },
         data: {
           phone, username, role, address, joined_date
-        },
-        select: {
-          id: true,
-          username: true,
-          phone: true,
-          role: true
         }
       })
       return {
-        tip: "成功修改用户信息",
-        user
+        tip: "成功修改用户信息"
       }
     }catch(error) {
       throw new HttpException({

@@ -10,9 +10,9 @@
             :model="form" 
             ref="form" 
             :rules="rules" 
+            status-icon
             label-width="80px" 
             label-position="left"
-            status-icon
         >
             <el-form-item label="姓名" prop="username">
                 <el-input v-model="form.username" class="max-w-xs"></el-input>
@@ -35,7 +35,7 @@
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6"></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-2"></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>

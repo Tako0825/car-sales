@@ -7,26 +7,35 @@
         center
         width="600px"
     >
-        <el-form ref="form" v-if="getUser" :model="getUser" label-width="80px" label-position="left">
-            <el-form-item label="姓名">
+        <el-form 
+            :model="getUser" 
+            v-if="getUser" 
+            ref="form" 
+            :rules="rules" 
+            status-icon
+            label-width="80px" 
+            label-position="left"
+        >
+            <el-form-item label="姓名" prop="username">
                 <el-input v-model="getUser.username" class="max-w-xs"></el-input>
             </el-form-item>
-            <el-form-item label="电话">
-                <el-input v-model="getUser.phone" class="max-w-xs"></el-input>
-            </el-form-item>
-            <el-form-item label="职位">
+            <el-form-item label="职位" prop="role">
                 <el-select v-model="getUser.role" placeholder="请选择职位">
                     <el-option label="职员" value="USER"></el-option>
                     <el-option label="管理员" value="ADMIN"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="入职时间">
+            <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-6"></el-date-picker>
-                    <el-time-picker placeholder="选择时间" v-model="getUser.time"></el-time-picker>
+                    <el-form-item prop="date">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-2"></el-date-picker>
+                    </el-form-item>
+                    <el-form-item prop="time">
+                        <el-time-picker placeholder="选择时间" v-model="getUser.time"></el-time-picker>
+                    </el-form-item>
                 </el-row>
             </el-form-item>
-            <el-form-item label="家庭住址">
+            <el-form-item label="家庭住址" prop="address">
                 <el-input type="textarea" v-model="getUser.address" class="max-w-md"></el-input>
             </el-form-item>
         </el-form>
@@ -41,6 +50,20 @@
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
+    data() {
+        return {
+            rules: {
+                username: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' },
+                    { min: 2, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                role: { required: true, message: '请选择员工职位', trigger: 'change' },
+                date: { required: true, message: '请选择入职日期', trigger: 'change' },
+                time: { required: true, message: '请选择入职时间', trigger: 'change' },
+                address: { required: true, message: '请输入家庭住址', trigger: 'blur' }
+            }
+        }
+    },
     computed: {
         ...mapGetters([
             "getDialogFormVisible", "getUser"
@@ -63,7 +86,7 @@ export default {
         ]),
         async handleUserChange() {
             const user = this.getUser
-            const { id, username, phone, role, address } = user
+            const { id, username, role, address } = user
             // 合并表单中的日期与时间
             const date = new Date(user.date)
             const time = new Date(user.time)
@@ -78,7 +101,6 @@ export default {
                 id,
                 data: {
                     username,
-                    phone,
                     role,
                     joined_date,
                     address
