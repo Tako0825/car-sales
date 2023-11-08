@@ -41,7 +41,7 @@ export class ProductService {
 
   // SERVICE - PAGING QUERY PRODUCT(分页查询产品)
   async findPage(page: number, pageSize: number) {
-    return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       // 产品总数
       const productTotal = await this.prisma.product.count()
       // 分页总数
@@ -68,7 +68,6 @@ export class ProductService {
       })
       source = await Promise.all(promise)
       return {
-        tip: `成功获取第 ${page} 页共 ${count} 条数据`,
         page,
         count,
         pageTotal,
@@ -82,7 +81,6 @@ export class ProductService {
   async findOne(id: number) {
     const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
     return {
-      tip: `成功获取指定产品`,
       product
     }
   }

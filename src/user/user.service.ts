@@ -47,19 +47,20 @@ export class UserService {
 
   // SERVICE - QUERY SPECIFIED USER(查询指定的用户)
   async findOne(id: number) {
-    const { avatar, username, phone, role, joined_date, address } = await this.commonService.getEntityById<User>(PrismaModel.user, id)
-    return {
-      tip: `成功获取指定用户`,
-      user: {
-        id,
-        avatar,
-        username,
-        phone,
-        role,
-        joined_date,
-        address
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      const { avatar, username, phone, role, joined_date, address } = await this.commonService.getEntityById<User>(PrismaModel.user, id)
+      return {
+        user: {
+          id,
+          avatar,
+          username,
+          phone,
+          role,
+          joined_date,
+          address
+        }
       }
-    }
+    })
   }
 
   // SERVICE - QUERY SPECIFIED USER BY PHONE(根据电话查询指定的用户)

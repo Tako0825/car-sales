@@ -6,7 +6,7 @@
       <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加产品</el-button>
     </header>
     <!-- 汽车列表 -->
-    <article v-if="getDataReady" v-loading="!getDataReady" class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-flow-row gap-4">
+    <article v-if="getSource" v-loading="!getDataReady" class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-flow-row gap-4">
       <!-- 遍历汽车卡片 -->
       <ProductCard 
         v-for="(product, index) in getSource" 
@@ -45,9 +45,9 @@ export default {
   name: "ProductArea",
   async created() {
     this.setDataReady(false)
-    await sleep()
     const { source } = await this.fetchSource()
     this.setSource(source)
+    await sleep()
     this.setDataReady(true)
   },  
   components: {
