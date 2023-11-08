@@ -4,6 +4,7 @@ import warehouseArea from "./modules/warehouseArea";
 import supplierArea from "./modules/supplierArea";
 import orderArea from "./modules/orderArea";
 import supplyArea from "./modules/supplyArea";
+import moveArea from "./modules/moveArea";
 
 export default () => {
     return {
@@ -13,7 +14,8 @@ export default () => {
             warehouseArea,
             supplierArea,
             orderArea,
-            supplyArea
+            supplyArea,
+            moveArea
         }
     }
 }

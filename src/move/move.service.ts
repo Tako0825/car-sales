@@ -5,8 +5,6 @@ import { Product, User, Warehouse, Order, Move } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { CreateOrderDto } from 'src/order/dto/create-order.dto';
-import { UpdateOrderDto } from 'src/order/dto/update-order.dto';
 
 @Injectable()
 export class MoveService {
@@ -63,7 +61,7 @@ export class MoveService {
           id: productId
         }
       })
-      const operator = await this.prisma.supplier.findUnique({
+      const operator = await this.prisma.user.findUnique({
         where: {
           id: operatorId
         }
@@ -80,10 +78,12 @@ export class MoveService {
       })
       return {
         id,
-        product,
-        operator,
-        outbound,
-        inbound
+        brand: product.name,
+        model: product.model,
+        operator: operator.username,
+        phone: operator.phone,
+        outbound: outbound.location,
+        inbound: inbound.location
       }
     }))
     

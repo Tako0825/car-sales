@@ -3,7 +3,7 @@
         <!-- 头部 -->
         <header class="w-full flex justify-between">
             <h1 class="text-2xl font-bold">订单管理</h1>
-            <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加订单</el-button>
+            <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加调仓记录</el-button>
         </header>
         <!-- 表格 -->
         <el-table
@@ -17,32 +17,35 @@
             <el-table-column width="50"></el-table-column>
             <el-table-column
                 prop="id"
-                label="订单号"
+                label="序号"
                 width="80"
             ></el-table-column>
             <el-table-column
                 prop="brand"
                 label="品牌"
+                width="80"
             ></el-table-column>
             <el-table-column
                 prop="model"
                 label="型号"
             ></el-table-column>
             <el-table-column
-                prop="user"
+                prop="operator"
                 label="负责人"
+                width="80"
             ></el-table-column>
             <el-table-column
                 prop="phone"
                 label="负责人电话"
+                width="120"
             ></el-table-column>
             <el-table-column
-                prop="warehouse"
-                label="来源仓库"
+                prop="outbound"
+                label="调出仓库"
             ></el-table-column>
             <el-table-column
-                prop="createtime"
-                label="交易时间"
+                prop="inbound"
+                label="调入仓库"
             ></el-table-column>
             <!-- 编辑 -->
             <el-table-column fixed="right" label="操作" width="120">
@@ -56,12 +59,12 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("orderArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("moveArea")
 export default {
-    name: "OrderTable",
+    name: "MoveTable",
     async created() {
-        const { orderList } = await this.fetchSource()
-        this.setSource(orderList)
+        const { moveList } = await this.fetchSource()
+        this.setSource(moveList)
     },
     computed: {
         ...mapGetters([

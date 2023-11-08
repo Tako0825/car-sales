@@ -91,7 +91,7 @@ export default [
       {
         path: "",
         name: "move",
-        component: () => import("@/layouts/home/UserArea.vue"),
+        component: () => import("@/layouts/home/MoveArea.vue"),
       }
     ]
   },
