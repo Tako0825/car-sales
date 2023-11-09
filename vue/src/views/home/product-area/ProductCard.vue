@@ -1,5 +1,5 @@
 <template>
-    <main @click="handleDetail" class="root p-4 flex flex-col font-bold select-none transition duration-500 hover:bg-purple-400 hover:text-white">
+    <main @click="handleDetail" class="root p-4 flex flex-col font-bold select-none transition duration-200 hover:bg-purple-400 hover:text-white">
         <!-- 品牌 & 型号 -->
         <h1 class="text-lg">{{ product.model }}</h1>
         <p style="color: #a162f7;">{{ product.name }}</p>
@@ -22,7 +22,7 @@
             <!-- 售价 -->
             <span>￥{{ product.price }}万</span>
         </section>
-        <el-button class="delete" @click.stop="deleteProduct">删除</el-button>
+        <i class="delete el-icon-error text-gray-700 text-2xl " @click.stop="handleDelete(product.id)"></i>
     </main>
 </template>
 
@@ -43,6 +43,7 @@ import image13 from "@/assets/product/product13.png"
 import image14 from "@/assets/product/product14.png"
 import image15 from "@/assets/product/product15.png"
 import image16 from "@/assets/product/product16.png"
+import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
@@ -74,10 +75,10 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogTableVisible", "setProduct"
+            "setDialogTableVisible", "setProduct", "setDataReady", "setSource"
         ]),
         ...mapActions([
-            "fetchSource", "fetchProduct"
+            "fetchSource", "fetchProduct", "deleteProduct"
         ]),
         // 处理产品详情
         async handleDetail() {
@@ -87,8 +88,20 @@ export default {
             this.setDialogTableVisible(true)
         },
         // 处理删除产品
-        deleteProduct() {
-            console.log("@");
+        async handleDelete(id) {
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'error'
+            }).then(async () => {
+                // 点击确定删除后...
+                await this.deleteProduct(id)
+                this.setDataReady(false)
+                const { source } = await this.fetchSource()
+                this.setSource(source)
+                await sleep()
+                this.setDataReady(true)
+            }).catch(() => {})
         }
     }
 }
