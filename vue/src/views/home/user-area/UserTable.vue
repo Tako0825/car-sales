@@ -38,10 +38,11 @@
                 <span class="ml-2">
                     <el-popconfirm
                         confirm-button-text='确 定'
+                        confirm-button-type="danger"
                         cancel-button-text='取 消'
                         icon="el-icon-info"
-                        icon-color="red"
-                        title="这是一段内容确定删除吗？"
+                        icon-color="#ff7d89"
+                        title="确定删除该员工吗？"
                         @confirm="handleDeleteUser(scope.row.id)"
                     >
                         <el-button 

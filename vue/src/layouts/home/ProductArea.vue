@@ -10,9 +10,9 @@
       <!-- 遍历汽车卡片 -->
       <ProductCard 
         v-for="(product, index) in getSource" 
-        :key="index" 
+        :key="index"
         :product="product"
-        class="aspect rounded-xl bg-white cursor-pointer transition duration-500 hover:bg-purple-400 hover:text-white"
+        class="aspect rounded-xl bg-white cursor-pointer"
       />
     </article>
     <!-- 空状态 -->
@@ -43,6 +43,9 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
   name: "ProductArea",
+  components: {
+    ProductCard, ProductFactory, ProductDetail
+  },
   async created() {
     this.setDataReady(false)
     const { source } = await this.fetchSource()
@@ -50,9 +53,6 @@ export default {
     await sleep()
     this.setDataReady(true)
   },  
-  components: {
-    ProductCard, ProductFactory, ProductDetail
-  },
   computed: {
     ...mapGetters([
       "getSource", "getPage", "getPageSize", "getProductTotal", "getDataReady"

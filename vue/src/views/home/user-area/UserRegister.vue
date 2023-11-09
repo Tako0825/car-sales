@@ -48,7 +48,7 @@
         </el-form>
         <section slot="footer" class="dialog-footer">
             <el-button type="success" @click="submitForm('form')">立即注册</el-button>
-            <el-button @click="resetForm('form')">重置</el-button>
+            <el-button @click="resetForm('form')">重 置</el-button>
         </section>
     </el-dialog>
 </template>
@@ -165,15 +165,14 @@ export default {
                     this.setSource(userList)
                     this.setRegisterFormVisible(false)
                     this.setDataReady(true)
+                    this.$refs[formName].resetFields()
                 }
-                else {
-                    return false
-                }
+                else return false
             })
         },
         // 重置表单
         resetForm(formName) {
-            this.$refs[formName].resetFields();
+            this.$refs[formName].resetFields()
         }
     }
 }

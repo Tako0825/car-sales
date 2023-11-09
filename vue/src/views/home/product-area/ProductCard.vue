@@ -1,5 +1,5 @@
 <template>
-    <main @click="handleDetail" class="p-4 flex flex-col font-bold select-none">
+    <main @click="handleDetail" class="root p-4 flex flex-col font-bold select-none transition duration-500 hover:bg-purple-400 hover:text-white">
         <!-- 品牌 & 型号 -->
         <h1 class="text-lg">{{ product.model }}</h1>
         <p style="color: #a162f7;">{{ product.name }}</p>
@@ -22,6 +22,7 @@
             <!-- 售价 -->
             <span>￥{{ product.price }}万</span>
         </section>
+        <el-button class="delete" @click.stop="deleteProduct">删除</el-button>
     </main>
 </template>
 
@@ -47,7 +48,7 @@ const { mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
     name: "ProductCard",
     props: [
-        "product"
+        "product", "isSeleted"
     ],
     data() {
         return {
@@ -85,10 +86,25 @@ export default {
             this.setProduct(product)
             this.setDialogTableVisible(true)
         },
+        // 处理删除产品
+        deleteProduct() {
+            console.log("@");
+        }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+    .root {
+        position: relative;
+    }
+    .root:hover .delete {
+        visibility: visible;
+    }
+    .delete {
+        visibility: hidden;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 </style>
