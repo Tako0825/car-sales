@@ -11,6 +11,7 @@ import { SupplyModule } from './supply/supply.module';
 import { OrderModule } from './order/order.module';
 import { MoveModule } from './move/move.module';
 import { ChartModule } from './chart/chart.module';
+import { QiniuModule } from './qiniu/qiniu.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ChartModule } from './chart/chart.module';
     OrderModule,
     MoveModule,
     ChartModule,
+    QiniuModule,
 ],
   controllers: [],
   providers: [JwtStrategy],
