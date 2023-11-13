@@ -50,14 +50,32 @@
             <el-button type="success" @click="submitForm('form')">立即注册</el-button>
             <el-button @click="resetForm('form')">重 置</el-button>
         </section>
+        <!-- 上传头像文件 -->
+        <el-upload
+            class="avatar-uploader"
+            action="http://upload-z2.qiniup.com"
+            :http-request="handleUpload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <img src="http://cdn.takoko.top/wutongroad/2023/11/13-16:24:59" alt="">
     </el-dialog>
 </template>
 
 <script>
+import * as qiniu from "qiniu-js"
 import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
+import { getUploadConfig } from "@/api/upload"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
+    async mounted() {
+        const { uploadToken:token } = await getUploadConfig()
+        this.token = token
+    },
     data() {
         let validatePassword = (rule, value, callback) => {
             if (value === '') {
@@ -80,6 +98,8 @@ export default {
             }
         }
         return {
+            imageUrl: '',
+            token: '',
             form: {
                 username: '',
                 phone: '',
@@ -173,11 +193,75 @@ export default {
         // 重置表单
         resetForm(formName) {
             this.$refs[formName].resetFields()
+        },
+        handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        },
+        async handleUpload(upload) {
+            const file = upload.file
+            const key = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString()
+            const token = this.token
+            const putExtra = {}
+            const config = {
+                useCdnDomain: true,
+                region: qiniu.region.z2
+            }
+            const observable = qiniu.upload(file, key, token, putExtra, config)
+            const observer = {
+                next(res){
+                    // ...
+                    console.log(res);
+                },
+                error(err){
+                    // ...
+                    console.log(err);
+                },
+                complete(res){
+                    // ...
+                    console.log(res);
+                    this.imageUrl = `http:/cdn.takoko.top/${key}`
+                }
+            }
+            observable.subscribe(observer) // 上传开始
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

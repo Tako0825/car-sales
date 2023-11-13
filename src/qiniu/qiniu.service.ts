@@ -14,7 +14,7 @@ export class QiniuService {
     // 其他选项
     private options:Record<string, any> = {
         // 1.存储空间名
-        bucket: "wutongroad"
+        scope: "wutongroad"
     }
     // 配置
     private config = new conf.Config({
@@ -24,11 +24,12 @@ export class QiniuService {
     // 服务 - 获取七牛云上传 token
     getUploadToken() {
         const putPolicy = new rs.PutPolicy(this.options)
+        const uploadToken = putPolicy.uploadToken(this.mac)
         return {
             tip: "成功获取七牛云上传凭据",
             url: this.url,
-            bucket: this.options.bucket,
-            uploadToken: putPolicy.uploadToken(this.mac)
+            bucket: this.options.scope,
+            uploadToken
         }
     }
 }
