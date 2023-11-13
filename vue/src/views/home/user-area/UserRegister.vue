@@ -13,18 +13,23 @@
             status-icon
             label-width="80px" 
             label-position="left"
+            class="flex flex-col items-start"
         >
-            <el-form-item label="姓名" prop="username">
-                <el-input v-model="form.username" class="max-w-xs"></el-input>
+            <!-- 上传头像 -->
+            <UploadAvatarVue class="self-center mb-6"/>
+            <el-row class="flex justify-between">
+                <el-form-item label="姓名" prop="username" class="mr-6">
+                    <el-input v-model="form.username"></el-input>
+                </el-form-item>
+                <el-form-item label="电话" prop="phone" required>
+                    <el-input v-model="form.phone"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-form-item label="密码" prop="password" class="w-full">
+                <el-input type="password" v-model="form.password" autocomplete="off" ></el-input>
             </el-form-item>
-            <el-form-item label="电话" prop="phone" required>
-                <el-input v-model="form.phone" class="max-w-xs"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input type="password" v-model="form.password" autocomplete="off" class="max-w-xs"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="passwordConfirmed">
-                <el-input type="password" v-model="form.passwordConfirmed" autocomplete="off" class="max-w-xs"></el-input>
+            <el-form-item label="确认密码" prop="passwordConfirmed" class="w-full">
+                <el-input type="password" v-model="form.passwordConfirmed" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="职位" prop="role">
                 <el-select v-model="form.role" placeholder="请选择职位">
@@ -35,46 +40,34 @@
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-2"></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6"></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>
                     </el-form-item>
                 </el-row>
             </el-form-item>
-            <el-form-item label="家庭住址" prop="address">
-                <el-input type="textarea" v-model="form.address" class="max-w-md"></el-input>
+            <el-form-item label="家庭住址" prop="address" class="w-full">
+                <el-input type="textarea" v-model="form.address"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
             <el-button type="success" @click="submitForm('form')">立即注册</el-button>
             <el-button @click="resetForm('form')">重 置</el-button>
         </section>
-        <!-- 上传头像文件 -->
-        <el-upload
-            class="avatar-uploader"
-            action="http://upload-z2.qiniup.com"
-            :http-request="handleUpload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <img src="http://cdn.takoko.top/wutongroad/2023/11/13-16:24:59" alt="">
     </el-dialog>
 </template>
 
 <script>
-import * as qiniu from "qiniu-js"
 import { sleep } from "@/util/sleep"
+import { uploadQiniuImage, hostname } from "@/api/upload"
+import UploadAvatarVue from './UploadAvatar.vue'
 import { createNamespacedHelpers } from "vuex"
-import { getUploadConfig } from "@/api/upload"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
-    async mounted() {
-        const { uploadToken:token } = await getUploadConfig()
-        this.token = token
+    name: "UserRegister",
+    components: {
+        UploadAvatarVue
     },
     data() {
         let validatePassword = (rule, value, callback) => {
@@ -88,7 +81,7 @@ export default {
         };
         let validatePhone = async (rule, value, callback) => {
             if(!/^1\d{10}$/.test(value)) {
-                callback(new Error("电话格式必须以 1 开头且长度为 11 个数字"))
+                callback(new Error("必须以 1 开头且长度为 11 个数字"))
             }
             else if(await this.isPhoneExisted(value)) {
                 callback(new Error("该电话已被注册"))
@@ -98,8 +91,6 @@ export default {
             }
         }
         return {
-            imageUrl: '',
-            token: '',
             form: {
                 username: '',
                 phone: '',
@@ -135,7 +126,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getRegisterFormVisible", "getUserTotal", "getPageSize"
+            "getRegisterFormVisible", "getUserTotal", "getPageSize", "getFile"
         ]),
         registerFormVisible: {
             get() {
@@ -169,6 +160,11 @@ export default {
                     const minutes = time.getMinutes()
                     const seconds = time.getSeconds()
                     const joined_date = new Date(year, month, day, hours, minutes, seconds)
+                    let avatar = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                    if(this.getFile()) {
+                        const { key } = await uploadQiniuImage(this.getFile())
+                        avatar = `${hostname}/${key}`
+                    }
                     await this.registerUser({
                         username,
                         phone,
@@ -176,7 +172,8 @@ export default {
                         passwordConfirmed,
                         role,
                         address,
-                        joined_date
+                        joined_date,
+                        avatar
                     })
                     this.setDataReady(false)
                     await sleep()
@@ -193,75 +190,11 @@ export default {
         // 重置表单
         resetForm(formName) {
             this.$refs[formName].resetFields()
-        },
-        handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
-            if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
-        },
-        async handleUpload(upload) {
-            const file = upload.file
-            const key = new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString()
-            const token = this.token
-            const putExtra = {}
-            const config = {
-                useCdnDomain: true,
-                region: qiniu.region.z2
-            }
-            const observable = qiniu.upload(file, key, token, putExtra, config)
-            const observer = {
-                next(res){
-                    // ...
-                    console.log(res);
-                },
-                error(err){
-                    // ...
-                    console.log(err);
-                },
-                complete(res){
-                    // ...
-                    console.log(res);
-                    this.imageUrl = `http:/cdn.takoko.top/${key}`
-                }
-            }
-            observable.subscribe(observer) // 上传开始
         }
     }
 }
 </script>
 
-<style scoped>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+<style>
+
 </style>

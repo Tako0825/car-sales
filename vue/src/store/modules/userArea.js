@@ -8,6 +8,8 @@ export default {
             source: new Array(),
             user: null,
             userTotal: 0,
+            // 上传相关配置
+            file: null,
             // 分页相关配置
             page: 1,
             pageSize: 10,
@@ -30,6 +32,7 @@ export default {
         getSource: state => state.source,
         getUserTotal: state => state.userTotal,
         getUser: state => state.user,
+        getFile: state => state.file,
         getPage: state => state.page,
         getPageSize: state => state.pageSize,
         getDataReady: state => state.dataReady,
@@ -41,6 +44,7 @@ export default {
         setSource: (state, payload) => { state.source = payload },
         setUserTotal: (state, payload) => { state.userTotal = payload },
         setUser: (state, payload) => { state.user = payload },
+        setFile: (state, payload) => { state.file = payload },
         setPage: (state, payload) => { state.page = payload },
         setPageSize: (state, payload) => { state.pageSize = payload },
         setDataReady: (state, payload) => { state.dataReady = payload },
