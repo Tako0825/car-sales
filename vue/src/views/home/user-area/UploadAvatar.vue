@@ -45,7 +45,7 @@ export default {
             }
             return isJPG && isLt2M;
         },
-        // 上传图片后...预览图片
+        // 上传图片后...预览头像
         handleAvatarSuccess(res, file) {
             this.previewUrl = URL.createObjectURL(file.raw);
         },

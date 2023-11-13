@@ -18,7 +18,7 @@ export class AuthService {
 
     // SERVICE - REGISTER(注册)
     async register(registerDto:RegisterDto) {
-        let { username, password, phone, role, joined_date, address } = registerDto
+        let { username, password, phone, role, joined_date, address, avatar } = registerDto
         if(await this.prisma.user.findUnique({
             where: {
                 phone
@@ -36,7 +36,8 @@ export class AuthService {
                     phone,
                     role,
                     joined_date,
-                    address
+                    address,
+                    avatar
                 }
             })
             return {
