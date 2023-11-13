@@ -11,4 +11,5 @@ export class UpdateUserDto implements Partial<User> {
     role?: $Enums.Role
     joined_date?: Date
     address?: string
+    avatar?: string
 }

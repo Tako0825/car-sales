@@ -3,9 +3,9 @@
     <el-dialog 
         title="编辑员工信息" 
         :visible.sync="dialogFormVisible"
-        :close-on-click-modal="false"
         center
         width="600px"
+        @close="handleClose"
     >
         <el-form 
             :model="getUser" 
@@ -15,7 +15,10 @@
             status-icon
             label-width="80px" 
             label-position="left"
+            class="flex flex-col items-start"
         >
+            <!-- 修改用户头像 -->
+            <UploadAvatar :avatar="getUser.avatar" class="self-center mb-6"/>
             <el-form-item label="姓名" prop="username">
                 <el-input v-model="getUser.username" class="max-w-xs"></el-input>
             </el-form-item>
@@ -28,15 +31,15 @@
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-2"></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-6"></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="getUser.time"></el-time-picker>
                     </el-form-item>
                 </el-row>
             </el-form-item>
-            <el-form-item label="家庭住址" prop="address">
-                <el-input type="textarea" v-model="getUser.address" class="max-w-md"></el-input>
+            <el-form-item label="家庭住址" prop="address" class="w-full">
+                <el-input type="textarea" v-model="getUser.address"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
@@ -47,9 +50,15 @@
 </template>
 
 <script>
+import UploadAvatar from "./UploadAvatar.vue"
+import { uploadQiniuImage, hostname } from "@/api/upload"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
+    name: "UserEdit",
+    components: {
+        UploadAvatar
+    },
     data() {
         return {
             rules: {
@@ -66,7 +75,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getDialogFormVisible", "getUser"
+            "getDialogFormVisible", "getUser", "getFile"
         ]),
         dialogFormVisible: {
             get() {
@@ -79,7 +88,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible", "setSource", "setDataReady"
+            "setDialogFormVisible", "setSource", "setDataReady", "setFile"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser", "updateUser"
@@ -97,13 +106,21 @@ export default {
             const minutes = time.getMinutes()
             const seconds = time.getSeconds()
             const joined_date = new Date(year, month, day, hours, minutes, seconds)
+            let avatar = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            // 判断有没有修改头像
+            if(this.getFile) {
+                const { key } = await uploadQiniuImage(this.getFile)
+                avatar = `${hostname}/${key}`
+                this.setFile(null)
+            }
             await this.updateUser({
                 id,
                 data: {
                     username,
                     role,
                     joined_date,
-                    address
+                    address,
+                    avatar
                 }
             })
             this.setDialogFormVisible(false)
@@ -111,6 +128,9 @@ export default {
             const { userList } = await this.fetchSource()
             this.setSource(userList)
             this.setDataReady(true)
+        },
+        handleClose() {
+            
         }
     }
 }

@@ -8,8 +8,12 @@
             :http-request="handleUpload"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
+            class="overflow-hidden"
         >
-            <img :src="previewUrl||'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'" alt="当前头像展示">
+            <el-image
+                :src="previewUrl || avatar ||'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
+                fit="cover"
+            ></el-image>
         </el-upload>
     </main>
 </template>
@@ -17,9 +21,12 @@
 <script>
 import { hostname, action } from "@/api/upload"
 import { createNamespacedHelpers } from "vuex"
-const { mapMutations } = createNamespacedHelpers("userArea")
+const { mapGetters, mapMutations } = createNamespacedHelpers("userArea")
 export default {
     name: "UploadAvatar",
+    props: [
+        "avatar"
+    ],
     data() {
         return {
             action,
@@ -27,6 +34,11 @@ export default {
             dialogVisible: false,
             previewUrl: '',
         }
+    },
+    computed: {
+        ...mapGetters([
+            "getFile"
+        ])
     },
     methods: {
         ...mapMutations([
