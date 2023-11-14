@@ -20,7 +20,8 @@ export default {
     data() {
         return {
             fontSize: 20,
-            base: "transparent"
+            base: "transparent",
+            chart: null
         }
     },
     computed: {
@@ -82,7 +83,7 @@ export default {
                         },
                         data: [
                             {
-                            "name": "",
+                                "name": "",
                                 // 仪表盘数值
                                 "value": this.value,
                             }
@@ -95,10 +96,15 @@ export default {
     methods: {
         InitChart() {
             let dom =  this.$refs.chart
-            var chart = echarts.init(dom, null, {
+            this.chart = echarts.init(dom, null, {
                 renderer: 'svg'
             });
-            this.option && chart.setOption(this.option)
+            this.option && this.chart.setOption(this.option)
+        }
+    },
+    watch: {
+        value() {
+            this.chart.setOption(this.option)
         }
     }
 }
