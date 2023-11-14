@@ -6,12 +6,16 @@ import { Validation } from 'src/common/validation/validation';
 import { AuthGuard } from '@nestjs/passport';
 import { $Enums } from '@prisma/client';
 import { RoleGuard } from 'src/common/guard/role.guard';
+import { UserOtherService } from './user.other.service';
 
 // CONTROLLER - USER
 @Controller('user')
 @UseGuards(AuthGuard("jwt"))
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly userOtherService: UserOtherService
+  ) {}
 
   // API - PAGING QUERY USER(分页查询用户)
   @Get()
@@ -51,5 +55,11 @@ export class UserController {
   @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.remove(id);
+  }
+
+  // API - QUERY ALL MY ORDER(查询用户订单)
+  @Get(':id/order')
+  async findMyOrder(@Param('id', ParseIntPipe) id: number) {
+    return await this.userOtherService.findMyOrder(id)
   }
 }
