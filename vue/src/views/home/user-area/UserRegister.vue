@@ -139,7 +139,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setRegisterFormVisible", "setPage", "setSource", "setDataReady", "setFile"
+            "setRegisterFormVisible", "setPage", "setSource", "setDataReady", "setFile", "setPreviewImage"
         ]),
         ...mapActions([
             "registerUser", "fetchSource", "isPhoneExisted"
@@ -149,6 +149,8 @@ export default {
             // 表单验证
             await this.$refs[formName].validate(async valid => {
                 if(valid) {
+                    // 清空预览图片
+                    this.setPreviewImage(null)
                     const { username, phone, password, passwordConfirmed, role, address } = this.form
                     // 合并表单中的日期与时间
                     const date = new Date(this.form.date)

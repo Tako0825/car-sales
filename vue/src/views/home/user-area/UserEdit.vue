@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible", "setSource", "setDataReady", "setFile"
+            "setDialogFormVisible", "setSource", "setDataReady", "setFile", "setPreviewImage"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser", "updateUser"
@@ -130,7 +130,7 @@ export default {
             this.setDataReady(true)
         },
         handleClose() {
-            
+            this.setPreviewImage(null)
         }
     }
 }

@@ -11,7 +11,8 @@
             class="overflow-hidden"
         >
             <el-image
-                :src="previewUrl || avatar ||'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
+                :src="getPreviewImage || avatar ||'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'"
+                class="w-full h-full"
                 fit="cover"
             ></el-image>
         </el-upload>
@@ -32,17 +33,16 @@ export default {
             action,
             hostname,
             dialogVisible: false,
-            previewUrl: '',
         }
     },
     computed: {
         ...mapGetters([
-            "getFile"
+            "getFile", "getPreviewImage"
         ])
     },
     methods: {
         ...mapMutations([
-            "setFile"
+            "setFile", "setPreviewImage"
         ]),
         // 上传图片前...约束
         beforeAvatarUpload(file) {
@@ -59,7 +59,8 @@ export default {
         },
         // 上传图片后...预览头像
         handleAvatarSuccess(res, file) {
-            this.previewUrl = URL.createObjectURL(file.raw);
+            this.setPreviewImage(URL.createObjectURL(file.raw))
+            
         },
         // 上传图片
         async handleUpload(upload) {

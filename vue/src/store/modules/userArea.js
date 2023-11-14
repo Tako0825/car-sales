@@ -47,7 +47,7 @@ export default {
         setUserTotal: (state, payload) => { state.userTotal = payload },
         setUser: (state, payload) => { state.user = payload },
         setFile: (state, payload) => { state.file = payload },
-        getPreviewImage: (state, payload) => { state.previewImage = payload },
+        setPreviewImage: (state, payload) => { state.previewImage = payload },
         setPage: (state, payload) => { state.page = payload },
         setPageSize: (state, payload) => { state.pageSize = payload },
         setDataReady: (state, payload) => { state.dataReady = payload },
