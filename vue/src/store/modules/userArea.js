@@ -8,6 +8,7 @@ export default {
             source: new Array(),
             user: null,
             userTotal: 0,
+            userDetail: null,
             // 上传相关配置
             file: null,
             previewImage: '',
@@ -32,6 +33,7 @@ export default {
     getters: {
         getSource: state => state.source,
         getUserTotal: state => state.userTotal,
+        getUserDetail: state => state.userDetail,
         getUser: state => state.user,
         getFile: state => state.file,
         getPreviewImage: state => state.previewImage,
@@ -45,6 +47,7 @@ export default {
     mutations: {
         setSource: (state, payload) => { state.source = payload },
         setUserTotal: (state, payload) => { state.userTotal = payload },
+        setUserDetail: (state, payload) => { state.userDetail = payload },
         setUser: (state, payload) => { state.user = payload },
         setFile: (state, payload) => { state.file = payload },
         setPreviewImage: (state, payload) => { state.previewImage = payload },
@@ -86,6 +89,12 @@ export default {
         // 请求接口 - 删除用户
         async deleteUser({ state }, payload) {
             await api.delete(`/api/user/${payload}`, { token: state.token })
-        }   
+        },
+        // 请求接口 - 查询用户详情
+        async fetchUserDetail({ state, commit }, payload) {
+            const response = await api.get(`/api/user/${payload}/order`, { token: state.token })
+            commit("setUserDetail", response)
+            return response
+        }
     }
 }

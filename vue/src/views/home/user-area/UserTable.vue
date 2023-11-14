@@ -92,15 +92,15 @@ export default {
     },  
     computed: {
         ...mapGetters([
-            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal", "getDataReady"
+            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal", "getDataReady", "getUserDetail"
         ])
     },
     methods: {
         ...mapMutations([
-            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady"
+            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady", "setUserDetail"
         ]),
         ...mapActions([
-            "fetchSource", "fetchUser", "deleteUser"
+            "fetchSource", "fetchUser", "deleteUser", "fetchUserDetail"
         ]),
         // 处理页数切换
         async handleCurrentChange(newPage) {
@@ -114,8 +114,7 @@ export default {
         },
         // 处理用户详情
         async handleDetail({ id }) {
-            const user = await this.fetchUser(id)
-            this.setUser(user)
+            this.setUserDetail(await this.fetchUserDetail(id))
             this.setDialogTableVisible(true)
         },
         // 处理用户编辑
