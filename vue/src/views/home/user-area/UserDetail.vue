@@ -6,14 +6,15 @@
   top="1rem"
 > 
   <el-row class="w-full h-64 flex">
-    <DashboardChartVue :title="'共售出(台)'" :value="count" :color="'#a162f7'" :rate="0.5" class="w-full h-full"/>
-    <DashboardChartVue :title="'总经营(万元)'" :value="sales" :color="'#a162f7'" :rate="0.5" class="w-full h-full"/>
+    <DashboardChartVue :title="'共售出(台)'" :value="count" :color="'#a162f7'" :rate="count / average_count" class="w-full h-full"/>
+    <DashboardChartVue :title="'总经营(万元)'" :value="sales" :color="'#a162f7'" :rate="sales / average_sales" class="w-full h-full"/>
   </el-row>
   
   <section class="rounded-xl w-full h-96 overflow-auto">
     <!-- 表格 -->
     <el-table
       :data="source"
+      v-if="source?.length"
       stripe
       style="width: 100%"
       header-cell-class-name="text-black" 
@@ -25,6 +26,7 @@
       <el-table-column prop="location" label="来源仓库"></el-table-column>
       <el-table-column prop="createtime" label="交易时间"></el-table-column>
     </el-table>
+    <el-empty v-if="!source?.length" class="text-gray-300 font-bold">空空如也</el-empty>
   </section>
 
 </el-dialog>
@@ -43,6 +45,12 @@ export default {
     },
     sales() {
       return this.getUserDetail?.sales || 0
+    },
+    average_count() {
+      return this.getUserDetail?.average_count || 0
+    },
+    average_sales() {
+      return this.getUserDetail?.average_sales || 0
     },
     source() {
       return this.getUserDetail?.source || []
