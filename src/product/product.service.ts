@@ -79,10 +79,30 @@ export class ProductService {
 
   // SERVICE - QUERY SPECIFIED PRODUCT(查询指定的产品)
   async findOne(id: number) {
-    const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
-    return {
-      product
-    }
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
+      const pie = await this.prisma.$queryRaw`
+        SELECT supply.quantity AS value, warehouse.location AS name
+        FROM supply
+        INNER JOIN warehouse 
+        ON supply.warehouseId = warehouse.id 
+        WHERE productId = ${id}
+      `
+      const gradientBar: Array<{ year: string, total: string }> = await this.prisma.$queryRaw`
+        SELECT YEAR(createtime) AS year,
+        CONCAT(COUNT(*), '') AS total
+        FROM \`order\` AS o
+        GROUP BY productId, YEAR(createtime)
+        HAVING productId = ${id}
+        ORDER BY year ASC
+      `
+      return {
+        product,
+        pie,
+        gradientBarX: gradientBar.map(item => item.year.toString()),
+        gradientBarY: gradientBar.map(item => +item.total)
+      }
+    })
   }
 
   // SERVICE - UPDATE PRODUCT(修改产品信息)

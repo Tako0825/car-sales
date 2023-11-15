@@ -4,10 +4,12 @@ export default {
     namespaced: true,
     state() {
         return {
-            // 用户相关配置
+            // 产品相关配置
             source: new Array(),
             productTotal: 0,
             product: null,
+            // 图表相关配置
+            chartSource: null,
             // 分页相关配置
             page: 1,
             pageSize: 12,
@@ -27,6 +29,7 @@ export default {
     },
     getters: {
         getSource: state => state.source,
+        getChartSource: state => state.chartSource,
         getProductTotal: state => state.productTotal,
         getProduct: state => state.product,
         getPage: state => state.page,
@@ -37,6 +40,7 @@ export default {
     },
     mutations: {
         setSource: (state, payload) => { state.source = payload },
+        setChartSource: (state, payload) => { state.chartSource = payload },
         setProductTotal: (state, payload) => { state.productTotal = payload },
         setProduct: (state, payload) => { state.product = payload },
         setPage: (state, payload) => { state.page = payload },

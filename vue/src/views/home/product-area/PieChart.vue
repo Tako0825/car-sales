@@ -19,7 +19,7 @@ echarts.use([
 export default {
     name: "DashboardChart",
     props: [
-        "title", "value", "rate", "color", "isActived", "index"
+        "title", "source"
     ],
     mounted() {
         this.InitChart()
@@ -34,19 +34,20 @@ export default {
     computed: {
         option() {
             return {
+                title: {
+                    text: this.title,
+                    left: 'center',
+                    top: "20px"
+                },
                 tooltip: {
                     trigger: 'item'
                 },
-                legend: {
-                    top: '5%',
-                    left: 'center'
-                },
                 series: [
                     {
-                        center: ["center", "60%"],
+                        center: ["center", "55%"],
                         name: 'Access From',
                         type: 'pie',
-                        radius: ['40%', '70%'],
+                        radius: ['40%', '80%'],
                         avoidLabelOverlap: false,
                         itemStyle: {
                             borderRadius: 10,
@@ -60,20 +61,14 @@ export default {
                         emphasis: {
                             label: {
                             show: true,
-                            fontSize: 40,
+                            fontSize: 16,
                             fontWeight: 'bold'
                             }
                         },
                         labelLine: {
                             show: false
                         },
-                        data: [
-                            { value: 1048, name: 'Search Engine' },
-                            { value: 735, name: 'Direct' },
-                            { value: 580, name: 'Email' },
-                            { value: 484, name: 'Union Ads' },
-                            { value: 300, name: 'Video Ads' }
-                        ]
+                        data: this.source
                     }
                 ]
             }
@@ -89,7 +84,7 @@ export default {
         }
     },
     watch: {
-        value() {
+        source() {
             this.chart.setOption(this.option)
         }
     }

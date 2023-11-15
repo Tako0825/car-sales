@@ -2,6 +2,7 @@
   <!-- 产品详情 -->
   <el-drawer
     title="产品详情" 
+    @open="handleDetail"
     :visible.sync="drawer"
     direction="ltr"
     size="800px"
@@ -31,8 +32,8 @@
       </article>
       <!-- 右半部分 -->
       <aside class="flex-1 flex flex-col gap-6">
-        <PieChart class="w-full flex-1 bg-white rounded-xl"/>
-        <GradientBarChart class="w-full flex-1 bg-white rounded-xl"/>
+        <PieChart :title="'库存剩余情况'" :source="getChartSource?.pie" class="w-full flex-1 bg-white rounded-xl"/>
+        <GradientBarChart :title="'历史销售情况'" :source="getChartSource" class="w-full flex-1 bg-white rounded-xl"/>
       </aside>
     </main>
   </el-drawer>
@@ -42,13 +43,13 @@
 import PieChart from "./PieChart.vue"
 import GradientBarChart from "./GradientBarChart.vue"
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations } = createNamespacedHelpers("productArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
   name: "ProductDetail",
   components: { PieChart, GradientBarChart },
   computed: {
     ...mapGetters([
-      "getDrawer", "getProduct"
+      "getDrawer", "getProduct", "getChartSource"
     ]),
     drawer: {
       get() {
@@ -61,8 +62,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "setDrawer"
+      "setDrawer", "setChartSource"
     ]),
+    ...mapActions([
+      "fetchProduct"
+    ]),
+    // 处理打开抽屉
+    async handleDetail() {
+      const { id } = this.getProduct
+      this.setChartSource(await this.fetchProduct(id))
+    }
   }
 }
 </script>
