@@ -4,6 +4,7 @@
   title="员工详情" 
   :visible.sync="dialogTableVisible"
   top="1rem"
+  width="800px"
 > 
   <el-row class="w-full h-64 flex">
     <DashboardChartVue :title="'共售出(台)'" :value="count" :color="'#a162f7'" :rate="count / average_count" class="w-full h-full"/>
@@ -24,7 +25,7 @@
       <el-table-column prop="name" label="品牌" width="80"></el-table-column>
       <el-table-column prop="model" label="型号" width="100"></el-table-column>
       <el-table-column prop="location" label="来源仓库"></el-table-column>
-      <el-table-column prop="createtime" label="交易时间"></el-table-column>
+      <el-table-column prop="createtime" label="交易时间" :formatter="formatCreatetime" width="180"></el-table-column>
     </el-table>
     <el-empty v-if="!source?.length" class="text-gray-300 font-bold">空空如也</el-empty>
   </section>
@@ -68,6 +69,11 @@ export default {
     }
   },
   methods: {
+    // 格式化 - createtime
+    formatCreatetime(row) {
+      const date = new Date(row.createtime)
+      return date.toLocaleString()
+    },
     ...mapMutations([
       "setDialogTableVisible"
     ])
