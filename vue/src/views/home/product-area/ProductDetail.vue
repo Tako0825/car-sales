@@ -3,7 +3,6 @@
     <el-dialog 
       title="产品详情" 
       :visible.sync="dialogTableVisible"
-      :close-on-click-modal="false"
     ></el-dialog>
 </template>
 

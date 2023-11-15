@@ -1,11 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product, User } from '@prisma/client';
+import { Product } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class ProductService {
@@ -16,14 +15,15 @@ export class ProductService {
 
   // SERVICE - CREATE PRODUCT(创建产品)
   async create(createProductDto: CreateProductDto) {
-    const { name, model, price, introduce } = createProductDto
+    const { name, model, price, poster, introduce } = createProductDto
     try {
       const product = await this.prisma.product.create({
         data: {
           name,
           model,
           price: +price,
-          introduce
+          introduce,
+          poster
         }
       })
       return {

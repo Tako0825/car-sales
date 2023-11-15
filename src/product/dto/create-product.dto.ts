@@ -8,6 +8,8 @@ export class CreateProductDto implements Partial<Product> {
     model: string
     @IsNotEmpty({ message: "汽车售价不允许为空" })
     price: number
+    @IsNotEmpty({ message: "汽车车型不允许为空" })
+    poster: string
     @IsNotEmpty({ message: "汽车介绍不允许为空" })
     introduce: string
 }

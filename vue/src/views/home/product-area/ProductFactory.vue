@@ -5,7 +5,8 @@
         :visible.sync="dialogFormVisible"
         center
         width="600px"
-    >
+        top="2%"
+    >   
         <el-form 
             ref="form" 
             :model="form" 
@@ -14,19 +15,41 @@
             status-icon
             label-width="80px" 
             label-position="left"
+            class="flex flex-col items-start"
         >
-            <el-form-item label="品牌" prop="name">
-                <el-input v-model="form.name" class="max-w-xs"></el-input>
+            <section class="w-80 h-36 my-6 self-center">
+                <el-image v-if="form.poster" :src="form.poster" fit="cover" class="w-full h-full" :preview-src-list="[form.poster]"></el-image>
+                <el-empty v-if="!form.poster" class="w-full h-full"></el-empty>
+            </section>
+            <el-row class="flex justify-between">
+                <el-form-item label="品牌" prop="name" class="mr-6  ">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="型号" prop="model">
+                    <el-input v-model="form.model"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-form-item label="售价" prop="price" class="w-full">
+                <el-input v-model="form.price">
+                    <span slot="suffix">万</span>
+                </el-input>
             </el-form-item>
-            <el-form-item label="型号" prop="model">
-                <el-input v-model="form.model" class="max-w-xs"></el-input>
+            <!-- 请选择车型 -->
+            <el-form-item label="车型" prop="poster">
+                <el-select v-model="form.poster" placeholder="请选择车型" clearable>
+                    <el-option
+                        v-for="item in types"
+                        :key="item.poster"
+                        :label="item.label"
+                        :value="item.poster"
+                    >
+                        <el-image class="float-left w-10 h-full" :src="item.poster" fit="cover"></el-image>
+                        <span class="float-right text-gray-500 font-bold">{{ item.label }}</span>
+                    </el-option>
+                </el-select>
             </el-form-item>
-            <el-form-item label="售价" prop="price">
-                <el-input v-model="form.price" class="max-w-xs"></el-input>
-                <span class="ml-2">万</span>
-            </el-form-item>
-            <el-form-item label="简介" prop="introduce">
-                <el-input type="textarea" v-model="form.introduce" class="max-w-md"></el-input>
+            <el-form-item label="简介" prop="introduce" class="w-full">
+                <el-input type="textarea" v-model="form.introduce"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
@@ -58,6 +81,7 @@ export default {
                 name: '',
                 model: '',
                 price: '',
+                poster: '',
                 introduce: '',
             },
             rules: {
@@ -67,11 +91,30 @@ export default {
                     { required: true, message: '请输入当前产品售价', trigger: 'blur' },
                     { validator: validatePrice, trigger: 'blur' }
                 ],
+                poster: { required: true, message: '请选择当前产品车型', trigger: 'change' },
                 introduce: [
                     { required: true, message: '请输入当前产品简介', trigger: 'blur' },
                     { min: 1, max: 200, message: '简介应当在 1 到 200 个字符', trigger: 'blur' },
                 ]
-            }
+            },
+            types: [
+                { poster: "http://cdn.takoko.top/product/product01.png", label: '卡车'}, 
+                { poster: "http://cdn.takoko.top/product/product02.png", label: '客车'}, 
+                { poster: "http://cdn.takoko.top/product/product03.png", label: '中型轿车'}, 
+                { poster: "http://cdn.takoko.top/product/product04.png", label: '旅行车'}, 
+                { poster: "http://cdn.takoko.top/product/product05.png", label: '敞篷跑车'}, 
+                { poster: "http://cdn.takoko.top/product/product06.png", label: '商务轿车'}, 
+                { poster: "http://cdn.takoko.top/product/product07.png", label: '房车'}, 
+                { poster: "http://cdn.takoko.top/product/product08.png", label: '大型拖车'}, 
+                { poster: "http://cdn.takoko.top/product/product09.png", label: '两厢式轿车'}, 
+                { poster: "http://cdn.takoko.top/product/product10.png", label: '双门轿车'}, 
+                { poster: "http://cdn.takoko.top/product/product11.png", label: '越野车'}, 
+                { poster: "http://cdn.takoko.top/product/product12.png", label: '跑车'}, 
+                { poster: "http://cdn.takoko.top/product/product13.png", label: '紧凑型轿车'}, 
+                { poster: "http://cdn.takoko.top/product/product14.png", label: '拖车'}, 
+                { poster: "http://cdn.takoko.top/product/product15.png", label: '货车'}, 
+                { poster: "http://cdn.takoko.top/product/product16.png", label: '冰淇淋车'}, 
+            ]
         }
     },
     computed: {

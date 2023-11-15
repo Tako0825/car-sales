@@ -34,6 +34,7 @@ model Product {
   model     String
   price     Float    @db.Double
   introduce String   @db.Text
+  poster    String   @default("")
   supply    Supply[]
   move      Move[]
   order     Order[]
