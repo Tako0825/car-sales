@@ -5,6 +5,7 @@
         :visible.sync="registerFormVisible"
         center
         width="600px"
+        top="2%"
     >
         <el-form 
             :model="form" 

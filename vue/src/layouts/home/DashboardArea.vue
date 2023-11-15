@@ -74,7 +74,7 @@ export default {
         {
           icon: "el-icon-s-flag text-3xl",
           title: "汽车营业额(万元)",
-          value: this.income,
+          value: this.income || 0,
           rate: 0.64,
           color: "#a162f7",
           component: DashboardChart
@@ -82,7 +82,7 @@ export default {
         {
           icon: "el-icon-s-marketing text-3xl",
           title: "汽车成交量",
-          value: this.sales,
+          value: this.sales || 0,
           rate: 0.52,
           color: "#ff7e86",
           component: DashboardChart
@@ -90,7 +90,7 @@ export default {
         {
           icon: "el-icon-s-data text-3xl",
           title: "全国仓库总数",
-          value: this.warehouses,
+          value: this.warehouses || 0,
           rate: 0.42,
           color: "#f6cc0d",
           component: DashboardChart
@@ -98,7 +98,7 @@ export default {
         {
           icon: "el-icon-menu",
           title: "员工总数",
-          value: this.users,
+          value: this.users || 0,
           rate: 0.77,
           color: "#70cf97",
           component: DashboardChart

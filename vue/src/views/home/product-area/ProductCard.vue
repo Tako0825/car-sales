@@ -37,7 +37,7 @@ export default {
     ],
     methods: {
         ...mapMutations([
-            "setDialogTableVisible", "setProduct", "setDataReady", "setSource"
+            "setDrawer", "setProduct", "setDataReady", "setSource"
         ]),
         ...mapActions([
             "fetchSource", "fetchProduct", "deleteProduct"
@@ -47,7 +47,7 @@ export default {
             const { id } = this.product
             const { product } = await this.fetchProduct(id)
             this.setProduct(product)
-            this.setDialogTableVisible(true)
+            this.setDrawer(true)
         },
         // 处理删除产品
         async handleDelete(id) {
