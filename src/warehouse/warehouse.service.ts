@@ -37,25 +37,26 @@ export class WarehouseService {
 
   // SERVICE - PAGING QUERY WAREHOUSE(分页查询仓库)
   async findPage(page: number, pageSize: number) {
-    // 产品总数
-    const warehouseTotal = await this.prisma.warehouse.count()
-    // 分页总数
-    const pageTotal = Math.ceil(warehouseTotal / pageSize)
-    // 当前页数据
-    const warehouseList =  await this.prisma.warehouse.findMany({
-      skip: (page - 1) * pageSize,
-      take: pageSize
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      // 产品总数
+      const warehouseTotal = await this.prisma.warehouse.count()
+      // 分页总数
+      const pageTotal = Math.ceil(warehouseTotal / pageSize)
+      // 当前页数据
+      const warehouseList =  await this.prisma.warehouse.findMany({
+        skip: (page - 1) * pageSize,
+        take: pageSize
+      })
+      // 当前页数据数目
+      const count = warehouseList.length
+      return {
+        page,
+        count,
+        pageTotal,
+        warehouseTotal,
+        warehouseList
+      }
     })
-    // 当前页数据数目
-    const count = warehouseList.length
-    return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
-      page,
-      count,
-      pageTotal,
-      warehouseTotal,
-      warehouseList
-    }
   }
 
   // SERVICE - QUERY SPECIFIED WAREHOUSE(查询指定的仓库)

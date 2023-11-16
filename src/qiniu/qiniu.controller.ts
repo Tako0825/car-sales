@@ -1,7 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { QiniuService } from './qiniu.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('qiniu')
+@UseGuards(AuthGuard("jwt"))
 export class QiniuController {
     constructor(private readonly qiniuService:QiniuService) {}
 
