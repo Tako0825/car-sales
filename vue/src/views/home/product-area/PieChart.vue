@@ -37,7 +37,7 @@ export default {
                 title: {
                     text: this.title,
                     left: 'center',
-                    top: "20px"
+                    top: "10px"
                 },
                 tooltip: {
                     trigger: 'item'

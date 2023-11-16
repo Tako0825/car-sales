@@ -7,7 +7,7 @@
     direction="ltr"
     size="800px"
   >
-    <main v-if="getProduct" v-loading="!getProduct" class="w-full h-full flex p-6 gap-8 bg-gray-100">
+    <main v-if="getProduct" v-loading="!getProduct" class="w-full h-full flex p-6 gap-8 bg-gray-100 overflow-hidden">
       <!-- 左半部分 -->
       <article class="flex flex-col gap-4 flex-1 h-5/6 p-8 rounded-xl relative text-gray-100" style="background-color: #a78bfa;">
         <!-- 名称 & 型号 & 售价 & 简介 -->
