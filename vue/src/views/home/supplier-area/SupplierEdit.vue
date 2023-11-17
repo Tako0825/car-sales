@@ -61,11 +61,13 @@ export default {
         // 处理修改供应商信息
         async handleSupplierChange() {
             const supplier = this.getSupplier
-            const { id, location } = supplier
+            const { id, company, phone, name } = supplier
             await this.updateSupplier({
                 id,
                 data: {
-                    location
+                    company,
+                    phone,
+                    name
                 }
             })
             this.setDialogEditVisible(false)

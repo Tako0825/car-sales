@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      yMax: 500,
+      yMax: 500,  
       zoomSize: 6,
       dataShadow: []
     }
@@ -47,7 +47,7 @@ export default {
         title: {
           text: this.title,
           left: "center",
-          top: "10px"
+          top: "20px"
         },
         xAxis: {
           data: this.x,

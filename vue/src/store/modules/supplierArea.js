@@ -66,7 +66,7 @@ export default {
             await api.patch(`/api/supplier/${payload.id}`, payload.data, { token: state.token })
         },
         // 请求接口 - 删除供应商
-        async deleteWarehouse({ state }, payload) {
+        async deleteSupplier({ state }, payload) {
             await api.delete(`/api/supplier/${payload}`, { token: state.token })
         }
     }

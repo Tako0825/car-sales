@@ -51,7 +51,6 @@ export class SupplierService {
     // 当前页数据数目
     const count = supplierList.length
     return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
       page,
       count,
       pageTotal,
@@ -64,7 +63,6 @@ export class SupplierService {
   async findOne(id: number) {
     const supplier = await this.commonService.getEntityById<Supplier>(PrismaModel.supplier, id)
     return {
-      tip: `成功获取指定供应商`,
       supplier
     }
   }

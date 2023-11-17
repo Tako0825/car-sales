@@ -22,7 +22,7 @@
         <!-- 编辑 -->
         <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-                <el-button @click="handelLocationChange(scope.row)" type="text">修改地址</el-button>
+                <el-button @click="handelLocationChange(scope.row)" type="text">修改</el-button>
                 <el-button @click="handleWarehouseDelete(scope.row)" type="text">删除</el-button>
             </template>
         </el-table-column>
@@ -36,6 +36,7 @@ const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("wareho
 export default {
     name: "WarehouseTable",
     async created() {
+        this.setDataReady(false)
         const { warehouseList } = await this.fetchSource()
         this.setSource(warehouseList)
         await sleep()
