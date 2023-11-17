@@ -64,6 +64,10 @@ export default {
         // 请求接口 - 修改仓库信息
         async updateWarehouse({ state }, payload) {
             await api.patch(`/api/warehouse/${payload.id}`, payload.data, { token: state.token })
+        },
+        // 请求接口 - 删除仓库信息
+        async deleteWarehouse({ state }, payload) {
+            await api.delete(`/api/warehouse/${payload}`, { token: state.token })
         }
     }
 }

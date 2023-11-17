@@ -5,6 +5,7 @@ import { Warehouse } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class WarehouseService {
@@ -97,42 +98,30 @@ export class WarehouseService {
   // SERVICE - DELETE WAREHOUSE(删除仓库)
   async remove(id: number) {
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
-    try {
-      const result = await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 WAREHOUSE -前置条件: 删除 SUPPLY & MOVE
+    return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+      await this.prisma.$transaction(async (prisma) => {
+        // 1.删除 WAREHOUSE - 前置条件: 删除 SUPPLY & MOVE & ORDER
         await prisma.move.deleteMany({
           where: {
             OR: [
-              {
-                inboundId: id
-              },
-              {
-                outboundId: id
-              }
+              { inboundId: id },
+              { outboundId: id }
             ]
           }
         })
         await prisma.supply.deleteMany({
-          where: {
-            warehouseId: id
-          }
+          where: { warehouseId: id }
+        })
+        await prisma.order.deleteMany({
+          where: { warehouseId: id }
         })
         await prisma.warehouse.delete({
-          where: {
-            id
-          }
+          where: { id }
         })
       })
       return {
-        tip: "成功删除仓库",
-        result
+        tip: "成功删除仓库"
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 }
