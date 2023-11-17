@@ -47,7 +47,7 @@
                     >
                         <el-button 
                             slot="reference" 
-                            v-show="scope.row.id===selectedId" 
+                            v-show="scope.row.id===getSelectedId" 
                             type="text"
                             :style="{ 'color': '#ff6370' }"
                             class="transition duration-1000"
@@ -59,16 +59,6 @@
     </el-table>
     <!-- 空状态 -->
     <el-empty description="" v-else class="bg-white w-full h-96 rounded-xl"></el-empty>
-
-    <!-- 分页 -->
-    <el-pagination
-        layout="prev, pager, next"
-        :current-page="getPage"
-        @current-change="handleCurrentChange"
-        :page-size="getPageSize"
-        :total="getUserTotal"
-        :hide-on-single-page="true"
-    ></el-pagination>
 </main>
 </template>
 
@@ -77,11 +67,6 @@ import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
-    data() {
-        return {
-            selectedId: null
-        }
-    },
     async created() {
         this.setDataReady(false)
         const { userList, userTotal } = await this.fetchSource()
@@ -92,26 +77,16 @@ export default {
     },  
     computed: {
         ...mapGetters([
-            "getUser", "getPage", "getPageSize", "getSource", "getUserTotal", "getDataReady", "getUserDetail"
+            "getUser", "getSource", "getDataReady", "getUserDetail", "getSelectedId"
         ])
     },
     methods: {
         ...mapMutations([
-            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady", "setUserDetail"
+            "setUser", "setPage", "setPageSize", "setSource", "setUserTotal", "setDialogTableVisible", "setDialogFormVisible", "setRegisterFormVisible", "setDataReady", "setUserDetail", "setSelectedId"
         ]),
         ...mapActions([
             "fetchSource", "fetchUser", "deleteUser", "fetchUserDetail"
         ]),
-        // 处理页数切换
-        async handleCurrentChange(newPage) {
-            this.selectedId = null
-            this.setDataReady(false)
-            this.setPage(newPage)
-            const { userList } = await this.fetchSource()
-            this.setSource(userList)
-            await sleep()
-            this.setDataReady(true)
-        },
         // 处理用户详情
         async handleDetail({ id }) {
             this.setUserDetail(await this.fetchUserDetail(id))
@@ -126,13 +101,13 @@ export default {
         // 处理选中的用户
         handleSelectedUser(value) {
             if (value?.id) {
-                this.selectedId = value.id
+                this.setSelectedId(value.id)
             }
         },
         // 处理删除用户
         async handleDeleteUser(id) {
             await this.deleteUser(id)
-            this.selectedId = null
+            this.setSelectedId(null)
             this.setDataReady(false)
             const { userList } = await this.fetchSource()
             this.setSource(userList)

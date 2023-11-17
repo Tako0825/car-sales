@@ -9,6 +9,7 @@ export default {
             user: null,
             userTotal: 0,
             userDetail: null,
+            selectedId: null,
             // 上传相关配置
             file: null,
             previewImage: '',
@@ -35,6 +36,7 @@ export default {
         getUserTotal: state => state.userTotal,
         getUserDetail: state => state.userDetail,
         getUser: state => state.user,
+        getSelectedId: state => state.selectedId,
         getFile: state => state.file,
         getPreviewImage: state => state.previewImage,
         getPage: state => state.page,
@@ -49,6 +51,7 @@ export default {
         setUserTotal: (state, payload) => { state.userTotal = payload },
         setUserDetail: (state, payload) => { state.userDetail = payload },
         setUser: (state, payload) => { state.user = payload },
+        setSelectedId: (state, payload) => { state.selectedId = payload },
         setFile: (state, payload) => { state.file = payload },
         setPreviewImage: (state, payload) => { state.previewImage = payload },
         setPage: (state, payload) => { state.page = payload },

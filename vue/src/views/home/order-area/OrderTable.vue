@@ -1,5 +1,5 @@
 <template>
-    <main class="flex flex-col gap-6">
+    <main class="w-full flex flex-col gap-6">
         <!-- 头部 -->
         <header class="w-full flex justify-between">
             <h1 class="text-2xl font-bold">订单管理</h1>
