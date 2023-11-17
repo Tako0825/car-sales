@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full h-auto flex flex-col gap-6">
+  <main class="w-full h-auto flex flex-col gap-6" v-loading="!dataReady">
     <!-- 块行容器 -->
     <article class="w-full h-80 flex justify-between gap-6">
       <!-- 仪表盘遍历 -->
@@ -39,6 +39,7 @@
 
 <script>
 import api from '@/api/api'
+import { sleep } from '@/util/sleep'
 
 const DashboardChart = () => import('@/views/home/dashboard-area/DashboardChart.vue')
 const HistogramChart = () => import('@/views/home/dashboard-area/HistogramChart.vue')
@@ -48,7 +49,8 @@ export default {
   components: {
     DashboardChart, HistogramChart, LineChart
   },
-  async mounted() {
+  async created() {
+    await sleep()
     const { total: income } = await api.get("/api/chart/total/income")
     const { total: sales } = await api.get("/api/chart/total/sales")
     const { total: warehouses } = await api.get("/api/chart/total/warehouses")
