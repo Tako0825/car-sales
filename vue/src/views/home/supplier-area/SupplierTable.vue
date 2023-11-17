@@ -38,6 +38,7 @@
             <el-table-column fixed="right" label="操作" width="120">
                 <template slot-scope="scope">
                     <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
+                    <el-button @click="handleSupplierDelete(scope.row)" type="text">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -67,6 +68,10 @@ export default {
         ]),
         // 处理修改
         handleEdit() {
+
+        },
+        // 处理删除供应商
+        handleSupplierDelete() {
 
         }
     }

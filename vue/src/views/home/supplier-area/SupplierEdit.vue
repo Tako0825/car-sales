@@ -1,27 +1,33 @@
 <template>
-    <!-- 编辑仓库信息 -->
+    <!-- 编辑供应商信息 -->
     <el-dialog 
-        title="编辑仓库信息" 
+        title="编辑供应商信息" 
         :visible.sync="dialogEditVisible"
         center
         width="600px"
     >
         <el-form 
-            :model="getWarehouse" 
-            v-if="getWarehouse" 
+            :model="getSupplier" 
+            v-if="getSupplier" 
             ref="form" 
             status-icon
             label-width="80px" 
             label-position="left"
         >
-            <el-form-item label="地址" prop="location" class="w-full">
-                <el-input type="textarea" v-model="getWarehouse.location"></el-input>
+            <el-form-item label="公司" prop="company" class="w-full">
+                <el-input type="textarea" v-model="getSupplier.company"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话" prop="phone" class="w-full">
+                <el-input type="textarea" v-model="getSupplier.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人" prop="name" class="w-full">
+                <el-input type="textarea" v-model="getSupplier.name"></el-input>
             </el-form-item>
         </el-form>
         <!-- 取消 & 保存 -->
         <section slot="footer" class="dialog-footer">
             <el-button @click="setDialogEditVisible(false)">取 消</el-button>
-            <el-button @click="handleWarehouseChange" type="primary">保 存</el-button>
+            <el-button @click="handleSupplierChange" type="primary">保 存</el-button>
         </section>
     </el-dialog>
 </template>
@@ -29,12 +35,12 @@
 <script>
 import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("warehouseArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("supplierArea")
 export default {
     name: "UserEdit",
     computed: {
         ...mapGetters([
-            "getDialogEditVisible", "getWarehouse"
+            "getDialogEditVisible", "getSupplier"
         ]),
         dialogEditVisible: {
             get() {
@@ -50,13 +56,13 @@ export default {
             "setDialogEditVisible", "setDataReady", "setSource"
         ]),
         ...mapActions([
-            "updateWarehouse", "fetchSource"
+            "updateSupplier", "fetchSource"
         ]),
-        // 处理修改地址
-        async handleWarehouseChange() {
-            const warehouse = this.getWarehouse
-            const { id, location } = warehouse
-            await this.updateWarehouse({
+        // 处理修改供应商信息
+        async handleSupplierChange() {
+            const supplier = this.getSupplier
+            const { id, location } = supplier
+            await this.updateSupplier({
                 id,
                 data: {
                     location
@@ -64,8 +70,8 @@ export default {
             })
             this.setDialogEditVisible(false)
             this.setDataReady(false)
-            const { warehouseList } = await this.fetchSource()
-            this.setSource(warehouseList)
+            const { supplierList } = await this.fetchSource()
+            this.setSource(supplierList)
             await sleep()
             this.setDataReady(true)
         }

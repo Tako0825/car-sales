@@ -1,7 +1,7 @@
 <template>
-    <!-- 添加仓库 -->
+    <!-- 添加供应商 -->
     <el-dialog 
-        title="添加仓库" 
+        title="添加供应商" 
         :visible.sync="dialogFormVisible"
         center
         width="600px"
@@ -16,8 +16,14 @@
             label-position="left"
             class="flex flex-col items-start"
         >
-            <el-form-item label="地址" prop="location" class="w-full">
-                <el-input type="textarea" v-model="form.location"></el-input>
+            <el-form-item label="公司" prop="company" class="w-full">
+                <el-input type="textarea" v-model="form.company"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话" prop="phone" class="w-full">
+                <el-input type="textarea" v-model="form.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="联系人" prop="name" class="w-full">
+                <el-input type="textarea" v-model="form.name"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
@@ -30,25 +36,37 @@
 <script>
 import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("warehouseArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("supplierArea")
 export default {
-    name: "WarehouseFactory",
+    name: "SupplierFactory",
     data() {
+        let validatePhone = async (rule, value, callback) => {
+            if(!/^1\d{10}$/.test(value)) {
+                callback(new Error("必须以 1 开头且长度为 11 个数字"))
+            }
+            else {
+                callback()
+            }
+        }
         return {
             form: {
-                location: ''
+                company: '',
+                phone: '',
+                name: ''
             },
             rules: {
-                location: [
-                    { required: true, message: '请输入当前仓库地址', trigger: 'blur' },
-                    { min: 1, max: 50, message: '简介应当在 50 个字符', trigger: 'blur' },
-                ]
+                company: [
+                    { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' },
+                    { min: 1, max: 50, message: '公司地址应当在 50 个字符', trigger: 'blur' },
+                ],
+                phone: { validator: validatePhone, trigger: 'blur' },
+                name: { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' }
             }
         }
     },
     computed: {
         ...mapGetters([
-            "getDialogFormVisible", "getWarehouseTotal", "getPageSize"
+            "getDialogFormVisible", "getSupplierTotal", "getPageSize"
         ]),
         dialogFormVisible: {
             get() {
@@ -64,19 +82,19 @@ export default {
             "setDialogFormVisible", "setPage", "setSource", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource", "createWarehouse"
+            "fetchSource", "createSupplier"
         ]),
-        // 提交表单 - 创建新产品
+        // 提交表单 - 添加新供应商
         async submitForm(formName) {
             await this.$refs[formName].validate(async valid => {
                 if(valid) {
                     // 表单验证通过后...
-                    await this.createWarehouse(this.form)
+                    await this.createSupplier(this.form)
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getWarehouseTotal / this.getPageSize))
-                    const { warehouseList } = await this.fetchSource()
-                    this.setSource(warehouseList)
+                    this.setPage(Math.ceil(this.getSupplierTotal / this.getPageSize))
+                    const { supplierList } = await this.fetchSource()
+                    this.setSource(supplierList)
                     this.setDialogFormVisible(false)
                     this.setDataReady(true)
                     // 重置表单

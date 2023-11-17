@@ -4,7 +4,7 @@ export default {
     namespaced: true,
     state() {
         return {
-            // 用户相关配置
+            // 仓库相关配置
             source: new Array(),
             warehouseTotal: 0,
             warehouse: null,
