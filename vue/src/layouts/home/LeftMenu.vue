@@ -9,11 +9,11 @@
       <!-- LOGO -->
       <LogoSectionVue :collapse="isCollapse"/>
 
-      <!-- 折叠控件 -->
-      <CollapseControlVue :collapse="isCollapse" @toggleCollapse="isCollapse=!isCollapse"/>
-      
       <!-- 选项 -->
       <MenuOptionsVue/>
+
+      <!-- 折叠控件 -->
+      <CollapseControlVue :collapse="isCollapse" @toggleCollapse="isCollapse=!isCollapse"/>
   </el-menu>
 </template>
 

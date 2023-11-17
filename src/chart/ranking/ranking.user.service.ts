@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ResponseData } from 'src/common/class/response.data';
 import { CommonService } from 'src/common/common.service';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 
@@ -12,7 +11,7 @@ export class RankingUserService {
 
     // SERVICE - GET USER RANKING(获取员工销售额排行)
     async getUserRanking() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             const count = 7
             const year = 5
             const currentYear = new Date().getFullYear()
@@ -69,7 +68,6 @@ export class RankingUserService {
                     await Promise.all(promise)
                     
                     resolve({
-                        tip: "成功获取员工销售额排行榜",
                         idList,
                         xList,
                         yList,

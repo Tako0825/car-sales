@@ -1,13 +1,17 @@
 <template>
-  <main class="flex flex-col gap-6 pb-10">
+  <main class="w-full h-auto flex flex-col items-center gap-6">
     <!-- 头部 -->
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">员工总览</h1>
       <el-button type="success" @click="setRegisterFormVisible(true)" size="medium">添加员工</el-button>
     </header>
-    <UserTableVue/>
+    <!-- 用户列表 -->
+    <UserTableVue class="w-full h-auto"/>
+    <!-- 用户详情 -->
     <UserDetailVue/>
+    <!-- 编辑表单 -->
     <UserEditVue/>
+    <!-- 注册用户表单 -->
     <UserRegisterVue/>
   </main>
 </template>

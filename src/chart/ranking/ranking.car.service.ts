@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ResponseData } from 'src/common/class/response.data';
 import { CommonService } from 'src/common/common.service';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 
@@ -12,7 +11,7 @@ export class RankingCarService {
 
     // SERVICE - GET CAR RANKING(获取汽车热销榜)
     async getCarRanking() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             const count = 7
             const year = 10
             const currentYear = new Date().getFullYear()
@@ -83,7 +82,6 @@ export class RankingCarService {
             })
 
             return {
-                tip: "成功获取汽车热销榜",
                 idList,
                 xList,
                 yList,

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ResponseData } from 'src/common/class/response.data';
 import { CommonService } from 'src/common/common.service';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 
@@ -12,7 +11,7 @@ export class TotalService {
 
     // SERVICE - GET INCOME TOTAL(获取营业额)
     async getIncome() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             const result = await this.prisma.$queryRaw`
                 SELECT ROUND(SUM(product.price),2) AS income
                 FROM \`order\`
@@ -20,7 +19,6 @@ export class TotalService {
                 ON \`order\`.productId = product.id
             `
             return {
-                tip: "成功获取营业额",
                 total: result[0].income
             }
         })
@@ -28,9 +26,8 @@ export class TotalService {
 
     // SERVICE - GET SALES TOTAL(获取成交量)
     async getSales() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             return {
-                tip: "成功获取成交量",
                 total: await this.prisma.order.count()
             }
         })
@@ -38,9 +35,8 @@ export class TotalService {
 
     // SERVICE - GET WAREHOUSE TOTAL(获取仓库数)
     async getWarehouses() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             return {
-                tip: "成功获取仓库数",
                 total: await this.prisma.warehouse.count()
             }
         }) 
@@ -48,9 +44,8 @@ export class TotalService {
 
     // SERVICE - GET USERS TOTAL(获取员工数)
     async getUsers() {
-        return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
+        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
             return {
-                tip: "成功获取员工数",
                 total: await this.prisma.user.count()
             }
         })

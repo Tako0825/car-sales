@@ -4,10 +4,10 @@
     <el-table 
         header-cell-class-name="text-black" 
         :data="getSource" 
-        style="width: 100%;"
         v-if="getSource.length" 
         v-loading="!getDataReady" 
-        class="rounded-xl font-bold w-full"
+        class="rounded-xl font-bold"
+        style="width: 99%;"
         highlight-current-row
         @current-change="handleSelectedUser"
     >

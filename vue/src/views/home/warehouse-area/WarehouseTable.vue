@@ -4,7 +4,7 @@
         :data="getSource"
         v-loading="!getDataReady"
         stripe
-        style="width: 100%"
+        style="width: 99%"
         header-cell-class-name="text-black" 
         class="rounded-xl"
     >
