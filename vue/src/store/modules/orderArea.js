@@ -51,6 +51,10 @@ export default {
             const response = await api.get(`/api/order?page=${state.page}&pageSize=${state.pageSize}`,{ token: state.token })
             commit("setOrderTotal", response.orderTotal)
             return response
+        },
+        // 请求接口 - 获取所有用户
+        async fetchAllUser({ state }) {
+            return await api.get(`/api/user`, { token: state.token })
         }
     }
 }

@@ -21,11 +21,12 @@ export class UserController {
   @Get()
   @UsePipes(Validation)
   async findPage(
-    @Query() pageDto: PageDto,
-    @Query("page", ParseIntPipe) page: number,
-    @Query("pageSize", ParseIntPipe) pageSize: number
+    @Query("page") page: string,
+    @Query("pageSize") pageSize: string
   ) {
-    return await this.userService.findPage(page, pageSize);
+    if(!isNaN(+page) && !isNaN(+pageSize))
+      return await this.userService.findPage(+page, +pageSize)
+    else return this.userService.findAll()
   }
 
   // API - QUERY SPECIFIED USER(查询指定的用户)

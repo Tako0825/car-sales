@@ -3,7 +3,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -45,8 +45,16 @@ export class UserService {
     })
   }
 
+  // SERVICE - QUERY ALL USER(查询所有用户)
+  async findAll() {
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      return await this.prisma.user.findMany()
+    })
+  }
+
   // SERVICE - QUERY SPECIFIED USER(查询指定的用户)
   async findOne(id: number) {
+    await this.commonService.getEntityById<User>(PrismaModel.user, id)
     return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       const { avatar, username, phone, role, joined_date, address } = await this.commonService.getEntityById<User>(PrismaModel.user, id)
       return {
