@@ -111,12 +111,8 @@ export class UserService {
   async remove(id: number) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     try {
+      // 1.删除 USER - 前置条件: 删除 ORDER
       const result = await this.prisma.$transaction(async (prisma) => {
-        await prisma.move.deleteMany({
-          where: {
-            operatorId: id
-          }
-        })
         await prisma.order.deleteMany({
           where: {
             userId: id

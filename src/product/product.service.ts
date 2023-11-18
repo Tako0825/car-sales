@@ -146,12 +146,7 @@ export class ProductService {
     await this.commonService.getEntityById<Product>(PrismaModel.product, id)
     try {
       const result = await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 PRODUCT -前置条件: 删除 MOVE & ORDER & SUPPLY
-        await prisma.move.deleteMany({
-          where: {
-            productId: id
-          }
-        })
+        // 1.删除 PRODUCT -前置条件: 删除 ORDER & SUPPLY
         await prisma.order.deleteMany({
           where: {
             productId: id

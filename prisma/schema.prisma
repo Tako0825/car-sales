@@ -23,7 +23,6 @@ model User {
   address    String   @default("这个家伙很神秘, 还没有留下任何地址哦~")
   avatar     String   @default("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png")
   joined_date DateTime @default(now())
-  move       Move[]
   order      Order[]
 }
 
@@ -36,7 +35,6 @@ model Product {
   introduce String   @db.Text
   poster    String   @default("")
   supply    Supply[]
-  move      Move[]
   order     Order[]
 }
 
@@ -66,24 +64,8 @@ model Supply {
 model Warehouse {
   id           Int      @id @default(autoincrement())
   location     String
-  outboundMove Move[]   @relation("OutboundWareHouse")
-  intboundMove Move[]   @relation("InboundWareHouse")
   supply       Supply[]
   order        Order[]
-}
-
-// 调仓记录
-model Move {
-  id         Int       @id @default(autoincrement())
-  product    Product   @relation(fields: [productId], references: [id])
-  productId  Int
-  operator   User      @relation(fields: [operatorId], references: [id])
-  operatorId Int
-  outbound   Warehouse @relation("OutboundWareHouse", fields: [outboundId], references: [id])
-  outboundId Int
-  inbound    Warehouse @relation("InboundWareHouse", fields: [inboundId], references: [id])
-  inboundId  Int
-  createtime DateTime  @default(now())
 }
 
 // 订单

@@ -4,6 +4,5 @@ export enum PrismaModel {
     warehouse = "warehouse",
     supplier = "supplier",
     supply = "supply",
-    move = "move",
     order = "order"
 }

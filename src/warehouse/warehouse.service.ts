@@ -107,15 +107,7 @@ export class WarehouseService {
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
       await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 WAREHOUSE - 前置条件: 删除 SUPPLY & MOVE & ORDER
-        await prisma.move.deleteMany({
-          where: {
-            OR: [
-              { inboundId: id },
-              { outboundId: id }
-            ]
-          }
-        })
+        // 1.删除 WAREHOUSE - 前置条件: 删除 SUPPLY & ORDER
         await prisma.supply.deleteMany({
           where: { warehouseId: id }
         })
