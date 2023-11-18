@@ -82,17 +82,5 @@ export default [
         component: () => import("@/layouts/home/SupplyArea.vue"),
       }
     ]
-  },
-  {
-    path: "/move",
-    meta: { auto: true, title: "调仓记录", icon: "el-icon-house"},
-    component: () => import("@/layouts/home/IndexPage.vue"),
-    children: [
-      {
-        path: "",
-        name: "move",
-        component: () => import("@/layouts/home/MoveArea.vue"),
-      }
-    ]
-  },
+  }
 ]

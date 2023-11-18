@@ -22,12 +22,10 @@
         <el-table-column
             prop="brand"
             label="品牌"
-            width="80"
         ></el-table-column>
         <el-table-column
             prop="model"
             label="型号"
-            width="100"
         ></el-table-column>
         <el-table-column
             prop="warehouse"
@@ -36,10 +34,10 @@
         <el-table-column
             prop="quantity"
             label="供应数量"
-            width="100"
+            width="80"
         ></el-table-column>
         <!-- 编辑 -->
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
                 <el-button @click="handleSupplyDelete(scope.row)" type="text">删除</el-button>
             </template>

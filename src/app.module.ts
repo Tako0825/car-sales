@@ -9,7 +9,6 @@ import { SupplierModule } from './supplier/supplier.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 import { SupplyModule } from './supply/supply.module';
 import { OrderModule } from './order/order.module';
-import { MoveModule } from './move/move.module';
 import { ChartModule } from './chart/chart.module';
 import { QiniuModule } from './qiniu/qiniu.module';
 
@@ -33,7 +32,6 @@ import { QiniuModule } from './qiniu/qiniu.module';
     WarehouseModule,
     SupplyModule,
     OrderModule,
-    MoveModule,
     ChartModule,
     QiniuModule,
 ],
