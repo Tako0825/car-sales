@@ -1,10 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class ProductService {
@@ -16,7 +17,7 @@ export class ProductService {
   // SERVICE - CREATE PRODUCT(创建产品)
   async create(createProductDto: CreateProductDto) {
     const { name, model, price, poster, introduce } = createProductDto
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const product = await this.prisma.product.create({
         data: {
           name,
@@ -30,13 +31,7 @@ export class ProductService {
         tip: "成功创建产品",
         product
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - PAGING QUERY PRODUCT(分页查询产品)
@@ -79,14 +74,14 @@ export class ProductService {
 
   // SERVICE - QUERY ALL PRODUCT(查询所有产品)
   async findAll() {
-    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       return await this.prisma.product.findMany()
     })
   }
 
   // SERVICE - QUERY SPECIFIED PRODUCT(查询指定的产品)
   async findOne(id: number) {
-    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
       const pie = await this.prisma.$queryRaw`
         SELECT supply.quantity AS value, warehouse.location AS name
@@ -116,7 +111,7 @@ export class ProductService {
   async update(id: number, updateProductDto: UpdateProductDto) {
     await this.commonService.getEntityById<Product>(PrismaModel.product, id)
     const { name, model, price, introduce } = updateProductDto
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const product = await this.prisma.product.update({
         where: {
           id
@@ -132,19 +127,13 @@ export class ProductService {
         tip: "成功修改产品信息",
         product
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - DELETE PRODUCT(删除产品)
   async remove(id: number) {
     await this.commonService.getEntityById<Product>(PrismaModel.product, id)
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const result = await this.prisma.$transaction(async (prisma) => {
         // 1.删除 PRODUCT -前置条件: 删除 ORDER & SUPPLY
         await prisma.order.deleteMany({
@@ -167,12 +156,6 @@ export class ProductService {
         tip: "成功删除产品",
         result
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 }

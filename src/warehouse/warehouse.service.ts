@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { Warehouse } from '@prisma/client';
@@ -17,7 +17,7 @@ export class WarehouseService {
   // SERVICE - CREATE WAREHOUSE(创建仓库)
   async create(createWarehouseDto: CreateWarehouseDto) {
     const { location } = createWarehouseDto
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const warehouse = await this.prisma.warehouse.create({
         data: {
           location
@@ -27,18 +27,12 @@ export class WarehouseService {
         tip: "成功创建仓库",
         warehouse
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - PAGING QUERY WAREHOUSE(分页查询仓库)
   async findPage(page: number, pageSize: number) {
-    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       // 产品总数
       const warehouseTotal = await this.prisma.warehouse.count()
       // 分页总数
@@ -62,7 +56,7 @@ export class WarehouseService {
 
   // SERVICE - QUERY ALL WAREHOUSE(查询所有仓库)
   async findAll() {
-    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       return await this.prisma.warehouse.findMany()
     })
   }
@@ -70,17 +64,14 @@ export class WarehouseService {
   // SERVICE - QUERY SPECIFIED WAREHOUSE(查询指定的仓库)
   async findOne(id: number) {
     const warehouse = await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
-    return {
-      tip: `成功获取指定供应商`,
-      warehouse
-    }
+    return { warehouse }
   }
 
   // SERVICE - UPDATE WAREHOUSE(修改仓库信息)
   async update(id: number, updateWarehouseDto: UpdateWarehouseDto) {
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
-    const { location } = updateWarehouseDto
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
+      const { location } = updateWarehouseDto
       const warehouse = await this.prisma.warehouse.update({
         where: {
           id
@@ -93,13 +84,7 @@ export class WarehouseService {
         tip: "成功修改仓库信息",
         warehouse
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - DELETE WAREHOUSE(删除仓库)

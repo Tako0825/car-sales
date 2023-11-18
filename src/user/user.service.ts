@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,7 @@ export class UserService {
 
   // SERVICE - PAGING QUERY USER(分页查询用户)
   async findPage(page: number, pageSize: number) {
-    return await this.commonService.handlePrismaExecution<any>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       // 用户总数
       const userTotal = await this.prisma.user.count()
       // 分页总数
@@ -47,7 +48,7 @@ export class UserService {
 
   // SERVICE - QUERY ALL USER(查询所有用户)
   async findAll() {
-    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       return await this.prisma.user.findMany()
     })
   }
@@ -86,9 +87,9 @@ export class UserService {
   // SERVICE - UPDATE USER(修改用户信息)
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const { phone, username, role, address, joined_date, avatar } = updateUserDto
-      const user = await this.prisma.user.update({
+      await this.prisma.user.update({
         where: {
           id
         },
@@ -99,18 +100,13 @@ export class UserService {
       return {
         tip: "成功修改用户信息"
       }
-    }catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - DELETE USER(删除用户)
   async remove(id: number) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       // 1.删除 USER - 前置条件: 删除 ORDER
       const result = await this.prisma.$transaction(async (prisma) => {
         await prisma.order.deleteMany({
@@ -128,11 +124,6 @@ export class UserService {
         tip: "成功删除用户",
         result
       }
-    }catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 }
