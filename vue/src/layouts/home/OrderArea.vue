@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible", "setDataReady", "setPage"
+            "setDialogFormVisible", "setDataReady", "setPage", "setSource"
         ]),
         ...mapActions([
             "fetchSource"

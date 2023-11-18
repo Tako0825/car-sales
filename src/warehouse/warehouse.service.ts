@@ -60,6 +60,13 @@ export class WarehouseService {
     })
   }
 
+  // SERVICE - QUERY ALL WAREHOUSE(查询所有仓库)
+  async findAll() {
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      return await this.prisma.warehouse.findMany()
+    })
+  }
+
   // SERVICE - QUERY SPECIFIED WAREHOUSE(查询指定的仓库)
   async findOne(id: number) {
     const warehouse = await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)

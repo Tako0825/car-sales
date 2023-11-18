@@ -77,6 +77,13 @@ export class ProductService {
     })
   }
 
+  // SERVICE - QUERY ALL PRODUCT(查询所有产品)
+  async findAll() {
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      return await this.prisma.product.findMany()
+    })
+  }
+
   // SERVICE - QUERY SPECIFIED PRODUCT(查询指定的产品)
   async findOne(id: number) {
     return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {

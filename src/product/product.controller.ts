@@ -23,11 +23,12 @@ export class ProductController {
   @Get()
   @UsePipes(Validation)
   async findPage(
-    @Query() pageDto: PageDto,
-    @Query("page", ParseIntPipe) page: number,
-    @Query("pageSize", ParseIntPipe) pageSize: number
+    @Query("page") page: string,
+    @Query("pageSize") pageSize: string
   ) {
-    return await this.productServise.findPage(page, pageSize);
+    if(!isNaN(+page) && !isNaN(+pageSize))
+    return await this.productServise.findPage(+page, +pageSize);
+    else return this.productServise.findAll()
   }
 
   // API - QUERY SPECIFIED PRODUCT(查询指定的产品)

@@ -5,6 +5,7 @@ import { Product, Warehouse, User, Order } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
+import { ResponseData } from 'src/common/class/response.data';
 
 @Injectable()
 export class OrderService {
@@ -15,29 +16,24 @@ export class OrderService {
 
   // SERVICE - CREATE ORDER(创建订单)
   async create(createOrderDto: CreateOrderDto) {
-    const { productId, userId, warehouseId } = createOrderDto
+    const { productId, userId, warehouseId, createtime } = createOrderDto
     await this.commonService.getEntityById<Product>(PrismaModel.product, productId)
     await this.commonService.getEntityById<User>(PrismaModel.user, userId)
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, warehouseId)
-    try {
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const order = await this.prisma.order.create({
         data: {
           productId,
           userId,
-          warehouseId
+          warehouseId,
+          createtime
         }
       })
       return {
         tip: "成功创建订单",
         order
       }
-    }
-    catch(error) {
-      throw new HttpException({
-        tip: "PRISMA 未知错误",
-        error
-      }, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    })
   }
 
   // SERVICE - PAGING QUERY ORDER(分页查询订单)
@@ -83,7 +79,6 @@ export class OrderService {
     // 当前页数据数目
     const count = orderList.length
     return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
       page,
       count,
       pageTotal,
@@ -112,7 +107,6 @@ export class OrderService {
         }
       })
       return {
-        tip: "成功获取订单",
         id,
         product,
         user,

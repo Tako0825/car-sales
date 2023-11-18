@@ -23,11 +23,12 @@ export class WarehouseController {
   @Get()
   @UsePipes(Validation)
   async findPage(
-    @Query() pageDto: PageDto,
-    @Query("page", ParseIntPipe) page: number,
-    @Query("pageSize", ParseIntPipe) pageSize: number
+    @Query("page") page: string,
+    @Query("pageSize") pageSize: string
   ) {
-    return await this.warehouseService.findPage(page, pageSize);
+    if(!isNaN(+page) && !isNaN(+pageSize))
+      return await this.warehouseService.findPage(+page, +pageSize);
+    else return this.warehouseService.findAll()
   }
 
   // API - QUERY SPECIFIED WAREHOUSE(查询指定的仓库)

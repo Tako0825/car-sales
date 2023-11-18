@@ -17,35 +17,35 @@
             class="flex flex-col items-start"
         >
             <!-- 请选择销售员 -->
-            <el-form-item label="销售员" prop="user">
-                <el-select v-model="form.user" placeholder="请选择销售员" clearable>
+            <el-form-item label="销售员" prop="userId">
+                <el-select v-model="form.userId" placeholder="请选择销售员" clearable>
                     <el-option
-                        v-for="item in fetchAllUser"
-                        :key="item.user"
+                        v-for="item in users"
+                        :key="item.value"
                         :label="item.label"
-                        :value="item.user"
+                        :value="item.value"
                     ></el-option>
                 </el-select>
             </el-form-item>
             <!-- 请选择产品 -->
-            <el-form-item label="产品" prop="product">
-                <el-select v-model="form.product" placeholder="请选择产品" clearable>
+            <el-form-item label="产品" prop="productId">
+                <el-select v-model="form.productId" placeholder="请选择产品" clearable>
                     <el-option
                         v-for="item in products"
-                        :key="item.product"
+                        :key="item.value"
                         :label="item.label"
-                        :value="item.product"
+                        :value="item.value"
                     ></el-option>
                 </el-select>
             </el-form-item>
             <!-- 请选择仓库 -->
-            <el-form-item label="仓库" prop="warehouse">
-                <el-select v-model="form.warehouse" placeholder="请选择仓库" clearable>
+            <el-form-item label="仓库" prop="warehouseId">
+                <el-select v-model="form.warehouseId" placeholder="请选择仓库" clearable>
                     <el-option
                         v-for="item in warehouses"
-                        :key="item.warehouse"
+                        :key="item.value"
                         :label="item.label"
-                        :value="item.warehouse"
+                        :value="item.value"
                     ></el-option>
                 </el-select>
             </el-form-item>
@@ -75,72 +75,37 @@ const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("orderA
 export default {
     name: "OrderFactory",
     async created() {
-        this.users = await this.fetchAllUser()
-        console.log(this.users);
+        this.users = await this.fetchUsers().then(users => users.map(user => ({
+            value: user.id,
+            label: user.username
+        })))
+        this.products = await this.fetchProducts().then(products => products.map(product => ({
+            value: product.id,
+            label: product.name + "-" + product.model
+        })))
+        this.warehouses = await this.fetchWarehouses().then(warehouses => warehouses.map(warehouse => ({
+            value: warehouse.id,
+            label: warehouse.location
+        })))
     },
     data() {
         return {
             form: {
-                user: '',
-                product: '',
-                warehouse: '',
+                userId: '',
+                productId: '',
+                warehouseId: '',
                 date: new Date(),
                 time: new Date()
             },
-            users: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
-            products: [{
-                value: '选项1',
-                label: '黄金糕'
-                }, {
-                value: '选项2',
-                label: '双皮奶'
-                }, {
-                value: '选项3',
-                label: '蚵仔煎'
-                }, {
-                value: '选项4',
-                label: '龙须面'
-                }, {
-                value: '选项5',
-                label: '北京烤鸭'
-                }],
-            warehouses: [{
-                value: '选项1',
-                label: '黄金糕'
-                }, {
-                value: '选项2',
-                label: '双皮奶'
-                }, {
-                value: '选项3',
-                label: '蚵仔煎'
-                }, {
-                value: '选项4',
-                label: '龙须面'
-                }, {
-                value: '选项5',
-                label: '北京烤鸭'
-                }],
+            users: [],
+            products: [],
+            warehouses: [],
             rules: {
-                company: [
-                    { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' },
-                    { min: 1, max: 50, message: '公司地址应当在 50 个字符', trigger: 'blur' },
-                ],
-                name: { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' }
+                userId: { required: true, message: '请输入当前订单销售员', trigger: 'blur' },
+                productId: { required: true, message: '请输入当前订单产品', trigger: 'blur' },
+                warehouseId: { required: true, message: '请输入当前订单所属仓库', trigger: 'blur' },
+                date: { required: true, message: '请输入具体成交日期', trigger: 'blur' },
+                time: { required: true, message: '请输入具体成交时间', trigger: 'blur' },
             }
         }
     },
@@ -162,14 +127,30 @@ export default {
             "setDialogFormVisible", "setPage", "setSource", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource", "createOrder", "fetchAllUser"
+            "fetchSource", "createOrder", "fetchUsers", "fetchProducts", "fetchWarehouses"
         ]),
         // 提交表单 - 添加新供应商
         async submitForm(formName) {
             await this.$refs[formName].validate(async valid => {
                 if(valid) {
+                    const { userId, productId, warehouseId } = this.form
+                    // 合并表单中的日期与时间
+                    const date = new Date(this.form.date)
+                    const time = new Date(this.form.time)
+                    const year = date.getFullYear()
+                    const month = date.getMonth()
+                    const day = date.getDate()
+                    const hours = time.getHours()
+                    const minutes = time.getMinutes()
+                    const seconds = time.getSeconds()
+                    const createtime = new Date(year, month, day, hours, minutes, seconds)
                     // 表单验证通过后...
-                    await this.createOrder(this.form)
+                    await this.createOrder({
+                        userId,
+                        productId,
+                        warehouseId,
+                        createtime
+                    })
                     this.setDataReady(false)
                     await sleep()
                     this.setPage(Math.ceil(this.getOrderTotal / this.getPageSize))
@@ -177,8 +158,6 @@ export default {
                     this.setSource(orderList)
                     this.setDialogFormVisible(false)
                     this.setDataReady(true)
-                    // 重置表单
-                    this.resetForm(formName)
                 }
                 else return false
             })

@@ -10,7 +10,7 @@ export default {
             order: null,
             // 分页相关配置
             page: 1,
-            pageSize: 20,
+            pageSize: 15,
             // 状态相关配置
             dataReady: false,
             dialogTableVisible: false,
@@ -53,8 +53,24 @@ export default {
             return response
         },
         // 请求接口 - 获取所有用户
-        async fetchAllUser({ state }) {
+        async fetchUsers({ state }) {
             return await api.get(`/api/user`, { token: state.token })
+        },
+        // 请求接口 - 获取所有产品
+        async fetchProducts({ state }) {
+            return await api.get(`/api/product`, { token: state.token })
+        },
+        // 请求接口 - 获取所有仓库
+        async fetchWarehouses({ state }) {
+            return await api.get(`/api/warehouse`, { token: state.token })
+        },
+        // 请求接口 - 创建订单
+        async createOrder({ state }, payload) {
+            await api.post(`/api/order`, payload, { token: state.token })
+        },
+        // 请求接口 - 删除订单
+        async deleteOrder({ state }, payload) {
+            await api.delete(`/api/order/${payload}`, { token: state.token })
         }
     }
 }

@@ -8,4 +8,5 @@ export class CreateOrderDto implements Partial<Order> {
     userId: number
     @IsNotEmpty({ message: "订单所属仓库不允许为空" })
     warehouseId: number
+    createtime?: Date
 }

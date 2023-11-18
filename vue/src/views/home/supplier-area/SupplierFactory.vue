@@ -20,10 +20,10 @@
                 <el-input type="textarea" v-model="form.company"></el-input>
             </el-form-item>
             <el-form-item label="联系电话" prop="phone" class="w-full">
-                <el-input type="textarea" v-model="form.phone"></el-input>
+                <el-input type="text" v-model="form.phone"></el-input>
             </el-form-item>
             <el-form-item label="联系人" prop="name" class="w-full">
-                <el-input type="textarea" v-model="form.name"></el-input>
+                <el-input type="text" v-model="form.name"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
@@ -59,8 +59,11 @@ export default {
                     { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' },
                     { min: 1, max: 50, message: '公司地址应当在 50 个字符', trigger: 'blur' },
                 ],
-                phone: { validator: validatePhone, trigger: 'blur' },
-                name: { required: true, message: '请输入当前供应商公司地址', trigger: 'blur' }
+                phone: [
+                    { required: true, message: '请输入当前供应商联系电话', trigger: 'blur' },
+                    { validator: validatePhone, trigger: 'blur' },
+                ],
+                name: { required: true, message: '请输入当前供应商联系人姓名', trigger: 'blur' }
             }
         }
     },
