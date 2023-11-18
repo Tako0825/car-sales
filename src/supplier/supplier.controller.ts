@@ -23,11 +23,12 @@ export class SupplierController {
   @Get()
   @UsePipes(Validation)
   async findPage(
-    @Query() pageDto: PageDto,
-    @Query("page", ParseIntPipe) page: number,
-    @Query("pageSize", ParseIntPipe) pageSize: number
+    @Query("page") page: string,
+    @Query("pageSize") pageSize: string
   ) {
-    return await this.supplierService.findPage(page, pageSize);
+    if(!isNaN(+page) && !isNaN(+pageSize))
+      return await this.supplierService.findPage(+page, +pageSize);
+    else return this.supplierService.findAll()
   }
 
   // API - QUERY SPECIFIED SUPPLIER(查询指定的供应商)

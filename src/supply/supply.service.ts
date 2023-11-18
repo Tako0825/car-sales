@@ -15,7 +15,7 @@ export class SupplyService {
 
   // SERVICE - CREATE SUPPLY(创建供应记录)
   async create(createSupplyDto: CreateSupplyDto) {
-    const { quantity, supplierId, productId, warehouseId } = createSupplyDto
+    const { quantity, supplierId, productId, warehouseId, createtime } = createSupplyDto
     await this.commonService.getEntityById<Supplier>(PrismaModel.supplier, supplierId)
     await this.commonService.getEntityById<Product>(PrismaModel.product, productId)
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, warehouseId)
@@ -25,7 +25,8 @@ export class SupplyService {
           quantity, 
           supplierId,
           productId,
-          warehouseId
+          warehouseId,
+          createtime
         }
       })
       return {
@@ -83,7 +84,6 @@ export class SupplyService {
     // 当前页数据数目
     const count = supplyList.length
     return {
-      tip: `成功获取第 ${page} 页共 ${count} 条数据`,
       page,
       count,
       pageTotal,
@@ -112,7 +112,6 @@ export class SupplyService {
         }
       })
       return {
-        tip: `成功获取指定供应记录`,
         id,
         quantity,
         supplier,

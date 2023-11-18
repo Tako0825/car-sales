@@ -1,7 +1,7 @@
 <template>
-    <!-- 添加订单 -->
+    <!-- 添加供应记录 -->
     <el-dialog 
-        title="添加订单" 
+        title="添加供应记录" 
         :visible.sync="dialogFormVisible"
         center
         width="600px"
@@ -16,11 +16,11 @@
             label-position="left"
             class="flex flex-col items-start"
         >
-            <!-- 请选择销售员 -->
-            <el-form-item label="销售员" prop="userId">
-                <el-select v-model="form.userId" filterable placeholder="请选择销售员" clearable>
+            <!-- 请选择供应商 -->
+            <el-form-item label="供应商" prop="supplierId">
+                <el-select v-model="form.supplierId" filterable placeholder="请选择供应商" clearable>
                     <el-option
-                        v-for="item in users"
+                        v-for="item in suppliers"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value"
@@ -49,6 +49,10 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <!-- 请填写供应数量 -->
+            <el-form-item label="供应量" prop="quantity">
+                <el-input v-model="form.quantity"></el-input>
+            </el-form-item>
             <!-- 请选择入职时间 -->
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
@@ -71,13 +75,13 @@
 <script>
 import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("orderArea")
+const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("supplyArea")
 export default {
-    name: "OrderFactory",
+    name: "SupplyFactory",
     async created() {
-        this.users = await this.fetchUsers().then(users => users.map(user => ({
-            value: user.id,
-            label: user.username
+        this.suppliers = await this.fetchSuppliers().then(suppliers => suppliers.map(supplier => ({
+            value: supplier.id,
+            label: supplier.company
         })))
         this.products = await this.fetchProducts().then(products => products.map(product => ({
             value: product.id,
@@ -89,29 +93,42 @@ export default {
         })))
     },
     data() {
+        let validateInteger = (rule, value, callback) => {
+            if (!Number.isInteger(+value) || +value <= 0) {
+                callback(new Error('必须是正整数'))
+            }
+            else {
+                callback();
+            }
+        };
         return {
             form: {
-                userId: '',
+                quantity: '',
+                supplierId: '',
                 productId: '',
                 warehouseId: '',
                 date: new Date(),
                 time: new Date()
             },
-            users: [],
+            suppliers: [],
             products: [],
             warehouses: [],
             rules: {
-                userId: { required: true, message: '请输入当前订单销售员', trigger: 'blur' },
-                productId: { required: true, message: '请输入当前订单产品', trigger: 'blur' },
-                warehouseId: { required: true, message: '请输入当前订单所属仓库', trigger: 'blur' },
-                date: { required: true, message: '请输入具体成交日期', trigger: 'blur' },
-                time: { required: true, message: '请输入具体成交时间', trigger: 'blur' },
+                supplierId: { required: true, message: '请输入供应商', trigger: 'blur' },
+                productId: { required: true, message: '请输入供应产品', trigger: 'blur' },
+                warehouseId: { required: true, message: '请输入入库仓库', trigger: 'blur' },
+                quantity: [
+                    { required: true, message: '请输入供应数量', trigger: 'blur' },
+                    { validator: validateInteger, trigger: 'blur' }
+                ],
+                date: { required: true, message: '请输入具体供应日期', trigger: 'blur' },
+                time: { required: true, message: '请输入具体供应时间', trigger: 'blur' },
             }
         }
     },
     computed: {
         ...mapGetters([
-            "getDialogFormVisible", "getOrderTotal", "getPageSize"
+            "getDialogFormVisible", "getSupplyTotal", "getPageSize"
         ]),
         dialogFormVisible: {
             get() {
@@ -127,13 +144,13 @@ export default {
             "setDialogFormVisible", "setPage", "setSource", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource", "createOrder", "fetchUsers", "fetchProducts", "fetchWarehouses"
+            "fetchSource", "createSupply", "fetchSuppliers", "fetchProducts", "fetchWarehouses"
         ]),
-        // 提交表单 - 添加新供应商
+        // 提交表单 - 添加新供应记录
         async submitForm(formName) {
             await this.$refs[formName].validate(async valid => {
                 if(valid) {
-                    const { userId, productId, warehouseId } = this.form
+                    const { quantity, supplierId, productId, warehouseId } = this.form
                     // 合并表单中的日期与时间
                     const date = new Date(this.form.date)
                     const time = new Date(this.form.time)
@@ -145,17 +162,18 @@ export default {
                     const seconds = time.getSeconds()
                     const createtime = new Date(year, month, day, hours, minutes, seconds)
                     // 表单验证通过后...
-                    await this.createOrder({
-                        userId,
+                    await this.createSupply({
+                        quantity,
+                        supplierId,
                         productId,
                         warehouseId,
                         createtime
                     })
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getOrderTotal / this.getPageSize))
-                    const { orderList } = await this.fetchSource()
-                    this.setSource(orderList)
+                    this.setPage(Math.ceil(this.getSupplyTotal / this.getPageSize))
+                    const { supplyList } = await this.fetchSource()
+                    this.setSource(supplyList)
                     this.setDialogFormVisible(false)
                     this.setDataReady(true)
                     await this.resetForm(formName)

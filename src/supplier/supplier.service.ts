@@ -59,6 +59,13 @@ export class SupplierService {
     }
   }
 
+  // SERVICE - QUERY ALL SUPPLIER(查询所有供应商)
+  async findAll() {
+    return this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
+      return await this.prisma.supplier.findMany()
+    })
+  }
+
   // SERVICE - QUERY SPECIFIED SUPPLIER(查询指定的供应商)
   async findOne(id: number) {
     const supplier = await this.commonService.getEntityById<Supplier>(PrismaModel.supplier, id)

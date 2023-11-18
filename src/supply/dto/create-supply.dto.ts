@@ -10,4 +10,5 @@ export class CreateSupplyDto implements Partial<Supply> {
     supplierId: number
     @IsNotEmpty({ message: "供应仓库不允许为空" })
     warehouseId: number
+    createtime?: Date
 }

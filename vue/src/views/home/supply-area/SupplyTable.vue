@@ -1,82 +1,91 @@
 <template>
-    <main class="flex flex-col gap-6">
-        <!-- 头部 -->
-        <header class="w-full flex justify-between">
-            <h1 class="text-2xl font-bold">供应记录</h1>
-            <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加供应记录</el-button>
-        </header>
-        <!-- 表格 -->
-        <el-table
-            :data="getSource"
-            stripe
-            style="width: 99%"
-            header-cell-class-name="text-black" 
-            class="rounded-xl"
-        >
-            <!-- 占位列 -->
-            <el-table-column width="50"></el-table-column>
-            <el-table-column
-                prop="id"
-                label="序号"
-                width="80"
-            ></el-table-column>
-            <el-table-column
-                prop="supplier"
-                label="供应商"
-            ></el-table-column>
-            <el-table-column
-                prop="brand"
-                label="品牌"
-                width="80"
-            ></el-table-column>
-            <el-table-column
-                prop="model"
-                label="型号"
-                width="100"
-            ></el-table-column>
-            <el-table-column
-                prop="warehouse"
-                label="仓库"
-            ></el-table-column>
-            <el-table-column
-                prop="quantity"
-                label="供应数量"
-                width="100"
-            ></el-table-column>
-            <!-- 编辑 -->
-            <el-table-column fixed="right" label="操作" width="120">
-                <template slot-scope="scope">
-                    <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </main>
+    <!-- 表格 -->
+    <el-table
+        :data="getSource"
+        v-loading="!getDataReady"
+        stripe
+        style="width: 99%"
+        header-cell-class-name="text-black" 
+        class="rounded-xl"
+    >
+        <!-- 占位列 -->
+        <el-table-column width="10"></el-table-column>
+        <el-table-column
+            prop="id"
+            label="供应号"
+            width="70"
+        ></el-table-column>
+        <el-table-column
+            prop="supplier"
+            label="供应商"
+        ></el-table-column>
+        <el-table-column
+            prop="brand"
+            label="品牌"
+            width="80"
+        ></el-table-column>
+        <el-table-column
+            prop="model"
+            label="型号"
+            width="100"
+        ></el-table-column>
+        <el-table-column
+            prop="warehouse"
+            label="仓库"
+        ></el-table-column>
+        <el-table-column
+            prop="quantity"
+            label="供应数量"
+            width="100"
+        ></el-table-column>
+        <!-- 编辑 -->
+        <el-table-column fixed="right" label="操作" width="120">
+            <template slot-scope="scope">
+                <el-button @click="handleSupplyDelete(scope.row)" type="text">删除</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
 </template>
 
 <script>
+import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("supplyArea")
 export default {
     name: "SupplyTable",
     async created() {
+        this.setDataReady(false)
         const { supplyList } = await this.fetchSource()
         this.setSource(supplyList)
+        await sleep()
+        this.setDataReady(true)
     },
     computed: {
         ...mapGetters([
-            "getSource"
+            "getSource", "getDataReady"
         ])
     },
     methods: {
         ...mapMutations([
-            "setSource", "setDialogFormVisible"
+            "setSource", "setDialogFormVisible", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource"
+            "fetchSource", "deleteSupply"
         ]),
-        // 处理修改
-        handleEdit() {
-
+        // 处理删除订单
+        handleSupplyDelete({ id }) {
+            this.$confirm('此操作将永久删除该供应记录, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'error'
+            }).then(async () => {
+                await this.deleteSupply(id)
+                this.setDataReady(false)
+                const { supplyList } = await this.fetchSource()
+                this.setSource(supplyList)
+                await sleep()
+                this.setDataReady(true)
+            }).catch(() => {})
         }
     }
 }
