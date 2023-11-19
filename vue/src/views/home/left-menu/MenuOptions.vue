@@ -15,6 +15,7 @@
 <script>
 import home from "@/routes/home.js"
 export default {
+    name: "MenuOptions",
     data() {
         return {
             home

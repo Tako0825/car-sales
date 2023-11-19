@@ -26,7 +26,6 @@
         :total="getProductTotal"
         :hide-on-single-page="true"
     ></el-pagination>
-
     <!-- 产品详情 -->
     <ProductDetail/>
     <!-- 表单 - 用于添加产品 -->
@@ -52,7 +51,7 @@ export default {
     this.setSource(source)
     await sleep()
     this.setDataReady(true)
-  },  
+  },
   computed: {
     ...mapGetters([
       "getSource", "getPage", "getPageSize", "getProductTotal", "getDataReady"

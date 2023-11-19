@@ -17,6 +17,7 @@ echarts.use([
   SVGRenderer
 ])
 export default {
+    name: "HistogramChart",
     async mounted() {
         const { xList, yList, source } = await api.get("/api/chart/ranking/user")
         this.xList = xList

@@ -17,7 +17,7 @@ echarts.use([
     SVGRenderer
 ]);
 export default {
-    name: "DashboardChart",
+    name: "PieChart",
     props: [
         "title", "source"
     ],

@@ -9,12 +9,12 @@
         <OrderTableVue/>
         <!-- 分页 -->
         <el-pagination
-        layout="prev, pager, next"
-        :current-page="getPage"
-        @current-change="handleCurrentChange"
-        :page-size="getPageSize"
-        :total="getOrderTotal"
-        :hide-on-single-page="true"
+            layout="prev, pager, next"
+            :current-page="getPage"
+            @current-change="handleCurrentChange"
+            :page-size="getPageSize"
+            :total="getOrderTotal"
+            :hide-on-single-page="true"
         ></el-pagination>
         <!-- 添加仓库 -->
         <OrderFactory/>
@@ -29,9 +29,7 @@ import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("orderArea")
 export default {
     name: "OrderArea",
-    components: {
-        OrderTableVue, OrderFactory
-    },
+    components: { OrderTableVue, OrderFactory },
     computed: {
         ...mapGetters([
             "getPage", "getPageSize", "getOrderTotal"

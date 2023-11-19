@@ -15,6 +15,7 @@
 <script>
 import avatar from "@/assets/avatar/wechat.jpg"
 export default {
+    name: "UserBar",
     data() {
         return {
             avatar

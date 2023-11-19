@@ -9,6 +9,7 @@
 
 <script>
 export default {
+    name: "CollapseControl",
     props: [
         "collapse"
     ]

@@ -15,9 +15,7 @@ import LeftMenuVue from './LeftMenu.vue'
 import TopNavVue from './TopNav.vue'
 export default {
   name: "HomePage",
-  components: {
-    LeftMenuVue, TopNavVue
-  }
+  components: { LeftMenuVue, TopNavVue }
 }
 </script>
 

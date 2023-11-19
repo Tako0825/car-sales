@@ -28,6 +28,7 @@ echarts.use([
   UniversalTransition
 ]);
 export default {
+    name: "LineChart",
     async mounted() {
         const { xList, source } = await api.get("/api/chart/ranking/car")
         this.xList = xList

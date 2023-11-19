@@ -67,6 +67,7 @@ import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("userArea")
 export default {
+    name: "UserTable",
     async created() {
         this.setDataReady(false)
         const { userList, userTotal } = await this.fetchSource()

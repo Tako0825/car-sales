@@ -8,10 +8,8 @@
   >
       <!-- LOGO -->
       <LogoSectionVue :collapse="isCollapse"/>
-
       <!-- 选项 -->
       <MenuOptionsVue/>
-
       <!-- 折叠控件 -->
       <CollapseControlVue :collapse="isCollapse" @toggleCollapse="isCollapse=!isCollapse"/>
   </el-menu>
@@ -22,6 +20,7 @@ import LogoSectionVue from '@/views/home/left-menu/LogoSection.vue'
 import CollapseControlVue from '@/views/home/left-menu/CollapseControl.vue'
 import MenuOptionsVue from '@/views/home/left-menu/MenuOptions.vue'
 export default {
+  name: "LeftMenu",
   components: {
     LogoSectionVue, CollapseControlVue, MenuOptionsVue
   },

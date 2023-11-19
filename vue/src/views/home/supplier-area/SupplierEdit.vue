@@ -37,7 +37,7 @@ import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("supplierArea")
 export default {
-    name: "UserEdit",
+    name: "SupplierEdit",
     computed: {
         ...mapGetters([
             "getDialogEditVisible", "getSupplier"

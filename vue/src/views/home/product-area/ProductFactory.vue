@@ -64,6 +64,7 @@ import { sleep } from "@/util/sleep"
 import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("productArea")
 export default {
+    name: "ProductFactory",
     data() {
         let validatePrice = (rule, value, callback) => {
             if(isNaN(+value)) {
