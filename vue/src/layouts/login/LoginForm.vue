@@ -41,12 +41,13 @@ export default {
             }
             // 请求登录接口-表单验证
             const response = await api.post(`/api/auth/login`, { phone, password })
-            const token = response.token
+            const { token, user } = response
             if(token) {
                 // 1. token本地存储
-                const token = response.token
                 localStorage.setItem("token", token)
-                // 2. 跳转路由至工作台
+                // 2. 用户信息本地存储
+                localStorage.setItem("user", JSON.stringify(user))
+                // 3. 跳转路由至工作台
                 this.$router.push('/');
             }
             this.dataReady = true
