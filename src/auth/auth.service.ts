@@ -49,63 +49,41 @@ export class AuthService {
 
     // SERVICE - LOGIN(登录)
     async login(loginDto:LoginDto) {
-        const { phone, password: loginPassword } = loginDto
         try {
-            const { id, username, password, role } = await this.prisma.user.findUnique({
+            const user:User = await this.prisma.user.findUnique({
                 where: {
-                    phone
-                },
-                select: {
-                    id: true,
-                    username: true,
-                    password: true,
-                    phone: true,
-                    role: true
+                    phone: loginDto.phone
                 }
             })
-            const hash = createHash("sha256").update(loginPassword).digest("hex")
+            const { phone, password } = user
+            const hash = createHash("sha256").update(loginDto.password).digest("hex")
             if(hash === password) {
                 // GENERATE TOKEN
                 const token = await this.jwt.signAsync({
                     params: {
                         phone,
-                        hash
+                        password
                     },
                     sign: process.env.SECRET_OR_KEY
                 })
                 return {
                     tip: "登录成功",
-                    user: {
-                        id,
-                        username,
-                        phone,
-                        role
-                    },
+                    user,
                     token
                 }
             }
         }catch(error) {
             throw new HttpException({
-                tip: 'PRISMA 未知错误',
-                error
-            }, HttpStatus.INTERNAL_SERVER_ERROR)
+                tip: '手机号不存在',
+            }, HttpStatus.UNPROCESSABLE_ENTITY)
         }
         throw new HttpException({
-            tip: '电话号码与密码不匹配',
+            tip: '手机号与密码不匹配',
         }, HttpStatus.UNPROCESSABLE_ENTITY)
     }
 
     // SEVICE - AUTOMATIC LOGIN(自动登录)
     async autoLogin(user:User) {
-        const { id, username, phone, role } = user
-        return {
-            tip: "自动登录成功",
-            user: {
-                id,
-                username,
-                phone,
-                role
-            }
-        }
+        return { user }
     }
 }

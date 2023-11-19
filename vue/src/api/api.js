@@ -27,7 +27,7 @@ async function request(url, options = {}) {
     Message.success(data.tip)
   }
   // !200 - 请求失败并弹出相应错误提示 
-  else if(!response.ok) {
+  else if(!response.ok && data?.tip) {
     Message.error(data.tip)
     console.log({ code, message, data });
   }

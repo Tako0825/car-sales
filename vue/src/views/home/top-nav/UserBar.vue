@@ -4,11 +4,16 @@
         <!-- 收件箱 -->
         <i class="el-icon-message transform scale-150"></i>
         <!-- 我的头像 -->
-        <img 
-            :src="avatar"
-            alt="我的头像"
-            class="w-11 h-11 rounded-md object-cover"
-        >
+        <el-dropdown @command="handleCommand" trigger="click">
+            <img 
+                :src="avatar"
+                alt="我的头像"
+                class="w-11 h-11 rounded-md object-cover"
+            >
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
     </main>
 </template>
 
@@ -19,6 +24,26 @@ export default {
     data() {
         return {
             avatar
+        }
+    },
+    methods: {
+        // 处理下拉菜单的激活指令
+        handleCommand(command) {
+            switch(command) {
+                case "logout": {
+                    this.$confirm('你确定要退出登录吗？', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: "warning"
+                    }).then(() => {
+                        // 1. 清楚本地存储中的 token
+                        localStorage.removeItem("token")
+                        // 2. 跳转至登录页面
+                        this.$router.push("/login")
+                    }).catch(() => {})
+                    break
+                }
+            }
         }
     }
 }
