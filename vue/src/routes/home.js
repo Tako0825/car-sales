@@ -1,6 +1,6 @@
 export default [
   {
-    path: "/admin",
+    path: "/",
     meta: { auto: true, title: "工作台", icon: "el-icon-pie-chart"},
     component: () => import("@/layouts/home/IndexPage.vue"),
     children: [

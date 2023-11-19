@@ -36,7 +36,7 @@ async function request(url, options = {}) {
 
 export default {
   get: async (url, config) => {
-    return request(url, {
+    return await request(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default {
     })
   },
   post: async (url, data, config) => {
-    return request(url, {
+    return await request(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default {
   },
 
   patch: async (url, data, config) => {
-    return request(url, {
+    return await request(url, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default {
   },
 
   delete: async (url, config) => {
-    return request(url, {
+    return await request(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

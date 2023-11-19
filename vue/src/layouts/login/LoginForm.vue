@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import api from '@/api/api'
 import { sleep } from '@/util/sleep'
 
 export default {
@@ -32,17 +33,23 @@ export default {
             this.dataReady = false
             // 加载动画
             await sleep(500)
-            this.dataReady = true
             // 表单验证验证规则
             if(!phone || !password) {
                 return this.$notify.error({
                     title: '手机号/密码不允许为空',
                 })
             }
-            // todo-登录请求(1.token本地存储、2.跳转路由至工作台)
-            
-            // 清空表单
-            this.removeForm()
+            // 请求登录接口-表单验证
+            const response = await api.post(`/api/auth/login`, { phone, password })
+            const token = response.token
+            if(token) {
+                // 1. token本地存储
+                const token = response.token
+                localStorage.setItem("token", token)
+                // 2. 跳转路由至工作台
+                this.$router.push('/');
+            }
+            this.dataReady = true
         },
         async removeForm() {
             this.phone = ''
