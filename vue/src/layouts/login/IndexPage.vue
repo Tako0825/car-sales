@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full h-full overflow-hidden flex bg-white">
+  <main class="w-full h-full px-24 overflow-hidden flex bg-white">
     <!-- 左半部分 -->
     <aside class="w-5/12 h-full flex flex-col justify-center items-center" style="background-color: #a162f7;">
       <el-image :src="'http://cdn.takoko.top/CarSale%20Poster.png'" fit="cover" class="transform -translate-y-20"></el-image>
@@ -7,7 +7,7 @@
     <!-- 右半部分 -->
     <article class="w-7/12 h-auto flex flex-col gap-16 justify-center items-center transform -translate-y-12">
       <!-- 头部 -->
-      <header class="flex flex-col gap-2 items-center">
+      <header class="flex flex-col gap-4 items-center">
         <section class="flex gap-2 items-center">
           <!-- LOGO -->
           <img src="@/assets/icon/logo.png" alt="LOGO" class="w-16 h-16">

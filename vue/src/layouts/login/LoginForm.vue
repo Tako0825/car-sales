@@ -2,10 +2,10 @@
     <main class="flex flex-col gap-6 transform">
         <section class="w-full h-auto relative">
             <input type="text" v-model="phone" placeholder="enter your phone number" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
-            <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">用户名</span>
+            <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">手机号</span>
         </section>
         <section class="w-full h-auto relative">
-            <input type="password" v-model="password" placeholder="enter your password" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
+            <input type="password" v-model="password" @keyup.enter="login" placeholder="enter your password" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
             <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">密&nbsp;&nbsp;&nbsp;码</span>
         </section>
         <el-button v-loading.fullscreen="!dataReady" :disabled="!dataReady" @click="login" class="login-button" type="primary" icon="el-icon-right">登 录</el-button>
@@ -67,7 +67,7 @@ export default {
 
     .login-button {
         font-weight: bold;
-        padding: 1.25rem;
+        padding: 1rem;
         font-size: 1rem;
     }
 </style>

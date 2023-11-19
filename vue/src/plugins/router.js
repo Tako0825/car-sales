@@ -13,7 +13,6 @@ export const RegisterRouter = () => {
 
     // 路由守卫 - 验证路由所需角色权限
     router.beforeEach(async (to, from, next) => {
-        console.log(to);
         // 路由需要权限
         if (to.meta.auth) {
             // 获取 token
