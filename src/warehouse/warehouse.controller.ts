@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UsePipes, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UsePipes, UseGuards, SetMetadata } from '@nestjs/common';
 import { WarehouseService } from './warehouse.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { PageDto } from 'src/common/dto/page.dto';
 import { Validation } from 'src/common/validation/validation';
 import { AuthGuard } from '@nestjs/passport';
+import { $Enums } from '@prisma/client';
+import { RoleGuard } from 'src/common/guard/role.guard';
 
 // CONTROLLER - WAREHOUSE
 @Controller('warehouse')
@@ -14,6 +16,8 @@ export class WarehouseController {
   
   // API - CREATE WAREHOUSE(创建仓库)
   @Post()
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async create(@Body() createWarehouseDto: CreateWarehouseDto) {
     return await this.warehouseService.create(createWarehouseDto)
@@ -39,6 +43,8 @@ export class WarehouseController {
 
   // API - UPDATE WAREHOUSE(修改仓库信息)
   @Patch(':id')
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateWarehouseDto: UpdateWarehouseDto) {
     return await this.warehouseService.update(id, updateWarehouseDto);
@@ -46,6 +52,8 @@ export class WarehouseController {
 
   // API - REMOVE WAREHOUSE(删除仓库)
   @Delete(':id')
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.warehouseService.remove(id);
   }

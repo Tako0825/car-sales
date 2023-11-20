@@ -20,7 +20,7 @@
             label="地址"
         ></el-table-column>
         <!-- 编辑 -->
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column v-if="['ADMIN'].includes($store.getters.getUser.role)" fixed="right" label="操作" width="120">
             <template slot-scope="scope">
                 <el-button @click="handelLocationChange(scope.row)" type="text">修改</el-button>
                 <el-button @click="handleWarehouseDelete(scope.row)" type="text">删除</el-button>

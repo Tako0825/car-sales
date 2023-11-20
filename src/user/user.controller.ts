@@ -1,7 +1,6 @@
 import { Controller, Get, Body, Patch, Param, Delete, Query, ParseIntPipe, UsePipes, UseGuards, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PageDto } from 'src/common/dto/page.dto';
 import { Validation } from 'src/common/validation/validation';
 import { AuthGuard } from '@nestjs/passport';
 import { $Enums } from '@prisma/client';

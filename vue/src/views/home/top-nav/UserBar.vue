@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
     name: "UserBar",
     async mounted() {
@@ -26,6 +27,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            "clearUser", "clearToken"
+        ]),
         // 处理下拉菜单的激活指令
         handleCommand(command) {
             switch(command) {
@@ -39,6 +43,9 @@ export default {
                         localStorage.removeItem("token")
                         // 2. 清除本地存储中的用户信息
                         localStorage.removeItem("user")
+                        // 3. 清除 vuex 全局状态
+                        this.clearUser()
+                        this.clearToken()
                         // 3. 跳转至登录页面
                         this.$router.push("/login")
                     }).catch(() => {})

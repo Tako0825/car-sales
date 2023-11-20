@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UsePipes, ParseFloatPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UsePipes, ParseFloatPipe, UseGuards, SetMetadata } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PageDto } from 'src/common/dto/page.dto';
 import { Validation } from 'src/common/validation/validation';
 import { AuthGuard } from '@nestjs/passport';
+import { $Enums } from '@prisma/client';
+import { RoleGuard } from 'src/common/guard/role.guard';
 
 // CONTROLLER - PRODUCT
 @Controller('product')
@@ -14,6 +16,8 @@ export class ProductController {
 
   // API - CREATE PRODUCT(创建产品)
   @Post()
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productServise.create(createProductDto)
@@ -39,6 +43,8 @@ export class ProductController {
 
   // API - UPDATE PRODUCT(修改产品信息)
   @Patch(':id')
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateProductDto: UpdateProductDto) {
     return await this.productServise.update(id, updateProductDto);
@@ -46,6 +52,8 @@ export class ProductController {
 
   // API - REMOVE PRODUCT(删除产品)
   @Delete(':id')
+  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.productServise.remove(id);
   }

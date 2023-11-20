@@ -3,7 +3,12 @@
     <!-- 头部 -->
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">员工总览</h1>
-      <el-button type="success" @click="setRegisterFormVisible(true)" size="medium">添加员工</el-button>
+      <el-button 
+        v-if="['ADMIN'].includes(this.$store.getters.getUser.role)" 
+        type="success" 
+        @click="setRegisterFormVisible(true)" 
+        size="small"
+      >添加员工</el-button>
     </header>
     <!-- 用户列表 -->
     <UserTableVue class="w-full h-auto"/>

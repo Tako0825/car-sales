@@ -3,7 +3,12 @@
     <!-- 头部 -->
     <header class="w-full flex justify-between">
         <h1 class="text-2xl font-bold">仓库总览</h1>
-        <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加仓库</el-button>
+        <el-button 
+          v-if="['ADMIN'].includes($store.getters.getUser.role)" 
+          type="success" 
+          @click="setDialogFormVisible(true)" 
+          size="small"
+        >添加仓库</el-button>
     </header>
     <WarehouseTableVue class="w-full"/>
     <!-- 分页 -->

@@ -3,7 +3,12 @@
     <!-- 头部 -->
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">汽车总览</h1>
-      <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加产品</el-button>
+      <el-button 
+        v-if="['ADMIN'].includes($store.getters.getUser.role)" 
+        type="success" 
+        @click="setDialogFormVisible(true)" 
+        size="small"
+      >添加产品</el-button>
     </header>
     <!-- 汽车列表 -->
     <article v-if="getSource.length" v-loading="!getDataReady" class="w-full h-auto grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  grid-flow-row gap-4">

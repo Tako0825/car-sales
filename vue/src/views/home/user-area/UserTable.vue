@@ -31,29 +31,29 @@
             </template>
         </el-table-column>
         <!-- 第 5 列: 其他操作(详情 & 编辑) -->
-        <el-table-column fixed="right" label="其他操作" min-width="120">
+        <el-table-column fixed="right" label="其他操作" width="150">
             <template slot-scope="scope">
                 <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
-                <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
-                <span class="ml-2">
-                    <el-popconfirm
-                        confirm-button-text='确 定'
-                        confirm-button-type="danger"
-                        cancel-button-text='取 消'
-                        icon="el-icon-info"
-                        icon-color="#ff7d89"
-                        title="确定删除该员工吗？"
-                        @confirm="handleDeleteUser(scope.row.id)"
-                    >
-                        <el-button 
-                            slot="reference" 
-                            v-show="scope.row.id===getSelectedId" 
-                            type="text"
-                            :style="{ 'color': '#ff6370' }"
-                            class="transition duration-1000"
-                        >删除</el-button>
-                    </el-popconfirm>
-                </span>
+                <el-button v-if="['ADMIN'].includes($store.getters.getUser.role)" @click="handleEdit(scope.row)" type="text">编辑</el-button>
+                <el-popconfirm
+                    v-if="['ADMIN'].includes($store.getters.getUser.role)"
+                    confirm-button-text='确 定'
+                    confirm-button-type="danger"
+                    cancel-button-text='取 消'
+                    icon="el-icon-info"
+                    icon-color="#ff7d89"
+                    title="确定删除该员工吗？"
+                    @confirm="handleDeleteUser(scope.row.id)"
+                    class="ml-2"
+                >
+                    <el-button 
+                        slot="reference" 
+                        v-show="scope.row.id===getSelectedId" 
+                        type="text"
+                        :style="{ 'color': '#ff6370' }"
+                        class="transition duration-1000"
+                    >删除</el-button>
+                </el-popconfirm>
             </template>
         </el-table-column>
     </el-table>

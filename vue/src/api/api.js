@@ -31,6 +31,9 @@ async function request(url, options = {}) {
     Message.error(data.tip)
     console.log({ code, message, data });
   }
+  else if(!response.ok) {
+    Message.error(message)
+  }
   return data;
 }
 
