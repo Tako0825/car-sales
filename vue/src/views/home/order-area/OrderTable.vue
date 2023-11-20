@@ -38,7 +38,7 @@
             prop="warehouse"
             label="来源仓库"
         ></el-table-column>
-        <el-table-column label="入职日期">
+        <el-table-column label="成交时间">
             <template slot-scope="scope">
             <p>{{ new Date(scope.row.createtime).toLocaleDateString() + " " + new Date(scope.row.createtime).toLocaleTimeString().slice(0,5) }}</p>
             </template>
