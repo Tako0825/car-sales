@@ -46,7 +46,7 @@ export default {
         },
         // 请求接口 - 创建供应商
         async createSupplier({ rootGetters }, payload) {
-            await api.post(`/api/rootGetters`, payload, { token: rootGetters.getToken })
+            await api.post(`/api/supplier`, payload, { token: rootGetters.getToken })
         },
         // 请求接口 - 获取指定的供应商信息
         async fetchSupplier({ rootGetters }, payload) {

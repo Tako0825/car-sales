@@ -6,14 +6,10 @@ export const action = "http://upload-z2.qiniup.com"
 export const hostname = "http://cdn.takoko.top"
 export const bucket = "wutongroad"
 
-export const getUploadConfig = async () => {
-    return await api.get("/api/qiniu/upload-token")
-}
-
 // 上传图片
 export const uploadQiniuImage = async (file) => {
     try {
-        const { uploadToken: token } = await api.get("/api/qiniu/upload-token")
+        const { uploadToken: token } = await api.get("/api/qiniu/upload-token", { token: localStorage.getItem("token") })
         const key = `${new Date().getFullYear()}-${new Date().getMonth() + 1}/${v4()}`
         const putExtra = {}
         const config = {
