@@ -21,16 +21,16 @@ export class RankingUserService {
             return new Promise((resolve) => {
                 // 以 currentYear 为基准, 取近 year 年以来销售量最高的 count 名员工 
                 this.prisma.$queryRaw`
-                    SELECT a.userId,user.username,SUM(product.price) AS total
+                    SELECT a.userId,User.username,SUM(Product.price) AS total
                     FROM (
                         SELECT *
-                        FROM \`order\`
+                        FROM \`Order\`
                         WHERE year(createtime) > ${currentYear - year}
                     ) AS a
-                    INNER JOIN product
-                    ON a.productId = product.id
-                    INNER JOIN user 
-                    ON a.userId = user.id
+                    INNER JOIN Product
+                    ON a.productId = Product.id
+                    INNER JOIN User 
+                    ON a.userId = User.id
                     GROUP BY userId
                     ORDER BY total DESC
                     LIMIT ${count}
@@ -47,12 +47,12 @@ export class RankingUserService {
                     const promise = idList.map(async (item,index) => {
                         // 上榜员工在相应年份的销售额
                         const result:Array<{ currentyear: number, total: number }> = await this.prisma.$queryRaw`
-                            SELECT YEAR(o.createtime) AS currentyear,ROUND(SUM(product.price),2) AS total
-                            FROM \`order\` AS o 
-                            INNER JOIN product 
-                            ON o.productId = product.id 
-                            INNER JOIN user 
-                            ON o.userId = user.id 
+                            SELECT YEAR(o.createtime) AS currentyear,ROUND(SUM(Product.price),2) AS total
+                            FROM \`Order\` AS o 
+                            INNER JOIN Product 
+                            ON o.productId = Product.id 
+                            INNER JOIN User 
+                            ON o.userId = User.id 
                             GROUP BY o.userId,currentyear 
                             HAVING currentyear >= ${currentYear - year + 1} 
                             AND o.userId = ${item}

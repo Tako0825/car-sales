@@ -18,6 +18,7 @@
 import { Message } from "element-ui";
 
 const DEVELOPMENT_SERVER = "localhost"
+// const PRODUCTION_SERVER = "139.9.180.97"
 const port = 3000
 async function request(url, options = {}) {
   const response = await fetch(`http://${DEVELOPMENT_SERVER}:${port}${url}`, options);

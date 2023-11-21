@@ -18,34 +18,34 @@ export class UserOtherService {
             }
         })
         const sales = await this.prisma.$queryRaw`
-            SELECT ROUND(SUM(product.price), 2) AS sales
-            FROM \`order\` AS o
-            INNER JOIN product 
-            ON o.productId = product.id
+            SELECT ROUND(SUM(Product.price), 2) AS sales
+            FROM \`Order\` AS o
+            INNER JOIN Product 
+            ON o.productId = Product.id
             WHERE o.userId = ${id}
         `
         const average = await this.prisma.$queryRaw`
           select round(avg(b.sales), 2) as average_sales, ceil(avg(b.count)) as average_count
           from (
-            select user.id, ifnull(a.sales, 0) as sales, ifnull(a.count, 0) as count
-            from user 
+            select User.id, ifnull(a.sales, 0) as sales, ifnull(a.count, 0) as count
+            from User 
             left join (
-              select userId, sum(product.price) as sales, count(o.id) as count
-              from \`order\` as o 
-              inner join product 
-              on o.productId = product.id 
+              select userId, sum(Product.price) as sales, count(o.id) as count
+              from \`Order\` as o 
+              inner join Product 
+              on o.productId = Product.id 
               group by userId 
             ) as a
-            on user.id = a.userId
+            on User.id = a.userId
           ) as b
         `
         const source = await this.prisma.$queryRaw`
-            SELECT o.id, product.name, product.model, warehouse.location, o.createtime 
-            FROM \`order\` AS o 
-            INNER JOIN product 
-            ON o.productId = product.id 
-            INNER JOIN warehouse 
-            ON o.warehouseId = warehouse.id 
+            SELECT o.id, Product.name, Product.model, Warehouse.location, o.createtime 
+            FROM \`Order\` AS o 
+            INNER JOIN Product 
+            ON o.productId = Product.id 
+            INNER JOIN Warehouse 
+            ON o.warehouseId = Warehouse.id 
             WHERE userId = ${id}
         `
         return {

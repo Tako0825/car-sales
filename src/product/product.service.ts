@@ -84,16 +84,16 @@ export class ProductService {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
       const pie = await this.prisma.$queryRaw`
-        SELECT supply.quantity AS value, warehouse.location AS name
-        FROM supply
-        INNER JOIN warehouse 
-        ON supply.warehouseId = warehouse.id 
+        SELECT Supply.quantity AS value, Warehouse.location AS name
+        FROM Supply
+        INNER JOIN Warehouse 
+        ON Supply.warehouseId = Warehouse.id 
         WHERE productId = ${id}
       `
       const gradientBar: Array<{ year: string, total: string }> = await this.prisma.$queryRaw`
         SELECT YEAR(createtime) AS year,
         CONCAT(COUNT(*), '') AS total
-        FROM \`order\` AS o
+        FROM \`Order\` AS o
         GROUP BY productId, YEAR(createtime)
         HAVING productId = ${id}
         ORDER BY year ASC
