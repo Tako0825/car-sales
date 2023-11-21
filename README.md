@@ -8,8 +8,7 @@
 账号：10000000000（11位手机号）
 密码：admin123
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409293/image-preview)
-
+![img.png](img.png)
 
 ## 项目背景
 
@@ -31,63 +30,64 @@
 ### 1. 工作台模块
 - 提供 Echarts 可视化图表来展示销售业务的相关数据
 
-
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409295/image-preview)
+![img_1.png](img_1.png)
 
 ### 2. 员工模块
 - 实现员工信息管理，包括基本信息和权限控制。
 - 支持角色和权限系统，确保安全可控的员工管理。
 
+![img_2.png](img_2.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409296/image-preview)
+![img_3.png](img_3.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409299/image-preview)
+![img_4.png](img_4.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409300/image-preview)
+![img_5.png](img_5.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409301/image-preview)
 ### 3. 汽车产品模块
 - 提供详细的汽车信息，包括型号、售价、车型、简介等。
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409302/image-preview)
+![img_6.png](img_6.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409303/image-preview)
+![img_7.png](img_7.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409304/image-preview)
+![img_8.png](img_8.png)
+
 ### 4. 仓库模块
 - 追踪汽车库存情况，包括每辆汽车的状态和位置。
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409306/image-preview)
+![img_9.png](img_9.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409307/image-preview)
+![img_10.png](img_10.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409309/image-preview)
+![img_11.png](img_11.png)
+
 ### 5. 供应商模块
 - 管理供应商信息，包括基本信息和联系方式。
 - 提供报表和统计功能，方便分析供应链表现。
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409310/image-preview)
+![img_12.png](img_12.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409311/image-preview)
+![img_13.png](img_13.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409312/image-preview)
+![img_14.png](img_14.png)
 
 ### 6. 订单模块
 - 管理订单生命周期，包括创建、编辑和取消订单。
 - 记录订单状态，确保对销售流水的完整掌控。
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409313/image-preview)
+![img_15.png](img_15.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409314/image-preview)
+![img_17.png](img_17.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409315/image-preview)
+![img_18.png](img_18.png)
 
 ### 7. 供应记录模块
 - 记录与供应商之间的交易信息，包括供应数量、时间、产品等。
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409316/image-preview)
+![img_19.png](img_19.png)
 
-![image.png](https://api.apifox.cn/api/v1/projects/3494036/resources/409317/image-preview)
+![img_20.png](img_20.png)
 
 ## 反馈与支持
 
