@@ -8,7 +8,7 @@
 账号：10000000000（11位手机号）
 密码：admin123
 
-![img.png](img.png)
+![img.png](image/img.png)
 
 ## 项目背景
 
@@ -30,64 +30,64 @@
 ### 1. 工作台模块
 - 提供 Echarts 可视化图表来展示销售业务的相关数据
 
-![img_1.png](img_1.png)
+![img_1.png](image/img_1.png)
 
 ### 2. 员工模块
 - 实现员工信息管理，包括基本信息和权限控制。
 - 支持角色和权限系统，确保安全可控的员工管理。
 
-![img_2.png](img_2.png)
+![img_2.png](image/img_2.png)
 
-![img_3.png](img_3.png)
+![img_3.png](image/img_3.png)
 
-![img_4.png](img_4.png)
+![img_4.png](image/img_4.png)
 
-![img_5.png](img_5.png)
+![img_5.png](image/img_5.png)
 
 ### 3. 汽车产品模块
 - 提供详细的汽车信息，包括型号、售价、车型、简介等。
 
-![img_6.png](img_6.png)
+![img_6.png](image/img_6.png)
 
-![img_7.png](img_7.png)
+![img_7.png](image/img_7.png)
 
-![img_8.png](img_8.png)
+![img_8.png](image/img_8.png)
 
 ### 4. 仓库模块
 - 追踪汽车库存情况，包括每辆汽车的状态和位置。
 
-![img_9.png](img_9.png)
+![img_9.png](image/img_9.png)
 
-![img_10.png](img_10.png)
+![img_10.png](image/img_10.png)
 
-![img_11.png](img_11.png)
+![img_11.png](image/img_11.png)
 
 ### 5. 供应商模块
 - 管理供应商信息，包括基本信息和联系方式。
 - 提供报表和统计功能，方便分析供应链表现。
 
-![img_12.png](img_12.png)
+![img_12.png](image/img_12.png)
 
-![img_13.png](img_13.png)
+![img_13.png](image/img_13.png)
 
-![img_14.png](img_14.png)
+![img_14.png](image/img_14.png)
 
 ### 6. 订单模块
 - 管理订单生命周期，包括创建、编辑和取消订单。
 - 记录订单状态，确保对销售流水的完整掌控。
 
-![img_15.png](img_15.png)
+![img_15.png](image/img_15.png)
 
-![img_17.png](img_17.png)
+![img_17.png](image/img_17.png)
 
-![img_18.png](img_18.png)
+![img_18.png](image/img_18.png)
 
 ### 7. 供应记录模块
 - 记录与供应商之间的交易信息，包括供应数量、时间、产品等。
 
-![img_19.png](img_19.png)
+![img_19.png](image/img_19.png)
 
-![img_20.png](img_20.png)
+![img_20.png](image/img_20.png)
 
 ## 反馈与支持
 
