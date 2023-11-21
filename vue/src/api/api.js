@@ -17,11 +17,11 @@
 */
 import { Message } from "element-ui";
 
-const DEVELOPMENT_SERVER = "localhost"
-// const PRODUCTION_SERVER = "139.9.180.97"
+// const DEVELOPMENT_SERVER = "localhost"
+const PRODUCTION_SERVER = "139.9.180.97"
 const port = 3000
 async function request(url, options = {}) {
-  const response = await fetch(`http://${DEVELOPMENT_SERVER}:${port}${url}`, options);
+  const response = await fetch(`http://${PRODUCTION_SERVER}:${port}${url}`, options);
   const { code, message, data } = await response.json()
   // 200 - 请求成功并弹出相应成功提示, 如果 data.tip 存在
   if(response.ok && data.tip?.length) {

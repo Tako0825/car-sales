@@ -37,7 +37,7 @@
             width="80"
         ></el-table-column>
         <!-- 编辑 -->
-        <el-table-column fixed="right" label="操作">
+        <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
                 <el-button @click="handleSupplyDelete(scope.row)" type="text">删除</el-button>
             </template>

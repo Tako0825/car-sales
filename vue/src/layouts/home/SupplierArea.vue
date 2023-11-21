@@ -10,6 +10,7 @@
             size="small"
         >添加供应商</el-button>
     </header>
+    <!-- 供应商列表 -->
     <SupplierTableVue class="w-full"/>
     <!-- 分页 -->
     <el-pagination

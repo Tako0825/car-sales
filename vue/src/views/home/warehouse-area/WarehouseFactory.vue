@@ -74,7 +74,7 @@ export default {
                     await this.createWarehouse(this.form)
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getWarehouseTotal / this.getPageSize))
+                    this.setPage(Math.ceil(this.getWarehouseTotal / this.getPageSize) || 1)
                     const { warehouseList } = await this.fetchSource()
                     this.setSource(warehouseList)
                     this.setDialogFormVisible(false)

@@ -171,7 +171,7 @@ export default {
                     })
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getSupplyTotal / this.getPageSize))
+                    this.setPage(Math.ceil(this.getSupplyTotal / this.getPageSize) || 1)
                     const { supplyList } = await this.fetchSource()
                     this.setSource(supplyList)
                     this.setDialogFormVisible(false)

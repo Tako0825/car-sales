@@ -153,7 +153,7 @@ export default {
                     })
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getOrderTotal / this.getPageSize))
+                    this.setPage(Math.ceil(this.getOrderTotal / this.getPageSize) || 0)
                     const { orderList } = await this.fetchSource()
                     this.setSource(orderList)
                     this.setDialogFormVisible(false)

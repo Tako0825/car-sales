@@ -3,10 +3,10 @@
         <!-- 头部 -->
         <header class="w-full flex justify-between">
             <h1 class="text-2xl font-bold">供应记录</h1>
-            <el-button type="success" @click="setDialogFormVisible(true)" size="medium">添加供应记录</el-button>
+            <el-button type="success" @click="setDialogFormVisible(true)" size="small">添加供应记录</el-button>
         </header>
-        <!-- 订单列表 -->
-        <SupplyTableVue/>
+        <!-- 供应记录列表 -->
+        <SupplyTableVue class="w-full"/>
         <!-- 分页 -->
         <el-pagination
             layout="prev, pager, next"

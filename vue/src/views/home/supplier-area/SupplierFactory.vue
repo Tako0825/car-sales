@@ -95,7 +95,7 @@ export default {
                     await this.createSupplier(this.form)
                     this.setDataReady(false)
                     await sleep()
-                    this.setPage(Math.ceil(this.getSupplierTotal / this.getPageSize))
+                    this.setPage(Math.ceil(this.getSupplierTotal / this.getPageSize) || 1)
                     const { supplierList } = await this.fetchSource()
                     this.setSource(supplierList)
                     this.setDialogFormVisible(false)
