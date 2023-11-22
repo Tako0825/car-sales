@@ -5,6 +5,8 @@ import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { User } from '@prisma/client';
 import { ResponseData } from 'src/common/class/response.data';
+import { createHash } from 'crypto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
@@ -99,6 +101,42 @@ export class UserService {
       })
       return {
         tip: "成功修改用户信息"
+      }
+    })
+  }
+
+  async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
+    await this.commonService.getEntityById<User>(PrismaModel.user, id)
+    return await this.commonService.handlePrismaExecution<any>(async() => {
+      // 情况 1
+      if(updatePasswordDto.password !== updatePasswordDto.passwordConfirmed) {
+        return { 
+          success: false,
+          message: "新密码与确认密码必须保持一致"
+        }
+      }
+      // 密码哈希加密
+      const hash = createHash("sha256").update(updatePasswordDto.originalPassword).digest("hex")
+      const user = await this.prisma.user.findUnique({
+        where: { id }
+      })
+      // 情况 2
+      if(hash !== user.password) {
+        return { 
+          success: false,
+          message: "原密码错误"
+        }
+      }
+      // 情况 3
+      await this.prisma.user.update({
+        where: { id },
+        data: {
+          password: createHash("sha256").update(updatePasswordDto.password).digest("hex")
+        }
+      })
+      return {
+        tip: "成功修改密码",
+        success: true
       }
     })
   }
