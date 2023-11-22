@@ -31,7 +31,13 @@
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="getUser.date" class="mr-6"></el-date-picker>
+                        <el-date-picker 
+                            type="date" 
+                            placeholder="选择日期" 
+                            v-model="getUser.date" 
+                            class="mr-6"
+                            :picker-options="pickerOptions"
+                        ></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="getUser.time"></el-time-picker>
@@ -70,6 +76,11 @@ export default {
                 date: { required: true, message: '请选择入职日期', trigger: 'change' },
                 time: { required: true, message: '请选择入职时间', trigger: 'change' },
                 address: { required: true, message: '请输入家庭住址', trigger: 'blur' }
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                }
             }
         }
     },

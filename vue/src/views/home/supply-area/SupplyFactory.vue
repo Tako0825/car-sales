@@ -57,16 +57,13 @@
             <el-form-item label="供应时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker 
-                            type="date" 
-                            placeholder="选择日期" 
-                            v-model="form.date" 
-                            class="mr-6" 
-                            :picker-options="pickerOptions"
-                        ></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6" :picker-options="pickerOptions"></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
-                        <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>
+                        <el-time-picker 
+                            placeholder="选择时间" 
+                            v-model="form.time"
+                        ></el-time-picker>
                     </el-form-item>
                 </el-row>
             </el-form-item>

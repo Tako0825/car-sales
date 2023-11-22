@@ -15,7 +15,7 @@
             label-position="left"
         >
             <el-form-item label="地址" prop="location" class="w-full">
-                <el-input type="textarea" v-model="getWarehouse.location"></el-input>
+                <el-input type="textarea" v-model="getWarehouse.location" rows="1"></el-input>
             </el-form-item>
         </el-form>
         <!-- 取消 & 保存 -->
