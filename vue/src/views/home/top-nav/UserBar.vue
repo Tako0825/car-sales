@@ -5,26 +5,23 @@
         <i class="el-icon-message transform scale-150"></i>
         <!-- 我的头像 -->
         <el-dropdown @command="handleCommand" trigger="click">
-            <el-avatar :src="avatar" alt="我的头像"></el-avatar>
+            <el-avatar :src="getUser.avatar" alt="我的头像"></el-avatar>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+                <el-dropdown-item command="space">我的资料</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </main>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 export default {
     name: "UserBar",
-    async mounted() {
-        const user = JSON.parse(localStorage.getItem("user"))
-        this.avatar = user.avatar
-    },
-    data() {
-        return {
-            avatar: ""
-        }
+    computed: {
+        ...mapGetters([
+            "getUser"
+        ])
     },
     methods: {
         ...mapMutations([
@@ -49,6 +46,15 @@ export default {
                         // 3. 跳转至登录页面
                         this.$router.push("/login")
                     }).catch(() => {})
+                    break
+                }
+                case "space": {
+                    if(this.$route.name !== "space") {
+                        this.$router.push({ name: "space" })
+                    }
+                    break
+                }
+                default: {
                     break
                 }
             }
