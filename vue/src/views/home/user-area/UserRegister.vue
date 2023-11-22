@@ -26,12 +26,14 @@
                     <el-input v-model="form.phone"></el-input>
                 </el-form-item>
             </el-row>
-            <el-form-item label="密码" prop="password" class="w-full">
-                <el-input type="password" v-model="form.password" autocomplete="off" ></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="passwordConfirmed" class="w-full">
-                <el-input type="password" v-model="form.passwordConfirmed" autocomplete="off"></el-input>
-            </el-form-item>
+            <el-row class="flex justify-between">
+                <el-form-item label="密码" prop="password" class="mr-6">
+                    <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="passwordConfirmed">
+                    <el-input type="password" v-model="form.passwordConfirmed" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-row>
             <el-form-item label="职位" prop="role">
                 <el-select v-model="form.role" placeholder="请选择职位">
                     <el-option label="职员" value="USER"></el-option>
@@ -41,7 +43,13 @@
             <el-form-item label="入职时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6"></el-date-picker>
+                        <el-date-picker 
+                            type="date" 
+                            placeholder="选择日期" 
+                            v-model="form.date" 
+                            class="mr-6"
+                            :picker-options="pickerOptions"
+                        ></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>
@@ -122,6 +130,11 @@ export default {
                 date: { required: true, message: '请选择入职日期', trigger: 'change' },
                 time: { required: true, message: '请选择入职时间', trigger: 'change' },
                 address: { required: true, message: '请输入家庭住址', trigger: 'blur' }
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                }
             }
         }
     },

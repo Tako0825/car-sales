@@ -50,10 +50,16 @@
                 </el-select>
             </el-form-item>
             <!-- 请选择入职时间 -->
-            <el-form-item label="入职时间" required>
+            <el-form-item label="成交时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6"></el-date-picker>
+                        <el-date-picker 
+                            type="date" 
+                            placeholder="选择日期" 
+                            v-model="form.date" 
+                            class="mr-6"
+                            :picker-options="pickerOptions"
+                        ></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>
@@ -106,6 +112,11 @@ export default {
                 warehouseId: { required: true, message: '请输入当前订单所属仓库', trigger: 'blur' },
                 date: { required: true, message: '请输入具体成交日期', trigger: 'blur' },
                 time: { required: true, message: '请输入具体成交时间', trigger: 'blur' },
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                }
             }
         }
     },

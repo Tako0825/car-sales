@@ -22,32 +22,33 @@
                 <el-empty v-if="!form.poster" class="w-full h-full"></el-empty>
             </section>
             <el-row class="flex justify-between">
-                <el-form-item label="品牌" prop="name" class="mr-6  ">
+                <el-form-item label="品牌" prop="name" class="mr-4">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="型号" prop="model">
                     <el-input v-model="form.model"></el-input>
                 </el-form-item>
             </el-row>
-            <el-form-item label="售价" prop="price" class="w-full">
-                <el-input v-model="form.price">
-                    <span slot="suffix">万</span>
-                </el-input>
-            </el-form-item>
-            <!-- 请选择车型 -->
-            <el-form-item label="车型" prop="poster">
-                <el-select v-model="form.poster" placeholder="请选择车型" clearable>
-                    <el-option
-                        v-for="item in types"
-                        :key="item.poster"
-                        :label="item.label"
-                        :value="item.poster"
-                    >
-                        <el-image class="float-left w-10 h-full" :src="item.poster" fit="cover"></el-image>
-                        <span class="float-right text-gray-500 font-bold">{{ item.label }}</span>
-                    </el-option>
-                </el-select>
-            </el-form-item>
+            <el-row class="flex justify-between">
+                <el-form-item label="售价" prop="price" class="mr-4">
+                    <el-input v-model="form.price">
+                        <span slot="suffix">万</span>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="车型" prop="poster">
+                    <el-select v-model="form.poster" placeholder="请选择车型" clearable>
+                        <el-option
+                            v-for="item in types"
+                            :key="item.poster"
+                            :label="item.label"
+                            :value="item.poster"
+                        >
+                            <el-image class="float-left w-10 h-full" :src="item.poster" fit="cover"></el-image>
+                            <span class="float-right text-gray-500 font-bold">{{ item.label }}</span>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-row>
             <el-form-item label="简介" prop="introduce" class="w-full">
                 <el-input type="textarea" v-model="form.introduce"></el-input>
             </el-form-item>

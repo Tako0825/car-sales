@@ -54,10 +54,16 @@
                 <el-input v-model="form.quantity"></el-input>
             </el-form-item>
             <!-- 请选择入职时间 -->
-            <el-form-item label="入职时间" required>
+            <el-form-item label="供应时间" required>
                 <el-row class="flex justify-start max-w-md">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date" class="mr-6"></el-date-picker>
+                        <el-date-picker 
+                            type="date" 
+                            placeholder="选择日期" 
+                            v-model="form.date" 
+                            class="mr-6" 
+                            :picker-options="pickerOptions"
+                        ></el-date-picker>
                     </el-form-item>
                     <el-form-item prop="time">
                         <el-time-picker placeholder="选择时间" v-model="form.time"></el-time-picker>
@@ -123,6 +129,11 @@ export default {
                 ],
                 date: { required: true, message: '请输入具体供应日期', trigger: 'blur' },
                 time: { required: true, message: '请输入具体供应时间', trigger: 'blur' },
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now()
+                }
             }
         }
     },
@@ -189,6 +200,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

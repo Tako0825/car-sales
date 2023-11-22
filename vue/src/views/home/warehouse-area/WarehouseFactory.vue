@@ -17,7 +17,7 @@
             class="flex flex-col items-start"
         >
             <el-form-item label="地址" prop="location" class="w-full">
-                <el-input type="textarea" v-model="form.location"></el-input>
+                <el-input type="textarea" v-model="form.location" rows="1"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">

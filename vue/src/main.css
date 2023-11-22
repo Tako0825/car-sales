@@ -30,3 +30,8 @@ img {
     display: initial;
     background-color: #555;
 }
+
+/* Element 时间选择器隐藏滚动条 */
+.el-scrollbar  {
+    overflow: hidden!important;
+}

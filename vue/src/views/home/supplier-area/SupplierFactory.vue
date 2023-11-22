@@ -16,14 +16,16 @@
             label-position="left"
             class="flex flex-col items-start"
         >
+            <el-row class="flex justify-between">
+                <el-form-item label="联系人" prop="name" class="mr-6">
+                    <el-input type="text" v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话" prop="phone">
+                    <el-input type="text" v-model="form.phone"></el-input>
+                </el-form-item>
+            </el-row>
             <el-form-item label="公司" prop="company" class="w-full">
                 <el-input type="textarea" v-model="form.company"></el-input>
-            </el-form-item>
-            <el-form-item label="联系电话" prop="phone" class="w-full">
-                <el-input type="text" v-model="form.phone"></el-input>
-            </el-form-item>
-            <el-form-item label="联系人" prop="name" class="w-full">
-                <el-input type="text" v-model="form.name"></el-input>
             </el-form-item>
         </el-form>
         <section slot="footer" class="dialog-footer">
