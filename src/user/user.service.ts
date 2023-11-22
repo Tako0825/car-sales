@@ -5,6 +5,7 @@ import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { User } from '@prisma/client';
 import { ResponseData } from 'src/common/class/response.data';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class UserService {
@@ -88,13 +89,15 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
-      const { phone, username, role, address, joined_date, avatar } = updateUserDto
+      const { phone, username, role, address, joined_date, avatar, password } = updateUserDto
+      // 密码哈希加密
+      const hash = createHash("sha256").update(password).digest("hex")
       await this.prisma.user.update({
         where: {
           id
         },
         data: {
-          phone, username, role, address, joined_date, avatar
+          phone, username, role, address, joined_date, avatar, password: hash
         }
       })
       return {
