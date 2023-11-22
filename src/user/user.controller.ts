@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { $Enums } from '@prisma/client';
 import { RoleGuard } from 'src/common/guard/role.guard';
 import { UserOtherService } from './user.other.service';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 // CONTROLLER - USER
 @Controller('user')
@@ -47,6 +48,14 @@ export class UserController {
   @UsePipes(Validation)
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
+  }
+
+  // API - UPDATE USER PASSWORD(修改用户密码)
+  @Patch(':id/password')
+  @UseGuards(AuthGuard("jwt"))
+  @UsePipes(Validation)
+  async updatePassword(@Param('id', ParseIntPipe) id: number, @Body() updatePasswordDto: UpdatePasswordDto) {
+    return await this.userService.updatePassword(id, updatePasswordDto);
   }
 
   // API - REMOVE USER(删除用户)

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import api from "@/api/api"
 import { mapGetters } from "vuex"
 export default {
   name: "SpacePage",
@@ -35,12 +36,12 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getUser"
+      "getUser", "getToken"
     ])
   },
   methods: {
     // 提交表单 - 更改密码
-    submitForm() {
+    async submitForm() {
       if(!this.originalPassword || !this.password || !this.passwordConfirmed) {
         return this.$notify.error({
           title: '表单不允许留空'
@@ -51,12 +52,22 @@ export default {
           title: '密码与确认密码必须一致'
         })
       }
-      const data = {
+      // 请求修改密码 API
+      const response = await api.patch(`/api/user/${this.getUser.id}/password`, {
         originalPassword: this.originalPassword,
         password: this.password,
         passwordConfirmed: this.passwordConfirmed
+      }, { token: this.getToken })
+      // API 调用错误 - 输出提示
+      if(!response.success) {
+        return this.$notify.error({
+          title: response.message
+        })
       }
-      console.log(data);
+      // API 调用成功 - 重置表单
+      else {
+        return this.resetForm()
+      }
     },
     // 重置表单
     resetForm() {

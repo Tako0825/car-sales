@@ -7,8 +7,8 @@
         <el-dropdown @command="handleCommand" trigger="click">
             <el-avatar :src="getUser.avatar" alt="我的头像"></el-avatar>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
                 <el-dropdown-item command="space">我的资料</el-dropdown-item>
+                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </main>

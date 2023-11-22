@@ -12,5 +12,4 @@ export class UpdateUserDto implements Partial<User> {
     joined_date?: Date
     address?: string
     avatar?: string
-    password?: string
 }
