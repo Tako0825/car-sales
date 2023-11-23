@@ -1,6 +1,11 @@
 <template>
   <el-tabs v-model="activedName" class=" bg-white p-6 rounded-lg">
-    <!-- 上传头像 -->
+    <!-- 个人资料 -->
+    <el-tab-pane label="个人资料" name="user">
+      <UserCardVue/>
+    </el-tab-pane>
+
+    <!-- 修改头像 -->
     <el-tab-pane label="修改头像" name="avatar">
       <AvatarCardVue/>
     </el-tab-pane>
@@ -15,13 +20,14 @@
 <script>
 import AvatarCardVue from '@/views/space/AvatarCard.vue'
 import PasswordCardVue from '@/views/space/PasswordCard.vue'
+import UserCardVue from '@/views/space/UserCard.vue'
 export default {
   name: "SpacePage",
-  components: { AvatarCardVue, PasswordCardVue },
+  components: { AvatarCardVue, PasswordCardVue, UserCardVue },
   data() {
     return {
       dataReady: false,
-      activedName: "avatar"
+      activedName: "user"
     }
   }
 }

@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex"
 import DashboardChartVue from '../dashboard-area/DashboardChart.vue'
+import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapMutations } = createNamespacedHelpers("userArea")
 export default {
   name: "UserDetail",
