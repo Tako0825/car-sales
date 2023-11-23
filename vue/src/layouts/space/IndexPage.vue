@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activedName" class=" bg-white p-6 rounded-lg">
+  <el-tabs v-model="activedName" class="w-full h-auto">
     <!-- 个人资料 -->
     <el-tab-pane label="个人资料" name="user">
       <UserCardVue/>

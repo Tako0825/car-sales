@@ -1,6 +1,6 @@
 <template>
     <!-- 修改我的密码 -->
-    <main>
+    <main class="w-full h-auto bg-white p-10 rounded-lg">
         <section v-for="input in inputs" :key="input.title" class="flex items-center gap-8">
             <h2 class="whitespace-nowrap w-24">{{ input.title }}</h2>
             <el-input 

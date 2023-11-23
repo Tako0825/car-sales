@@ -1,6 +1,6 @@
 <template>
     <!-- 更换我的头像 -->
-    <main class="w-full h-full flex flex-col items-center gap-6">
+    <main class="w-full h-auto bg-white p-6 rounded-lg flex flex-col items-center gap-6">
         <UploadAvatar :avatar="getUser?.avatar"/>
         <el-button @click="handleUploadAvatar" type="primary" :disabled="!getFile">点击上传</el-button>
     </main>
