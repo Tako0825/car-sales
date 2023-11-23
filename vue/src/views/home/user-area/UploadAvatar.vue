@@ -32,12 +32,11 @@ export default {
         return {
             action,
             hostname,
-            dialogVisible: false,
         }
     },
     computed: {
         ...mapGetters([
-            "getFile", "getPreviewImage"
+            "getPreviewImage"
         ])
     },
     methods: {

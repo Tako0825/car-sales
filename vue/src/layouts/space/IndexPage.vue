@@ -1,87 +1,32 @@
 <template>
-  <main class="w-full h-full bg-white rounded-lg flex justify-center items-center">
-    <article class="w-1/3 -auto flex flex-col gap-10">
-      <section class="w-full h-auto relative">
-        <input type="password" v-model="originalPassword" placeholder="enter your original password" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
-        <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">原密码</span>
-      </section>
-      <section class="w-full h-auto relative">
-        <input type="password" v-model="password" @keyup.enter="login" placeholder="enter your new password" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
-        <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">密码</span>
-      </section>
-      <section class="w-full h-auto relative">
-        <input type="password" v-model="passwordConfirmed" placeholder="enter your new password again" class="w-full h-auto p-3 border-2 border-solid border-gray-400 rounded-md font-bold text-md">
-        <span class="text-xs font-bold absolute top-0 left-4 transform -translate-y-1/2 bg-white text-gray-400 px-2">确认密码</span>
-      </section>
-      <div class="flex justify-center">
-        <el-button type="success" @click="submitForm">修改密码</el-button>
-        <el-button @click="resetForm">重 置</el-button>
-      </div>
-    </article>
-  </main>
+  <el-tabs v-model="activedName" class=" bg-white p-6 rounded-lg">
+    <!-- 上传头像 -->
+    <el-tab-pane label="修改头像" name="avatar">
+      <AvatarCardVue/>
+    </el-tab-pane>
+
+    <!-- 修改密码 -->
+    <el-tab-pane label="修改密码" name="password">
+      <PasswordCardVue class="w-full h-full flex flex-col items-center gap-6"/>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
-import api from "@/api/api"
-import { mapGetters } from "vuex"
+import AvatarCardVue from '@/views/space/AvatarCard.vue'
+import PasswordCardVue from '@/views/space/PasswordCard.vue'
 export default {
   name: "SpacePage",
+  components: { AvatarCardVue, PasswordCardVue },
   data() {
     return {
       dataReady: false,
-      originalPassword: "",
-      password: "",
-      passwordConfirmed: ""
-    }
-  },
-  computed: {
-    ...mapGetters([
-      "getUser", "getToken"
-    ])
-  },
-  methods: {
-    // 提交表单 - 更改密码
-    async submitForm() {
-      if(!this.originalPassword || !this.password || !this.passwordConfirmed) {
-        return this.$notify.error({
-          title: '表单不允许留空'
-        })
-      }
-      else if(this.password !== this.passwordConfirmed) {
-        return this.$notify.error({
-          title: '密码与确认密码必须一致'
-        })
-      }
-      // 请求修改密码 API
-      const response = await api.patch(`/api/user/${this.getUser.id}/password`, {
-        originalPassword: this.originalPassword,
-        password: this.password,
-        passwordConfirmed: this.passwordConfirmed
-      }, { token: this.getToken })
-      // API 调用错误 - 输出提示
-      if(!response.success) {
-        return this.$notify.error({
-          title: response.message
-        })
-      }
-      // API 调用成功 - 重置表单
-      else {
-        return this.resetForm()
-      }
-    },
-    // 重置表单
-    resetForm() {
-      this.originalPassword = "",
-      this.password = "",
-      this.passwordConfirmed = ""
+      activedName: "avatar"
     }
   }
 }
 </script>
 
 <style scoped>
-  /* 输入框聚焦时, 相应的 label 字体颜色变黑 */
-  section:focus-within span {
-      color: #000;
-  }
+
 </style>
