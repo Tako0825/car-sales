@@ -10,6 +10,7 @@ export const bucket = "wutongroad"
 export const uploadQiniuImage = async (file) => {
     try {
         const { uploadToken: token } = await api.get("/api/qiniu/upload-token", { token: localStorage.getItem("token") })
+        console.log(token);
         const key = `${new Date().getFullYear()}-${new Date().getMonth() + 1}/${v4()}`
         const putExtra = {}
         const config = {
