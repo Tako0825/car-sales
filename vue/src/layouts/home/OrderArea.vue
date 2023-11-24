@@ -6,16 +6,7 @@
             <el-button type="success" @click="setDialogFormVisible(true)" size="small">添加订单</el-button>
         </header>
         <!-- 订单列表 -->
-        <OrderTableVue class="w-full"/>
-        <!-- 分页 -->
-        <el-pagination
-            layout="prev, pager, next"
-            :current-page="getPage"
-            @current-change="handleCurrentChange"
-            :page-size="getPageSize"
-            :total="getOrderTotal"
-            :hide-on-single-page="true"
-        ></el-pagination>
+        <OrderTableVue/>
         <!-- 添加仓库 -->
         <OrderFactory/>
     </main>
@@ -24,33 +15,15 @@
 <script>
 import OrderTableVue from '@/views/home/order-area/OrderTable.vue'
 import OrderFactory from '@/views/home/order-area/OrderFactory.vue';
-import { sleep } from '@/util/sleep';
 import { createNamespacedHelpers } from "vuex"
-const { mapGetters, mapMutations, mapActions } = createNamespacedHelpers("orderArea")
+const { mapMutations } = createNamespacedHelpers("orderArea")
 export default {
     name: "OrderArea",
     components: { OrderTableVue, OrderFactory },
-    computed: {
-        ...mapGetters([
-            "getPage", "getPageSize", "getOrderTotal"
-        ])
-    },
     methods: {
         ...mapMutations([
-            "setDialogFormVisible", "setDataReady", "setPage", "setSource"
-        ]),
-        ...mapActions([
-            "fetchSource"
-        ]),
-        // 处理页数切换
-        async handleCurrentChange(newPage) {
-            this.setDataReady(false)
-            this.setPage(newPage)
-            const { orderList } = await this.fetchSource()
-            this.setSource(orderList)
-            await sleep()
-            this.setDataReady(true)
-        }
+            "setDialogFormVisible"
+        ])
     }
 }
 </script>

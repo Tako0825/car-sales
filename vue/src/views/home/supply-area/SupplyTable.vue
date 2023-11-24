@@ -1,9 +1,10 @@
 <template>
-    <!-- 表格 -->
-    <main class="relative">
-        <article class="w-full h-auto absolute top-0 left-0">
+    <main class="relative w-full h-auto">
+        <article class="w-full h-auto absolute top-0 left-0 flex flex-col items-center gap-4 pb-12">
+            <!-- 表格 -->
             <el-table
                 :data="getSource"
+                v-if="getSource"
                 v-loading="!getDataReady"
                 stripe
                 style="width: 99%"
@@ -45,6 +46,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <!-- 空状态 -->
+            <el-empty description="" v-else class="bg-white w-full h-96 rounded-xl"></el-empty>
+            <!-- 分页 -->
+            <el-pagination
+                layout="prev, pager, next"
+                :current-page="getPage"
+                @current-change="handleCurrentChange"
+                :page-size="getPageSize"
+                :total="getSupplyTotal"
+            ></el-pagination>
         </article>
     </main>
 </template>
@@ -64,12 +75,12 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getSource", "getDataReady"
+            "getSource", "getDataReady", "getPage", "getPageSize", "getSupplyTotal"
         ])
     },
     methods: {
         ...mapMutations([
-            "setSource", "setDialogFormVisible", "setDataReady"
+            "setSource", "setDialogFormVisible", "setDataReady", "setPage"
         ]),
         ...mapActions([
             "fetchSource", "deleteSupply"
@@ -88,6 +99,15 @@ export default {
                 await sleep()
                 this.setDataReady(true)
             }).catch(() => {})
+        },
+        // 处理页数切换
+        async handleCurrentChange(newPage) {
+            this.setDataReady(false)
+            this.setPage(newPage)
+            const { supplyList } = await this.fetchSource()
+            this.setSource(supplyList)
+            await sleep()
+            this.setDataReady(true)
         }
     }
 }

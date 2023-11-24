@@ -1,46 +1,57 @@
 <template>
-<!-- 表格 -->
-<main class="relative">
-    <article class="w-full h-auto absolute top-0 left-0">
-        <el-table
-            :data="getSource"
-            v-loading="!getDataReady"
-            stripe
-            style="width: 99%"
-            header-cell-class-name="text-black" 
-            class="rounded-xl"
-        >
-            <!-- 占位列 -->
-            <el-table-column width="50"></el-table-column>
-            <el-table-column
-                prop="id"
-                label="序号"
-                width="80"
-            ></el-table-column>
-            <el-table-column
-                prop="company"
-                label="公司"
-            ></el-table-column>
-            <el-table-column
-                prop="phone"
-                label="联系电话"
-                width="150"
-            ></el-table-column>
-            <el-table-column
-                prop="name"
-                label="联系人"
-                width="150"
-            ></el-table-column>
-            <!-- 编辑 -->
-            <el-table-column v-if="['ADMIN'].includes($store.getters.getUser.role)" fixed="right" label="操作" width="120">
-                <template slot-scope="scope">
-                    <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
-                    <el-button @click="handleSupplierDelete(scope.row)" type="text">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </article>
-</main>
+    <main class="relative w-full h-auto">
+        <article class="w-full h-auto absolute top-0 left-0 flex flex-col items-center gap-4 pb-12">
+            <!-- 表格 -->
+            <el-table
+                :data="getSource"
+                v-if="getSource"
+                v-loading="!getDataReady"
+                stripe
+                style="width: 99%"
+                header-cell-class-name="text-black" 
+                class="rounded-xl"
+            >
+                <!-- 占位列 -->
+                <el-table-column width="50"></el-table-column>
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="80"
+                ></el-table-column>
+                <el-table-column
+                    prop="company"
+                    label="公司"
+                ></el-table-column>
+                <el-table-column
+                    prop="phone"
+                    label="联系电话"
+                    width="150"
+                ></el-table-column>
+                <el-table-column
+                    prop="name"
+                    label="联系人"
+                    width="150"
+                ></el-table-column>
+                <!-- 编辑 -->
+                <el-table-column v-if="['ADMIN'].includes($store.getters.getUser.role)" fixed="right" label="操作" width="120">
+                    <template slot-scope="scope">
+                        <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
+                        <el-button @click="handleSupplierDelete(scope.row)" type="text">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <!-- 空状态 -->
+            <el-empty description="" v-else class="bg-white w-full h-96 rounded-xl"></el-empty>
+            <!-- 分页 -->
+            <el-pagination
+                layout="prev, pager, next"
+                :current-page="getPage"
+                @current-change="handleCurrentChange"
+                :page-size="getPageSize"
+                :total="getSupplierTotal"
+            ></el-pagination>
+        </article>
+    </main>
 </template>
 
 <script>
@@ -58,12 +69,12 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getSource", "getDataReady"
+            "getSource", "getDataReady", "getPage", "getPageSize", "getSupplierTotal"
         ])
     },
     methods: {
         ...mapMutations([
-            "setSource", "setDialogFormVisible", "setDataReady", "setSupplier", "setDialogEditVisible"
+            "setSource", "setDialogFormVisible", "setDataReady", "setSupplier", "setDialogEditVisible", "setPage"
         ]),
         ...mapActions([
             "fetchSource", "deleteSupplier", "fetchSupplier"
@@ -88,6 +99,15 @@ export default {
                 await sleep()
                 this.setDataReady(true)
             }).catch(() => {})
+        },
+        // 处理页数切换
+        async handleCurrentChange(newPage) {
+            this.setDataReady(false)
+            this.setPage(newPage)
+            const { supplierList } = await this.fetchSource()
+            this.setSource(supplierList)
+            await sleep()
+            this.setDataReady(true)
         }
     }
 }
