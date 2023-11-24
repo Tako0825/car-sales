@@ -39,27 +39,27 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取供应商信息
-        async fetchSource({ state, commit, rootGetters }) {   
-            const response = await api.get(`/api/supplier?page=${state.page}&pageSize=${state.pageSize}`,{ token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {   
+            const response = await api.get(`/api/supplier?page=${state.page}&pageSize=${state.pageSize}`,{ token: localStorage.getItem("token") })
             commit("setSupplierTotal", response.supplierTotal)
             return response
         },
         // 请求接口 - 创建供应商
-        async createSupplier({ rootGetters }, payload) {
-            await api.post(`/api/supplier`, payload, { token: rootGetters.getToken })
+        async createSupplier(context, payload) {
+            await api.post(`/api/supplier`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取指定的供应商信息
-        async fetchSupplier({ rootGetters }, payload) {
-            const response = await api.get(`/api/supplier/${payload}`, { token: rootGetters.getToken })
+        async fetchSupplier(context, payload) {
+            const response = await api.get(`/api/supplier/${payload}`, { token: localStorage.getItem("token") })
             return response.supplier
         },
         // 请求接口 - 修改供应商信息
-        async updateSupplier({ rootGetters }, payload) {
-            await api.patch(`/api/supplier/${payload.id}`, payload.data, { token: rootGetters.getToken })
+        async updateSupplier(context, payload) {
+            await api.patch(`/api/supplier/${payload.id}`, payload.data, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 删除供应商
-        async deleteSupplier({ rootGetters }, payload) {
-            await api.delete(`/api/supplier/${payload}`, { token: rootGetters.getToken })
+        async deleteSupplier(context, payload) {
+            await api.delete(`/api/supplier/${payload}`, { token: localStorage.getItem("token") })
         }
     }
 }

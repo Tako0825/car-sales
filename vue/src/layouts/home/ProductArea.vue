@@ -4,7 +4,7 @@
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">汽车总览</h1>
       <el-button 
-        v-if="['ADMIN'].includes($store.getters.getUser.role)" 
+        v-if="['ADMIN'].includes($store.getters.getUser?.role)" 
         type="success" 
         @click="setDialogFormVisible(true)" 
         size="small"

@@ -84,9 +84,6 @@ export class AuthService {
 
     // SEVICE - AUTOMATIC LOGIN(自动登录)
     async autoLogin(user:User) {
-        return {
-            tip: "自动登录成功",
-            user
-        }
+        return { user }
     }
 }

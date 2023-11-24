@@ -53,7 +53,7 @@ export default {
           data: this.x,
           axisLabel: {
             inside: true,
-            color: '#fff'
+            color: '#000'
           },
           axisTick: {
             show: false

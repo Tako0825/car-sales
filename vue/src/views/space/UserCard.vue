@@ -61,7 +61,7 @@ export default {
   name: "UserCard",
   async created() {
     await sleep()
-    const response = await api.get(`/api/user/${this.getUser.id}/order`, { token: this.getToken })
+    const response = await api.get(`/api/user/${this.getUser?.id}/order`, { token: localStorage.getItem("token") })
     this.source = response?.source || []
     this.average_count = response?.average_count
     this.average_sales = response?.average_sales
@@ -79,10 +79,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getUser", "getToken"
+      "getUser"
     ]),
     joined_date() {
-      return new Date(this.getUser.joined_date).toLocaleDateString()
+      return new Date(this.getUser?.joined_date).toLocaleDateString()
     }
   },
   methods: {

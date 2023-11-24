@@ -55,39 +55,39 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取用户信息
-        async fetchSource({ state, commit, rootGetters }) {
-            const response = await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, { token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {
+            const response = await api.get(`/api/user?page=${state.page}&pageSize=${state.pageSize}`, { token: localStorage.getItem("token") })
             commit("setUserTotal", response.userTotal)
             return response
         },
         // 请求接口 - 获取指定用户
-        async fetchUser({ rootGetters }, payload) {
-            const response = await api.get(`/api/user/${payload}`, { token: rootGetters.getToken })
+        async fetchUser(context, payload) {
+            const response = await api.get(`/api/user/${payload}`, { token: localStorage.getItem("token") })
             const user = response.user
             user.date = new Date(user.joined_date).getTime()
             user.time = new Date(user.joined_date).getTime()
             return user
         },
         // 请求接口 - 修改指定用户
-        async updateUser({ rootGetters }, payload) {
-            await api.patch(`/api/user/${payload.id}`, payload.data , { token: rootGetters.getToken })
+        async updateUser(context, payload) {
+            await api.patch(`/api/user/${payload.id}`, payload.data , { token: localStorage.getItem("token") })
         },
         // 请求接口 - 注册用户
-        async registerUser({ rootGetters }, payload) {
-            await api.post(`/api/auth/register`, payload, { token: rootGetters.getToken })
+        async registerUser(context, payload) {
+            await api.post(`/api/auth/register`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 判断电话是否已注册
-        async isPhoneExisted({ rootGetters }, payload) {
-            const response = await api.get(`/api/user/phone/${payload}`, { token: rootGetters.getToken })
+        async isPhoneExisted(context, payload) {
+            const response = await api.get(`/api/user/phone/${payload}`, { token: localStorage.getItem("token") })
             return response
         },
         // 请求接口 - 删除用户
-        async deleteUser({ rootGetters }, payload) {
-            await api.delete(`/api/user/${payload}`, { token: rootGetters.getToken })
+        async deleteUser(payload) {
+            await api.delete(`/api/user/${payload}`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 查询用户详情
-        async fetchUserDetail({ rootGetters, commit }, payload) {
-            const response = await api.get(`/api/user/${payload}/order`, { token: rootGetters.getToken })
+        async fetchUserDetail({ commit }, payload) {
+            const response = await api.get(`/api/user/${payload}/order`, { token: localStorage.getItem("token") })
             commit("setUserDetail", response)
             return response
         }

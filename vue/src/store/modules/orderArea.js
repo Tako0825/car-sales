@@ -39,30 +39,30 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取供应商信息
-        async fetchSource({ state, commit, rootGetters }) {   
-            const response = await api.get(`/api/order?page=${state.page}&pageSize=${state.pageSize}`,{ token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {   
+            const response = await api.get(`/api/order?page=${state.page}&pageSize=${state.pageSize}`,{ token: localStorage.getItem("token") })
             commit("setOrderTotal", response.orderTotal)
             return response
         },
         // 请求接口 - 获取所有用户
-        async fetchUsers({ rootGetters }) {
-            return await api.get(`/api/user`, { token: rootGetters.getToken })
+        async fetchUsers() {
+            return await api.get(`/api/user`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取所有产品
-        async fetchProducts({ rootGetters }) {
-            return await api.get(`/api/product`, { token: rootGetters.getToken })
+        async fetchProducts() {
+            return await api.get(`/api/product`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取所有仓库
-        async fetchWarehouses({ rootGetters }) {
-            return await api.get(`/api/warehouse`, { token: rootGetters.getToken })
+        async fetchWarehouses() {
+            return await api.get(`/api/warehouse`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 创建订单
-        async createOrder({ rootGetters }, payload) {
-            await api.post(`/api/order`, payload, { token: rootGetters.getToken })
+        async createOrder(context, payload) {
+            await api.post(`/api/order`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 删除订单
-        async deleteOrder({ rootGetters }, payload) {
-            await api.delete(`/api/order/${payload}`, { token: rootGetters.getToken })
+        async deleteOrder(context, payload) {
+            await api.delete(`/api/order/${payload}`, { token: localStorage.getItem("token") })
         }
     }
 }

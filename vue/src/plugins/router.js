@@ -42,7 +42,6 @@ export const RegisterRouter = () => {
             
                       // 将用户信息存储到 Vuex 中
                       store.commit('setUser', fetchedUser)
-                      store.commit('setToken', token)
                     
                       // 用户角色不符合，重定向到登录页面或其他适当的页面
                       if (!to.meta.role.includes(fetchedUser.role)) {

@@ -36,30 +36,30 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取供应记录
-        async fetchSource({ state, commit, rootGetters }) {   
-            const response = await api.get(`/api/supply?page=${state.page}&pageSize=${state.pageSize}`,{ token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {   
+            const response = await api.get(`/api/supply?page=${state.page}&pageSize=${state.pageSize}`,{ token: localStorage.getItem("token") })
             commit("setSupplyTotal", response.supplyTotal)
             return response
         },
         // 请求接口 - 获取所有供应商
-        async fetchSuppliers({ rootGetters }) {
-            return await api.get(`/api/supplier`, { token: rootGetters.getToken })
+        async fetchSuppliers() {
+            return await api.get(`/api/supplier`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取所有产品
-        async fetchProducts({ rootGetters }) {
-            return await api.get(`/api/product`, { token: rootGetters.getToken })
+        async fetchProducts() {
+            return await api.get(`/api/product`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取所有仓库
-        async fetchWarehouses({ rootGetters }) {
-            return await api.get(`/api/warehouse`, { token: rootGetters.getToken })
+        async fetchWarehouses() {
+            return await api.get(`/api/warehouse`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 创建供应记录
-        async createSupply({ rootGetters }, payload) {
-            await api.post(`/api/supply`, payload, { token: rootGetters.getToken })
+        async createSupply(context, payload) {
+            await api.post(`/api/supply`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 删除供应记录
-        async deleteSupply({ rootGetters }, payload) {
-            await api.delete(`/api/supply/${payload}`, { token: rootGetters.getToken })
+        async deleteSupply(context, payload) {
+            await api.delete(`/api/supply/${payload}`, { token: localStorage.getItem("token") })
         }
     }
 }

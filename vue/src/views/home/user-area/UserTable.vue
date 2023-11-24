@@ -42,9 +42,9 @@
                 <el-table-column fixed="right" label="其他操作" width="150">
                     <template slot-scope="scope">
                         <el-button @click="handleDetail(scope.row)" type="text">详情</el-button>
-                        <el-button v-if="['ADMIN'].includes($store.getters.getUser.role)" @click="handleEdit(scope.row)" type="text">编辑</el-button>
+                        <el-button v-if="['ADMIN'].includes($store.getters.getUser?.role)" @click="handleEdit(scope.row)" type="text">编辑</el-button>
                         <el-popconfirm
-                            v-if="['ADMIN'].includes($store.getters.getUser.role)"
+                            v-if="['ADMIN'].includes($store.getters.getUser?.role)"
                             confirm-button-text='确 定'
                             confirm-button-type="danger"
                             cancel-button-text='取 消'

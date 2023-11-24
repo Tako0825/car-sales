@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "clearUser", "clearToken"
+            "clearUser"
         ]),
         // 处理下拉菜单的激活指令
         handleCommand(command) {
@@ -38,11 +38,8 @@ export default {
                     }).then(() => {
                         // 1. 清除本地存储中的 token
                         localStorage.removeItem("token")
-                        // 2. 清除本地存储中的用户信息
-                        localStorage.removeItem("user")
-                        // 3. 清除 vuex 全局状态
+                        // 2. 清除 vuex 全局状态
                         this.clearUser()
-                        this.clearToken()
                         // 3. 跳转至登录页面
                         this.$router.push("/login")
                     }).catch(() => {})

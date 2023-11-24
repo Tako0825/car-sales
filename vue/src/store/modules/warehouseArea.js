@@ -39,27 +39,27 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取仓库信息
-        async fetchSource({ state, commit, rootGetters }) {   
-            const response = await api.get(`/api/warehouse?page=${state.page}&pageSize=${state.pageSize}`,{ token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {   
+            const response = await api.get(`/api/warehouse?page=${state.page}&pageSize=${state.pageSize}`,{ token: localStorage.getItem("token") })
             commit("setWarehouseTotal", response.warehouseTotal)
             return response
         },
         // 请求接口 - 创建仓库
-        async createWarehouse({ rootGetters }, payload) {
-            await api.post(`/api/warehouse`, payload, { token: rootGetters.getToken })
+        async createWarehouse(context, payload) {
+            await api.post(`/api/warehouse`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 获取指定的仓库信息
-        async fetchWarehouse({ rootGetters }, payload) {
-            const response = await api.get(`/api/warehouse/${payload}`, { token: rootGetters.getToken })
+        async fetchWarehouse(context, payload) {
+            const response = await api.get(`/api/warehouse/${payload}`, { token: localStorage.getItem("token") })
             return response.warehouse
         },
         // 请求接口 - 修改仓库信息
-        async updateWarehouse({ rootGetters }, payload) {
-            await api.patch(`/api/warehouse/${payload.id}`, payload.data, { token: rootGetters.getToken })
+        async updateWarehouse(context, payload) {
+            await api.patch(`/api/warehouse/${payload.id}`, payload.data, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 删除仓库信息
-        async deleteWarehouse({ rootGetters }, payload) {
-            await api.delete(`/api/warehouse/${payload}`, { token: rootGetters.getToken })
+        async deleteWarehouse(context, payload) {
+            await api.delete(`/api/warehouse/${payload}`, { token: localStorage.getItem("token") })
         }
     }
 }

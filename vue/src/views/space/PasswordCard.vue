@@ -37,7 +37,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "getUser", "getToken"
+            "getUser"
         ]),
         inputs() {
             return [
@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "clearUser", "clearToken"
+            "clearUser"
         ]),
         // 提交表单 - 更改密码
         async submitForm() {
@@ -81,7 +81,7 @@ export default {
                 originalPassword,
                 password,
                 passwordConfirmed
-            }, { token: this.getToken })
+            }, { token: localStorage.getItem("token") })
             // API 调用错误 - 输出提示
             if(!response.success) {
                 return this.$notify.error({
@@ -90,10 +90,8 @@ export default {
             }
             // API 调用成功 - 清除登录状态
             else {
-                localStorage.removeItem("user")
                 localStorage.removeItem("token")
                 this.clearUser()
-                this.clearToken()
                 this.$router.push("/login")
             }
         },

@@ -43,22 +43,22 @@ export default {
     },
     actions: {
         // 请求接口 - 分页获取产品信息
-        async fetchSource({ state, commit, rootGetters }) {   
-            const response = await api.get(`/api/product?page=${state.page}&pageSize=${state.pageSize}`,{ token: rootGetters.getToken })
+        async fetchSource({ state, commit }) {   
+            const response = await api.get(`/api/product?page=${state.page}&pageSize=${state.pageSize}`,{ token: localStorage.getItem("token") })
             commit("setProductTotal", response.productTotal)
             return response
         },
         // 请求接口 - 获取指定产品信息
-        async fetchProduct({ rootGetters }, payload) {
-            return await api.get(`/api/product/${payload}`, { token: rootGetters.getToken })
+        async fetchProduct(context, payload) {
+            return await api.get(`/api/product/${payload}`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 创建产品
-        async createProduct({ rootGetters }, payload) {
-            await api.post(`/api/product`, payload, { token: rootGetters.getToken })
+        async createProduct(context, payload) {
+            await api.post(`/api/product`, payload, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 删除产品
-        async deleteProduct({ rootGetters }, payload) {
-            await api.delete(`/api/product/${payload}`, { token: rootGetters.getToken })
+        async deleteProduct(context, payload) {
+            await api.delete(`/api/product/${payload}`, { token: localStorage.getItem("token") })
         }
     }
 }
