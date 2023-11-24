@@ -7,7 +7,7 @@ export default [
       {
         path: "",
         name: "dashboard",
-        meta: { auth: true, role: [ "USER", "ADMIN" ]},
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
         component: () => import("@/layouts/home/DashboardArea.vue"),
       }
     ]
@@ -20,7 +20,7 @@ export default [
       {
         path: "",
         name: "user",
-        meta: { auth: true, role: [ "USER", "ADMIN" ] },
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
         component: () => import("@/layouts/home/UserArea.vue"),
       }
     ]
@@ -33,7 +33,7 @@ export default [
       {
         path: "",
         name: "product",
-        meta: { auth: true, role: [ "USER", "ADMIN" ]},
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
         component: () => import("@/layouts/home/ProductArea.vue"),
       }
     ]
@@ -46,7 +46,7 @@ export default [
       {
         path: "",
         name: "warehouse",
-        meta: { auth: true, role: [ "USER", "ADMIN" ]},
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
         component: () => import("@/layouts/home/WarehouseArea.vue"),
       }
     ]
@@ -59,7 +59,7 @@ export default [
       {
         path: "",
         name: "supplier",
-        meta: { auth: true, role: [ "USER", "ADMIN" ] },
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
         component: () => import("@/layouts/home/SupplierArea.vue"),
       }
     ]
@@ -72,7 +72,7 @@ export default [
       {
         path: "",
         name: "order",
-        meta: { auth: true, role: [ "USER", "ADMIN" ] },
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
         component: () => import("@/layouts/home/OrderArea.vue"),
       }
     ]
@@ -85,7 +85,7 @@ export default [
       {
         path: "",
         name: "supply",
-        meta: { auth: true, role: [ "USER", "ADMIN" ] },
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
         component: () => import("@/layouts/home/SupplyArea.vue"),
       }
     ]

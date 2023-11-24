@@ -82,7 +82,7 @@ export default {
             return response
         },
         // 请求接口 - 删除用户
-        async deleteUser(payload) {
+        async deleteUser(context, payload) {
             await api.delete(`/api/user/${payload}`, { token: localStorage.getItem("token") })
         },
         // 请求接口 - 查询用户详情

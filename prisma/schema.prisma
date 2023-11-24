@@ -11,6 +11,7 @@ datasource db {
 enum Role {
   USER
   ADMIN
+  ROOT
 }
 
 // 员工

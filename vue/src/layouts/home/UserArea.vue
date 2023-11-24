@@ -4,7 +4,7 @@
     <header class="w-full flex justify-between">
       <h1 class="text-2xl font-bold">员工总览</h1>
       <el-button 
-        v-if="['ADMIN'].includes(this.$store.getters.getUser?.role)" 
+        v-if="['ROOT'].includes(this.$store.getters.getUser?.role)" 
         type="success" 
         @click="setRegisterFormVisible(true)" 
         size="small"

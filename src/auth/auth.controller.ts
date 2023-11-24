@@ -14,7 +14,7 @@ export class AuthController {
 
   // API - REGISTER(注册)
   @Post("register")
-  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @SetMetadata("role", [$Enums.Role.ROOT])
   @UseGuards(AuthGuard("jwt"), RoleGuard)
   @UsePipes(Validation)
   async register(@Body() registerDto:RegisterDto) {

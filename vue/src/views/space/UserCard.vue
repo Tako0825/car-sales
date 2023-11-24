@@ -13,8 +13,8 @@
       <el-card v-loading="!getUser" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的信息</h1>
         <section class="flex flex-col">
-            <span>手机号：</span><div class="bg-gray-100 px-4 py-2 rounded-md mt-1 mb-6">{{ getUser?.phone }}</div>
-            <span>家庭住址：</span><div class="bg-gray-100 px-4 py-2 rounded-md mt-1">{{ getUser?.address }}</div>
+            <span>手机号：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1 mb-6">{{ getUser?.phone }}</div>
+            <span>家庭住址：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1">{{ getUser?.address }}</div>
         </section>
       </el-card>
 
@@ -22,14 +22,14 @@
       <el-card v-loading="!count" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的业绩</h1>
         <section class="flex flex-col">
-            <span>出货量：</span><div class="bg-gray-100 px-4 py-2 rounded-md mt-1 mb-6">{{ count }}</div>
-            <span>营业额：</span><div class="bg-gray-100 px-4 py-2 rounded-md mt-1">{{ sales }}</div>
+            <span>出货量：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1 mb-6">{{ count }}</div>
+            <span>营业额：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1">{{ sales }}</div>
         </section>
       </el-card>
     </aside>
 
     <!-- 我的订单 -->
-    <el-card v-loading="!source?.length" class="w-full h-auto">
+    <el-card v-loading="!source?.length" shadow="nnever" class="w-full h-auto">
       <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
       <article class="w-full flex flex-col justify-start items-start p-4 rounded-lg relative overflow-hidden" style="height: 960px;">
         <section class="w-full h-full overflow-auto absolute top-0 left-0">

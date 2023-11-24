@@ -6,7 +6,7 @@ export default   {
       {
         path: "",
         name: "space",
-        meta: { auth: true, role: [ "USER", "ADMIN" ]},
+        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
         component: () => import("@/layouts/space/IndexPage.vue"),
       }
     ]

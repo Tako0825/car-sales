@@ -24,7 +24,7 @@
         </section>
         <!-- 点击删除产品 -->
         <i 
-            v-if="['ADMIN'].includes($store.getters.getUser?.role)" 
+            v-if="['ADMIN', 'ROOT'].includes($store.getters.getUser?.role)" 
             @click.stop="handleDelete(product.id)" 
             class="delete el-icon-error text-gray-700 text-2xl "
         ></i>

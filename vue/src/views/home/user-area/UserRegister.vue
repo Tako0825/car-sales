@@ -38,6 +38,7 @@
                 <el-select v-model="form.role" placeholder="请选择职位">
                     <el-option label="职员" value="USER"></el-option>
                     <el-option label="管理员" value="ADMIN"></el-option>
+                    <el-option label="超级管理" value="ROOT"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="入职时间" required>
