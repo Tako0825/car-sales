@@ -13,7 +13,7 @@
                 @current-change="handleSelectedUser" 
             >
                 <!-- 第 1 列: 用户(头像 & 姓名) -->
-                <el-table-column prop="username" label="用户" min-width="150">
+                <el-table-column prop="username" fixed label="用户" min-width="150">
                     <template slot-scope="scope">
                     <section class="flex gap-6 items-center">
                         <el-avatar :src="scope.row.avatar"></el-avatar>
@@ -22,13 +22,20 @@
                     </template>
                 </el-table-column>
                 <!-- 第 2 列: 电话 -->
-                <el-table-column prop="phone" label="电话" min-width="120"></el-table-column>
+                <el-table-column prop="phone" label="电话" min-width="150"></el-table-column>
+                <!-- 第 2 列: 电话 -->
+                <el-table-column label="职位">
+                    <template slot-scope="scope">
+                        <p v-if="scope.row.role === 'ADMIN'">管理员</p>
+                        <p v-else-if="scope.row.role === 'USER'">职员</p>
+                    </template>
+                </el-table-column>
                 <!-- 第 3 列: 家庭住址 -->
-                <el-table-column prop="address" label="住址"  min-width="200"></el-table-column>
+                <el-table-column prop="address" label="住址"  min-width="300"></el-table-column>
                 <!-- 第 4 列: 入职日期 -->
                 <el-table-column label="入职日期"  min-width="120">
                     <template slot-scope="scope">
-                    <p>{{ new Date(scope.row.joined_date).toLocaleDateString() }}</p>
+                        <p>{{ new Date(scope.row.joined_date).toLocaleDateString() }}</p>
                     </template>
                 </el-table-column>
                 <!-- 第 5 列: 其他操作(详情 & 编辑) -->

@@ -12,7 +12,7 @@
                 class="rounded-xl"
             >
                 <!-- 占位列 -->
-                <el-table-column width="50"></el-table-column>
+                <el-table-column width="10"></el-table-column>
                 <el-table-column
                     prop="id"
                     label="序号"
