@@ -1,42 +1,46 @@
 <template>
-    <!-- 表格 -->
-    <el-table
-        :data="getSource"
-        v-loading="!getDataReady"
-        stripe
-        style="width: 99%"
-        header-cell-class-name="text-black" 
-        class="rounded-xl"
-    >
-        <!-- 占位列 -->
-        <el-table-column width="50"></el-table-column>
-        <el-table-column
-            prop="id"
-            label="序号"
-            width="80"
-        ></el-table-column>
-        <el-table-column
-            prop="company"
-            label="公司"
-        ></el-table-column>
-        <el-table-column
-            prop="phone"
-            label="联系电话"
-            width="150"
-        ></el-table-column>
-        <el-table-column
-            prop="name"
-            label="联系人"
-            width="150"
-        ></el-table-column>
-        <!-- 编辑 -->
-        <el-table-column v-if="['ADMIN'].includes($store.getters.getUser.role)" fixed="right" label="操作" width="120">
-            <template slot-scope="scope">
-                <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
-                <el-button @click="handleSupplierDelete(scope.row)" type="text">删除</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+<!-- 表格 -->
+<main class="relative">
+    <article class="w-full h-auto absolute top-0 left-0">
+        <el-table
+            :data="getSource"
+            v-loading="!getDataReady"
+            stripe
+            style="width: 99%"
+            header-cell-class-name="text-black" 
+            class="rounded-xl"
+        >
+            <!-- 占位列 -->
+            <el-table-column width="50"></el-table-column>
+            <el-table-column
+                prop="id"
+                label="序号"
+                width="80"
+            ></el-table-column>
+            <el-table-column
+                prop="company"
+                label="公司"
+            ></el-table-column>
+            <el-table-column
+                prop="phone"
+                label="联系电话"
+                width="150"
+            ></el-table-column>
+            <el-table-column
+                prop="name"
+                label="联系人"
+                width="150"
+            ></el-table-column>
+            <!-- 编辑 -->
+            <el-table-column v-if="['ADMIN'].includes($store.getters.getUser.role)" fixed="right" label="操作" width="120">
+                <template slot-scope="scope">
+                    <el-button @click="handleEdit(scope.row)" type="text">修改</el-button>
+                    <el-button @click="handleSupplierDelete(scope.row)" type="text">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </article>
+</main>
 </template>
 
 <script>

@@ -1,48 +1,52 @@
 <template>
     <!-- 表格 -->
-    <el-table
-        :data="getSource"
-        v-loading="!getDataReady"
-        stripe
-        style="width: 99%"
-        header-cell-class-name="text-black" 
-        class="rounded-xl"
-    >
-        <!-- 占位列 -->
-        <el-table-column width="10"></el-table-column>
-        <el-table-column
-            prop="id"
-            label="供应号"
-            width="70"
-        ></el-table-column>
-        <el-table-column
-            prop="supplier"
-            label="供应商"
-        ></el-table-column>
-        <el-table-column
-            prop="brand"
-            label="品牌"
-        ></el-table-column>
-        <el-table-column
-            prop="model"
-            label="型号"
-        ></el-table-column>
-        <el-table-column
-            prop="warehouse"
-            label="仓库"
-        ></el-table-column>
-        <el-table-column
-            prop="quantity"
-            label="供应数量"
-            width="80"
-        ></el-table-column>
-        <!-- 编辑 -->
-        <el-table-column fixed="right" label="操作" width="120">
-            <template slot-scope="scope">
-                <el-button @click="handleSupplyDelete(scope.row)" type="text">删除</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+    <main class="relative">
+        <article class="w-full h-auto absolute top-0 left-0">
+            <el-table
+                :data="getSource"
+                v-loading="!getDataReady"
+                stripe
+                style="width: 99%"
+                header-cell-class-name="text-black" 
+                class="rounded-xl"
+            >
+                <!-- 占位列 -->
+                <el-table-column width="10"></el-table-column>
+                <el-table-column
+                    prop="id"
+                    label="供应号"
+                    width="70"
+                ></el-table-column>
+                <el-table-column
+                    prop="supplier"
+                    label="供应商"
+                ></el-table-column>
+                <el-table-column
+                    prop="brand"
+                    label="品牌"
+                ></el-table-column>
+                <el-table-column
+                    prop="model"
+                    label="型号"
+                ></el-table-column>
+                <el-table-column
+                    prop="warehouse"
+                    label="仓库"
+                ></el-table-column>
+                <el-table-column
+                    prop="quantity"
+                    label="供应数量"
+                    width="80"
+                ></el-table-column>
+                <!-- 编辑 -->
+                <el-table-column fixed="right" label="操作" width="120">
+                    <template slot-scope="scope">
+                        <el-button @click="handleSupplyDelete(scope.row)" type="text">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </article>
+    </main>
 </template>
 
 <script>

@@ -1,15 +1,16 @@
 <template>
-<main class="relative w-full flex flex-col items-center gap-6">   
+<main class="relative">
+    <article class="absolute w-full">
     <!-- 用户列表 -->
     <el-table 
         header-cell-class-name="text-black" 
         :data="getSource" 
-        v-if="getSource.length" 
+        v-if="getSource" 
         v-loading="!getDataReady" 
-        class="rounded-xl font-bold"
-        style="width: 99%;"
-        highlight-current-row
-        @current-change="handleSelectedUser"
+        class="rounded-xl font-bold" 
+        style="width: 100%;" 
+        highlight-current-row 
+        @current-change="handleSelectedUser" 
     >
         <!-- 第 1 列: 用户(头像 & 姓名) -->
         <el-table-column prop="username" label="用户" min-width="150">
@@ -59,6 +60,8 @@
     </el-table>
     <!-- 空状态 -->
     <el-empty description="" v-else class="bg-white w-full h-96 rounded-xl"></el-empty>
+
+    </article>
 </main>
 </template>
 

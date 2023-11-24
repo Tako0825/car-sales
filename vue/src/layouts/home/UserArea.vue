@@ -11,7 +11,7 @@
       >添加员工</el-button>
     </header>
     <!-- 用户列表 -->
-    <UserTableVue class="w-full h-auto"/>
+    <UserTableVue class="w-full flex flex-col items-center gap-6"/>
     <!-- 分页 -->
     <el-pagination
       layout="prev, pager, next"

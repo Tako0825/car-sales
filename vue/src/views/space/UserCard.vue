@@ -1,6 +1,6 @@
 <template>
-  <main class="w-full h-auto flex flex-col 2xl:flex-row gap-4">
-    <aside  class="w-96 h-auto flex flex-col gap-4">
+  <main class="w-full h-auto flex flex-col xl:flex-row items-start gap-4">
+    <aside class="xl:w-96 w-full h-auto flex flex-col gap-4">
       <!-- 我的头像 -->
       <el-card v-loading="!getUser" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的头像</h1>
@@ -28,27 +28,26 @@
       </el-card>
     </aside>
 
-    <article class="w-full h-full flex flex-col justify-start items-start">
-      <!-- 我的订单 -->
-      <el-card v-loading="!source.length" shadow="never" class="w-full h-full">
-        <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
-        <section class="w-full h-screen overflow-auto">
+    <!-- 我的订单 -->
+    <el-card v-loading="!source?.length" class="w-full h-auto">
+      <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
+      <article class="w-full flex flex-col justify-start items-start p-4 rounded-lg relative overflow-hidden" style="height: 960px;">
+        <section class="w-full h-full overflow-auto absolute top-0 left-0">
           <el-table
             :data="source"
             stripe
-            style="width: 90%;"
-            :show-header="false"
-            header-cell-class-name="text-black w-full" 
+            style="width: 100%;"
+            header-cell-class-name="text-black" 
           >
-            <el-table-column prop="id" label="订单号"></el-table-column>
+            <el-table-column prop="id" fixed label="订单号" width="80"></el-table-column>
             <el-table-column prop="name" label="品牌"></el-table-column>
             <el-table-column prop="model" label="型号"></el-table-column>
             <el-table-column prop="location" label="来源仓库"></el-table-column>
-            <el-table-column prop="createtime" label="交易时间" :formatter="formatCreatetime"></el-table-column>
+            <el-table-column prop="createtime" fixed label="交易时间" width="150" :formatter="formatCreatetime"></el-table-column>
           </el-table>
         </section>
-      </el-card>
-    </article>
+      </article>
+    </el-card>
   </main>
 </template>
 
