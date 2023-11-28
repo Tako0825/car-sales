@@ -5,6 +5,7 @@
       <TopNavVue class="w-full h-16 px-8 bg-white flex justify-between items-center select-none"/>
       <section class="w-full h-full p-8 overflow-y-auto">
         <router-view></router-view>
+        <el-backtop :visibility-height="100" target="section"></el-backtop>
       </section>
     </article>
   </main>

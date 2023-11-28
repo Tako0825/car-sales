@@ -5,26 +5,24 @@
       <el-card v-loading="!getUser" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的头像</h1>
         <el-image :src="getUser?.avatar" fit="cover" class="w-full rounded-lg" style="aspect-ratio: 1;"></el-image>
-        <h1 class="py-2">{{ getUser?.username }}</h1>
-        <span class="text-sm text-gray-400 mr-3">{{ joined_date }}</span>
       </el-card>
 
       <!-- 我的信息 -->
-      <el-card v-loading="!getUser" shadow="never">
+      <el-card v-loading="!getUser || !count || !sales" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的信息</h1>
-        <section class="flex flex-col">
-            <span>手机号：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1 mb-6">{{ getUser?.phone }}</div>
-            <span>家庭住址：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1">{{ getUser?.address }}</div>
-        </section>
-      </el-card>
-
-      <!-- 我的业绩 -->
-      <el-card v-loading="!count" shadow="never">
-        <h1 slot="header" class="clearfix text-xl font-bold">我的业绩</h1>
-        <section class="flex flex-col">
-            <span>出货量：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1 mb-6">{{ count }}</div>
-            <span>营业额：</span><div class="bg-gray-100 px-4 py-2 rounded-lg mt-1">{{ sales }}</div>
-        </section>
+        <el-descriptions :border="true" :column="1" :labelStyle="{ 'color': 'black', 'white-space': 'nowrap' }">
+          <el-descriptions-item label="用户名">{{ getUser?.username }}</el-descriptions-item>
+          <el-descriptions-item label="手机号">{{ getUser?.phone }}</el-descriptions-item>
+          <el-descriptions-item label="居住地">{{ getUser?.address }}</el-descriptions-item>
+          <el-descriptions-item label="入职时间">{{ joined_date }}</el-descriptions-item>
+          <el-descriptions-item label="职位">
+            <el-tag v-if="getUser?.role==='USER'" size="small">职员</el-tag>
+            <el-tag v-if="getUser?.role==='ADMIN'" size="small">管理员</el-tag>
+            <el-tag v-if="getUser?.role==='ROOT'" size="small">超级管理</el-tag>
+          </el-descriptions-item>
+          <el-descriptions-item label="出货量">{{ count }}</el-descriptions-item>
+          <el-descriptions-item label="营业额">{{ sales }}</el-descriptions-item>
+        </el-descriptions>
       </el-card>
     </aside>
 
