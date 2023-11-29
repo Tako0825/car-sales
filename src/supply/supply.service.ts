@@ -148,14 +148,13 @@ export class SupplyService {
   async remove(id: number) {
     await this.commonService.getEntityById<Supply>(PrismaModel.supply, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
-      const result = await this.prisma.supply.delete({
+      await this.prisma.supply.delete({
         where: {
           id
         }
       })
       return {
-        tip: "成功删除供应记录",
-        result
+        tip: "成功删除供应记录"
       }
     })
   }

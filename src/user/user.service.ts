@@ -147,7 +147,7 @@ export class UserService {
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       // 1.删除 USER - 前置条件: 删除 ORDER
       const result = await this.prisma.$transaction(async (prisma) => {
-        await prisma.order.deleteMany({
+        const orderCount = await prisma.order.deleteMany({
           where: {
             userId: id
           }
@@ -157,10 +157,13 @@ export class UserService {
             id
           }
         })
+        return {
+          orderCount
+        }
       })
       return {
         tip: "成功删除用户",
-        result
+        ...result
       }
     })
   }

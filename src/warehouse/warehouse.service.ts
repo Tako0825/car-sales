@@ -91,20 +91,29 @@ export class WarehouseService {
   async remove(id: number) {
     await this.commonService.getEntityById<Warehouse>(PrismaModel.warehouse, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async () => {
-      await this.prisma.$transaction(async (prisma) => {
-        // 1.删除 WAREHOUSE - 前置条件: 删除 SUPPLY & ORDER
-        await prisma.supply.deleteMany({
+      const result = await this.prisma.$transaction(async () => {
+        // 1.删除 WAREHOUSE - 前置条件: 删除 SUPPLY & ORDER & INVENTORY
+        const supplyCount = await this.prisma.supply.deleteMany({
           where: { warehouseId: id }
         })
-        await prisma.order.deleteMany({
+        const orderCount = await this.prisma.order.deleteMany({
           where: { warehouseId: id }
         })
-        await prisma.warehouse.delete({
+        const inventoryCount = await this.prisma.inventory.deleteMany({
+          where: { warehouseId: id }
+        })
+        await this.prisma.warehouse.delete({
           where: { id }
         })
+        return {
+          supplyCount,
+          orderCount,
+          inventoryCount
+        }
       })
       return {
-        tip: "成功删除仓库"
+        tip: "成功删除仓库",
+        ...result
       }
     })
   }

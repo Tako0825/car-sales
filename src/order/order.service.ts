@@ -145,14 +145,26 @@ export class OrderService {
   async remove(id: number) {
     await this.commonService.getEntityById<Order>(PrismaModel.order, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
-      const result = await this.prisma.order.delete({
+      // 1.删除订单
+      const deleted = await this.prisma.order.delete({
         where: {
           id
         }
       })
+      // 2.将相应库存记录的库存量 + 1
+      await this.prisma.inventory.updateMany({
+        where: {
+          productId: deleted.productId,
+          warehouseId: deleted.warehouseId
+        },
+        data: {
+          quantity: {
+            increment: 1
+          }
+        }
+      })
       return {
-        tip: "成功删除订单",
-        result
+        tip: "成功删除订单"
       }
     })
   }

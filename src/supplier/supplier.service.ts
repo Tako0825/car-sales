@@ -97,7 +97,7 @@ export class SupplierService {
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
       const result = await this.prisma.$transaction(async (prisma) => {
         // 1.删除 SUPPLIER -前置条件: 删除 SUPPLY
-        await prisma.supply.deleteMany({
+        const supplyCount = await prisma.supply.deleteMany({
           where: {
             supplierId: id
           }
@@ -107,10 +107,13 @@ export class SupplierService {
             id
           }
         })
+        return {
+          supplyCount
+        }
       })
       return {
         tip: "成功删除供应商",
-        result
+        ...result
       }
     })
   }
