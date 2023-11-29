@@ -84,11 +84,13 @@ export class ProductService {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
       const product = await this.commonService.getEntityById<Product>(PrismaModel.product, id)
       const pie = await this.prisma.$queryRaw`
-        SELECT Supply.quantity AS value, Warehouse.location AS name
-        FROM Supply
+        SELECT CONCAT(Inventory.quantity, '') AS value, 
+        Warehouse.location AS name 
+        FROM Inventory 
         INNER JOIN Warehouse 
-        ON Supply.warehouseId = Warehouse.id 
-        WHERE productId = ${id}
+        ON Inventory.warehouseId = Warehouse.id 
+        WHERE Inventory.productId = ${id}
+        AND Inventory.quantity > 0;
       `
       const gradientBar: Array<{ year: string, total: string }> = await this.prisma.$queryRaw`
         SELECT YEAR(createtime) AS year,

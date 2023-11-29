@@ -154,8 +154,12 @@ export class OrderService {
       // 2.将相应库存记录的库存量 + 1
       await this.prisma.inventory.updateMany({
         where: {
-          productId: deleted.productId,
-          warehouseId: deleted.warehouseId
+          AND: [
+            {
+              productId: deleted.productId,
+              warehouseId: deleted.warehouseId
+            }
+          ]
         },
         data: {
           quantity: {
