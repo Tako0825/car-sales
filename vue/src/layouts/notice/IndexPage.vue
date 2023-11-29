@@ -1,3 +1,15 @@
+<template>
+    <main class="bg-white rounded-lg p-6 mx-auto" style="max-width: 900px;">
+        <el-page-header @back="$router.back()" class="py-4" content="公告"></el-page-header>
+        <v-md-preview :text="content"></v-md-preview>
+    </main>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            content: `
 # 汽车销售管理平台介绍
 
 ## 项目背景
@@ -42,45 +54,45 @@ Node.Js、MySQL
 
 1. 源代码（通过 zip 解压或 git 拉取）
     
-```shell
+\`\`\`shell
     git clone https://github.com/Tako0825/car-sales.git 
-```
+\`\`\`
 
 2. 配置 .env.example 示例文件为 .env 文件（补充数据库、七牛云等配置信息）
 
 3. 安装 pnpm
 
-```shell
+\`\`\`shell
     npm install pnpm -g
-```
+\`\`\`
 
 4. 安装依赖（根目录和 vue 目录下分别执行）
 
-```shell
+\`\`\`shell
     pnpm install
-```
+\`\`\`
 
 5. 数据库迁徙
 
 
-```shell
+\`\`\`shell
     npx prisma generate
-```
+\`\`\`
 
-```shell
+\`\`\`shell
     npx prisma migrate dev
-```
+\`\`\`
 6. 运行 nest 后台（根目录下执行）
 
-```shell
+\`\`\`shell
     pnpm dev
-```
+\`\`\`
 
 7. 运行 vue 前台（vue 目录下执行）
 
-```shell
+\`\`\`shell
     pnpm run serve
-```
+\`\`\`
 
 8. 访问项目（http://localhost:8080）
 
@@ -162,3 +174,12 @@ Node.Js、MySQL
 如果您在使用过程中遇到任何问题、有建议，或者对我们的项目有任何反馈，请随时联系我们（2060364922@qq.com）。我们欢迎您的反馈，以帮助我们不断改进和优化平台。
 
 这是我们在大学学习过程中一个重要的期末项目，代表了我们对专业技术的深入理解和实际运用，感谢您选择我们的汽车销售管理平台！感谢您的支持！
+
+
+
+
+            `
+        }
+    }
+}
+</script>

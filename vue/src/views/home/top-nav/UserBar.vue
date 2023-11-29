@@ -1,8 +1,10 @@
 <template>
     <!-- 用户栏 -->
-    <main class="flex gap-6 items-center">
+    <main class="flex gap-3 items-center">
         <!-- 收件箱 -->
-        <i class="el-icon-message transform scale-150"></i>
+        <router-link :to="{ name: 'notice' }">
+            <el-button icon="el-icon-message" circle></el-button>
+        </router-link>
         <!-- 我的头像 -->
         <el-dropdown @command="handleCommand" trigger="click">
             <el-avatar :src="getUser?.avatar" alt="我的头像"></el-avatar>
