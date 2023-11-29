@@ -37,6 +37,7 @@ model Product {
   poster    String   @default("")
   supply    Supply[]
   order     Order[]
+  inventory Inventory[]
 }
 
 // 供应商
@@ -67,6 +68,7 @@ model Warehouse {
   location     String
   supply       Supply[]
   order        Order[]
+  inventory Inventory[]
 }
 
 // 订单
@@ -79,4 +81,14 @@ model Order {
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
   warehouseId Int
   createtime  DateTime  @default(now())
+}
+
+// 库存
+model Inventory {
+  id          Int       @id @default(autoincrement())
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   Int
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId Int
+  quantity    Int       @db.UnsignedInt
 }
