@@ -41,6 +41,12 @@ export class ProductController {
     return await this.productServise.findOne(id);
   }
 
+  // API - QUERY SPECIFIED PRODUCT'S INVENTORY(查询指定的产品库存)
+  @Get(':id/inventory')
+  async findInventory(@Param('id', ParseIntPipe) id: number) {
+    return await this.productServise.findInventory(id)
+  }
+
   // API - UPDATE PRODUCT(修改产品信息)
   @Patch(':id')
   @SetMetadata("role", [$Enums.Role.ADMIN, $Enums.Role.ROOT])

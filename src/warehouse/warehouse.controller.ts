@@ -41,6 +41,12 @@ export class WarehouseController {
     return await this.warehouseService.findOne(id);
   }
 
+  // API - QUERY SPECIFIED WAREHOUSE'S INVENTORY(查询指定的仓库库存)
+  @Get(':id/inventory')
+  async findInventory(@Param('id', ParseIntPipe) id: number) {
+    return await this.warehouseService.findInventory(id);
+  }
+
   // API - UPDATE WAREHOUSE(修改仓库信息)
   @Patch(':id')
   @SetMetadata("role", [$Enums.Role.ADMIN, $Enums.Role.ROOT])

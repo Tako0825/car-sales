@@ -56,6 +56,14 @@ export default {
         async fetchWarehouses() {
             return await api.get(`/api/warehouse`, { token: localStorage.getItem("token") })
         },
+        // 请求接口 - 获取相应产品的库存 
+        async fetchProductInventory(context, payload) {
+            return await api.get(`/api/product/${payload}/inventory`, { token: localStorage.getItem("token") })
+        },
+        // 请求接口 - 获取相应仓库的库存 
+        async fetchWarehouseInventory(context, payload) {
+            return await api.get(`/api/warehouse/${payload}/inventory`, { token: localStorage.getItem("token") })
+        },
         // 请求接口 - 创建订单
         async createOrder(context, payload) {
             await api.post(`/api/order`, payload, { token: localStorage.getItem("token") })
