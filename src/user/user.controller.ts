@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Patch, Param, Delete, Query, ParseIntPipe, UsePipes, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, Query, ParseIntPipe, UsePipes, UseGuards, SetMetadata, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Validation } from 'src/common/validation/validation';
@@ -48,6 +48,13 @@ export class UserController {
   @UsePipes(Validation)
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
+  }
+
+  // API - UPDATE AVATAR(修改用户头像)
+  @Patch(':id/avatar')
+  @UseGuards(AuthGuard("jwt"))
+  async updateAvatar(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+    return await this.userService.updateAvatar(id, updateUserDto);
   }
 
   // API - UPDATE USER PASSWORD(修改用户密码)

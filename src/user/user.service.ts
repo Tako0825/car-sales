@@ -90,13 +90,13 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
-      const { phone, username, role, address, joined_date, avatar } = updateUserDto
+      const { phone, username, role, address, joined_date } = updateUserDto
       await this.prisma.user.update({
         where: {
           id
         },
         data: {
-          phone, username, role, address, joined_date, avatar
+          phone, username, role, address, joined_date
         }
       })
       return {
@@ -104,7 +104,26 @@ export class UserService {
       }
     })
   }
+  // SERVICE - UPDATE PASSWORD(修改用户密码)
+  async updateAvatar(id: number, updateUserDto: UpdateUserDto) {
+    await this.commonService.getEntityById<User>(PrismaModel.user, id)
+    return await this.commonService.handlePrismaExecution<ResponseData>(async() => {
+      const { avatar } = updateUserDto
+      await this.prisma.user.update({
+        where: {
+          id
+        },
+        data: {
+          avatar
+        }
+      })
+      return {
+        tip: "成功修改用户头像"
+      }
+    })
+  }
 
+  // SERVICE - UPDATE PASSWORD(修改用户密码)
   async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
     await this.commonService.getEntityById<User>(PrismaModel.user, id)
     return await this.commonService.handlePrismaExecution<any>(async() => {
