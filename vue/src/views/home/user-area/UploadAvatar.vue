@@ -59,7 +59,6 @@ export default {
         // 上传图片后...预览头像
         handleAvatarSuccess(res, file) {
             this.setPreviewImage(URL.createObjectURL(file.raw))
-            
         },
         // 上传图片
         async handleUpload(upload) {

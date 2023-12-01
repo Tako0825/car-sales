@@ -29,7 +29,7 @@
             </el-form-item>
             <!-- 请选择产品 -->
             <el-form-item label="产品" prop="productId">
-                <el-select v-model="form.productId" filterable placeholder="请选择产品" clearable>
+                <el-select v-model="form.productId" @change="changeProduct" filterable placeholder="请选择产品" clearable>
                     <el-option
                         v-for="item in products"
                         :key="item.value"
@@ -40,7 +40,7 @@
             </el-form-item>
             <!-- 请选择仓库 -->
             <el-form-item label="仓库" prop="warehouseId">
-                <el-select v-model="form.warehouseId" filterable placeholder="请选择仓库" clearable>
+                <el-select v-model="form.warehouseId" @change="changeWarehouse" filterable placeholder="请选择仓库" clearable>
                     <el-option
                         v-for="item in warehouses"
                         :key="item.value"
@@ -120,6 +120,14 @@ export default {
             }
         }
     },
+    watch: {
+       form: {
+        deep: true,
+        handler() {
+            console.log("@@@");
+        }
+       }
+    },
     computed: {
         ...mapGetters([
             "getDialogFormVisible", "getOrderTotal", "getPageSize"
@@ -177,6 +185,15 @@ export default {
         // 重置表单
         async resetForm(formName) {
             this.$refs[formName].resetFields()
+        },
+        // 切换产品
+        async changeProduct() {
+            console.log(123);
+        },
+        // 切换产品
+        async changeWarehouse() {
+            console.log(242);
+
         }
     }
 }
