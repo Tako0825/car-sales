@@ -16,7 +16,7 @@
                 <el-table-column prop="username" fixed label="用户" min-width="150">
                     <template slot-scope="scope">
                     <section class="flex gap-6 items-center">
-                        <el-avatar :src="scope.row.avatar"></el-avatar>
+                        <img :src="scope.row.avatar" class="w-12 h-12 rounded-full object-cover align-middle" alt="用户头像">
                         <p>{{ scope.row.username }}</p>
                     </section>
                     </template>
