@@ -33,7 +33,7 @@ export default {
             "setFile"
         ]),
         ...mapUserActions([
-            "updateUser", "fetchUser"
+            "updateUserAvatar", "fetchUser"
         ]),
         // 处理 - 上传头像
         async handleUploadAvatar() {
@@ -41,7 +41,7 @@ export default {
                 const { key } = await uploadQiniuImage(this.getFile)
                 this.setFile(null)
                 // 1. 更换头像
-                await this.updateUser({
+                await this.updateUserAvatar({
                     id: this.getUser.id,
                     data: {
                         avatar: `${hostname}/${key}`

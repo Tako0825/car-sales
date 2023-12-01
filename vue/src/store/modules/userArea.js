@@ -72,6 +72,10 @@ export default {
         async updateUser(context, payload) {
             await api.patch(`/api/user/${payload.id}`, payload.data , { token: localStorage.getItem("token") })
         },
+        // 请求接口 - 修改指定用户头像
+        async updateAvatar(context, payload) {
+            await api.patch(`/api/user/${payload.id}/avatar`, payload.data, { token: localStorage.getItem("token") })
+        },
         // 请求接口 - 注册用户
         async registerUser(context, payload) {
             await api.post(`/api/auth/register`, payload, { token: localStorage.getItem("token") })
