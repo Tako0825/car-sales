@@ -16,7 +16,7 @@ export class ProductController {
 
   // API - CREATE PRODUCT(创建产品)
   @Post()
-  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @SetMetadata("role", [$Enums.Role.ADMIN, $Enums.Role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async create(@Body() createProductDto: CreateProductDto) {
@@ -43,7 +43,7 @@ export class ProductController {
 
   // API - UPDATE PRODUCT(修改产品信息)
   @Patch(':id')
-  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @SetMetadata("role", [$Enums.Role.ADMIN, $Enums.Role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateProductDto: UpdateProductDto) {
@@ -52,7 +52,7 @@ export class ProductController {
 
   // API - REMOVE PRODUCT(删除产品)
   @Delete(':id')
-  @SetMetadata("role", [$Enums.Role.ADMIN])
+  @SetMetadata("role", [$Enums.Role.ADMIN, $Enums.Role.ROOT])
   @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.productServise.remove(id);
