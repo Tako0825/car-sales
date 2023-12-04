@@ -120,14 +120,6 @@ export default {
             }
         }
     },
-    watch: {
-       form: {
-        deep: true,
-        handler() {
-            console.log("@@@");
-        }
-       }
-    },
     computed: {
         ...mapGetters([
             "getDialogFormVisible", "getOrderTotal", "getPageSize"
@@ -146,7 +138,7 @@ export default {
             "setDialogFormVisible", "setPage", "setSource", "setDataReady"
         ]),
         ...mapActions([
-            "fetchSource", "createOrder", "fetchUsers", "fetchProducts", "fetchWarehouses"
+            "fetchSource", "createOrder", "fetchUsers", "fetchProducts", "fetchWarehouses", "fetchProductInventory", "fetchWarehouseInventory"
         ]),
         // 提交表单 - 添加新供应商
         async submitForm(formName) {
@@ -187,13 +179,37 @@ export default {
             this.$refs[formName].resetFields()
         },
         // 切换产品
-        async changeProduct() {
-            console.log(123);
+        async changeProduct(id) {
+            if(id) {
+                this.warehouses = await this.fetchProductInventory(id)
+            .then(warehouses => warehouses.map(warehouse => ({
+                value: warehouse.id,
+                label: warehouse.location
+            })))
+            }
+            else {
+                this.warehouses = await this.fetchWarehouses()
+                .then(warehouses => warehouses.map(warehouse => ({
+                    value: warehouse.id,
+                    label: warehouse.location
+                })))
+            }
         },
         // 切换产品
-        async changeWarehouse() {
-            console.log(242);
-
+        async changeWarehouse(id) {
+            if(id) {
+                this.products = await this.fetchWarehouseInventory(id)
+                .then(products => products.map(product => ({
+                    value: product.id,
+                    label: product.name + "-" + product.model
+                })))
+            }
+            else {
+                this.products = await this.fetchProducts().then(products => products.map(product => ({
+                    value: product.id,
+                    label: product.name + "-" + product.model
+                })))
+            }
         }
     }
 }

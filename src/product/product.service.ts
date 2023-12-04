@@ -109,6 +109,23 @@ export class ProductService {
     })
   }
 
+  // SERVICE - QUERY SPECIFIED PRODUCT'S INVENTORY(查询指定的产品库存)
+  async findInventory(id: number) {
+    await this.commonService.getEntityById<Product>(PrismaModel.product, id)
+    return await this.commonService.handlePrismaExecution<any>(async() => {
+      const productList = await this.prisma.$queryRaw` 
+        SELECT Warehouse.id, Warehouse.location 
+        FROM Inventory 
+        INNER JOIN Warehouse 
+        ON Inventory.warehouseId = Warehouse.id 
+        WHERE Inventory.productId = ${id} 
+        AND Inventory.quantity > 0 
+        ORDER BY Warehouse.id ASC 
+      `
+      return productList
+    })
+  }
+
   // SERVICE - UPDATE PRODUCT(修改产品信息)
   async update(id: number, updateProductDto: UpdateProductDto) {
     await this.commonService.getEntityById<Product>(PrismaModel.product, id)
