@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            "setSource", "setDialogEditVisible", "setDataReady", "setWarehouse"
+            "setSource", "setDialogEditVisible", "setDataReady", "setWarehouse", "setPage"
         ]),
         ...mapActions([
             "fetchSource", "fetchWarehouse", "deleteWarehouse"
