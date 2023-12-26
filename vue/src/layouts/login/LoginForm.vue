@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             phone: "10000000000",
-            password: "",
+            password: "admin123",
             dataReady: true
         }
     },
