@@ -17,7 +17,7 @@
 */
 import { Message } from "element-ui";
 
-const hostname = "39.108.189.148"
+const hostname = "120.77.36.238"
 const port = 3000
 async function request(url, options = {}) {
   const response = await fetch(`http://${hostname}:${port}${url}`, options);

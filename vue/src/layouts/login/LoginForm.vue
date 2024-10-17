@@ -20,7 +20,7 @@ export default {
     name: "LoginForm",
     data() {
         return {
-            phone: "10000000000",
+            phone: "11111111111",
             password: "admin123",
             dataReady: true
         }

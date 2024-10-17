@@ -3,7 +3,7 @@ import * as qiniu from "qiniu-js"
 import { Message } from "element-ui";
 import { v4 } from "uuid"
 export const action = "http://upload-z2.qiniup.com"
-export const hostname = "http://cdn.takoko.top"
+export const hostname = "http://cdn.tako.top"
 export const bucket = "wutongroad"
 
 // 上传图片
