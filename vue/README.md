@@ -26,10 +26,10 @@
 
 ## 立即体验
 
-[http://tako.top](http://tako.top) 
+[http://www.tako.top](http://www.tako.top)
 
 > 账号：10000000000（11位）
-> 
+>
 > 密码：admin123
 
 ![image.png](http://cdn.tako.top/markdown/login1.jpg)
@@ -41,9 +41,9 @@ Node.Js、MySQL
 ## 如何开始使用
 
 1. 源代码（通过 zip 解压或 git 拉取）
-    
+
 ```shell
-    git clone https://github.com/Tako0825/car-sales.git 
+    git clone https://github.com/Tako0825/car-sales.git
 ```
 
 2. 配置 .env.example 示例文件为 .env 文件（补充数据库、七牛云等配置信息）
