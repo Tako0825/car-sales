@@ -26,7 +26,7 @@
 
 ## 立即体验
 
-[http://tako.top](http://tako.top)
+[http://www.tako.top](http://www.tako.top)
 
 > 账号：10000000000（11位）
 >
