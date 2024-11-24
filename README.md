@@ -26,13 +26,13 @@
 
 ## 立即体验
 
-[http://tako.top](http://tako.top) 
+[http://tako.top](http://tako.top)
 
 > 账号：10000000000（11位）
-> 
+>
 > 密码：admin123
 
-![image.png](http://cdn.tako.top/markdown/login1.jpg)
+![image.png](./image//img.png)
 
 ## 运行环境
 
@@ -41,9 +41,9 @@ Node.Js、MySQL
 ## 如何开始使用
 
 1. 源代码（通过 zip 解压或 git 拉取）
-    
+
 ```shell
-    git clone https://github.com/Tako0825/car-sales.git 
+    git clone https://github.com/Tako0825/car-sales.git
 ```
 
 2. 配置 .env.example 示例文件为 .env 文件（补充数据库、七牛云等配置信息）
@@ -91,7 +91,7 @@ Node.Js、MySQL
 - 提供 Echarts 可视化图表来展示销售业务的相关数据
 
 
-![image.png](http://cdn.tako.top/markdown/dashboard1.jpg)
+![image.png](./image/img_1.png)
 
 ### 2. 员工模块
 
@@ -99,62 +99,63 @@ Node.Js、MySQL
 - 支持角色和权限系统，确保安全可控的员工管理。
 
 
-![image.png](http://cdn.tako.top/markdown/user1.jpg)
+![image.png](./image/img_2.png)
 
-![image.png](http://cdn.tako.top/markdown/user2.jpg)
+![image.png](./image/img_3.png)
 
-![image.png](http://cdn.tako.top/markdown/user3.jpg)
+![image.png](./image/img_4.png)
 
-![image.png](http://cdn.tako.top/markdown/user4.jpg)
+![image.png](./image/img_5.png)
+
 
 ### 3. 汽车产品模块
 
 - 提供详细的汽车信息，包括型号、售价、车型、简介等。
 
-![image.png](http://cdn.tako.top/markdown/product1.jpg)
+![image.png](./image/img_6.png)
 
-![image.png](http://cdn.tako.top/markdown/product2.jpg)
+![image.png](./image/img_7.png)
 
-![image.png](http://cdn.tako.top/markdown/product3.jpg)
+![image.png](./image/img_8.png)
 
 
 ### 4. 仓库模块
 
 - 追踪汽车库存情况，包括每辆汽车的状态和位置。
 
-![image.png](http://cdn.tako.top/markdown/warehouse1.jpg)
+![image.png](./image/img_9.png)
 
-![image.png](http://cdn.tako.top/markdown/warehouse2.jpg)
+![image.png](./image/img_10.png)
 
-![image.png](http://cdn.tako.top/markdown/warehouse3.jpg)
+![image.png](./image/img_11.png)
 
 ### 5. 供应商模块
 
 - 管理供应商信息，包括基本信息和联系方式。
 - 提供报表和统计功能，方便分析供应链表现。
 
-![image.png](http://cdn.tako.top/markdown/supplier1.jpg)
+![image.png](./image/img_12.png)
 
-![image.png](http://cdn.tako.top/markdown/supplier2.jpg)
+![image.png](./image/img_13.png)
 
-![image.png](http://cdn.tako.top/markdown/supplier3.jpg)
+![image.png](./image/img_14.png)
 
 ### 6. 订单模块
 
 - 管理订单生命周期，包括创建、编辑和取消订单。
 - 记录订单状态，确保对销售流水的完整掌控。
 
-![image.png](http://cdn.tako.top/markdown/order1.jpg)
+![image.png](./image/img_15.png)
 
-![image.png](http://cdn.tako.top/markdown/order2.jpg)
+![image.png](./image/img_16.png)
 
 ### 7. 供应记录模块
 
 - 记录与供应商之间的交易信息，包括供应数量、时间、产品等。
 
-![image.png](http://cdn.tako.top/markdown/supply1.jpg)
+![image.png](./image/img_19.png)
 
-![image.png](http://cdn.tako.top/markdown/supply2.jpg)
+![image.png](./image/img_20.png)
 
 
 ## 反馈与支持
