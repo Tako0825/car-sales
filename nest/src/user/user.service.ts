@@ -98,7 +98,7 @@ export class UserService {
     await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
-        const { phone, username, role, address, joined_date } = updateUserDto;
+        const { phone, username, role, address, joined_date, avatar } = updateUserDto;
         await this.prisma.user.update({
           where: {
             id,
@@ -109,6 +109,7 @@ export class UserService {
             role,
             address,
             joined_date,
+            avatar,
           },
         });
         return {
