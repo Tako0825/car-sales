@@ -1,3 +1,3 @@
-import * as echarts from "echarts/core"
+import * as echarts from "echarts/core";
 
-export default echarts
+export default echarts;

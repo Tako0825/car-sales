@@ -62,7 +62,6 @@ Node.Js、MySQL
 
 5. 数据库迁徙
 
-
 ```shell
     npx prisma generate
 ```
@@ -70,6 +69,7 @@ Node.Js、MySQL
 ```shell
     npx prisma migrate dev
 ```
+
 6. 运行 nest 后台（根目录下执行）
 
 ```shell
@@ -90,14 +90,12 @@ Node.Js、MySQL
 
 - 提供 Echarts 可视化图表来展示销售业务的相关数据
 
-
 ![image.png](./image/img_1.png)
 
 ### 2. 员工模块
 
 - 实现员工信息管理，包括基本信息和权限控制。
 - 支持角色和权限系统，确保安全可控的员工管理。
-
 
 ![image.png](./image/img_2.png)
 
@@ -106,7 +104,6 @@ Node.Js、MySQL
 ![image.png](./image/img_4.png)
 
 ![image.png](./image/img_5.png)
-
 
 ### 3. 汽车产品模块
 
@@ -117,7 +114,6 @@ Node.Js、MySQL
 ![image.png](./image/img_7.png)
 
 ![image.png](./image/img_8.png)
-
 
 ### 4. 仓库模块
 
@@ -156,7 +152,6 @@ Node.Js、MySQL
 ![image.png](./image/img_19.png)
 
 ![image.png](./image/img_20.png)
-
 
 ## 反馈与支持
 

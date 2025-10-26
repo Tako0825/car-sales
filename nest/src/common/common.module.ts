@@ -6,6 +6,6 @@ import { CommonService } from './common.service';
 @Module({
   imports: [PrismaModule],
   providers: [CommonService],
-  exports: [CommonService]
+  exports: [CommonService],
 })
 export class CommonModule {}

@@ -7,23 +7,23 @@ export default [
       {
         path: "",
         name: "dashboard",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/DashboardArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/user",
     component: () => import("@/layouts/home/IndexPage.vue"),
-    meta: { title: "员工总览", icon: "el-icon-user" }, 
+    meta: { title: "员工总览", icon: "el-icon-user" },
     children: [
       {
         path: "",
         name: "user",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/UserArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/product",
@@ -33,10 +33,10 @@ export default [
       {
         path: "",
         name: "product",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/ProductArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/warehouse",
@@ -46,36 +46,36 @@ export default [
       {
         path: "",
         name: "warehouse",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ]},
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/WarehouseArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/supplier",
-    meta: { title: "供应商总览", icon: "el-icon-office-building"},
+    meta: { title: "供应商总览", icon: "el-icon-office-building" },
     component: () => import("@/layouts/home/IndexPage.vue"),
     children: [
       {
         path: "",
         name: "supplier",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/SupplierArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/order",
-    meta: { title: "订单管理", icon: "el-icon-document-copy"},
+    meta: { title: "订单管理", icon: "el-icon-document-copy" },
     component: () => import("@/layouts/home/IndexPage.vue"),
     children: [
       {
         path: "",
         name: "order",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/OrderArea.vue"),
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/supply",
@@ -85,9 +85,9 @@ export default [
       {
         path: "",
         name: "supply",
-        meta: { auth: true, role: [ "USER", "ADMIN", "ROOT" ] },
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
         component: () => import("@/layouts/home/SupplyArea.vue"),
-      }
-    ]
-  }
-]
+      },
+    ],
+  },
+];

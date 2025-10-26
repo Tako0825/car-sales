@@ -1,37 +1,37 @@
 @import "tailwindcss/tailwind.css";
 
 * {
-    box-sizing: border-box;
-    border: 0;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 img {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 /* 适用于 Webkit 浏览器（Chrome、Safari等） */
 ::-webkit-scrollbar {
-    width: .4rem;
-    height: .4rem;
+  width: 0.4rem;
+  height: 0.4rem;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: .4rem;
+  background-color: #888;
+  border-radius: 0.4rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    display: initial;
-    background-color: #555;
+  display: initial;
+  background-color: #555;
 }
 
 /* Element 时间选择器隐藏滚动条 */
-.el-scrollbar  {
-    overflow: hidden!important;
+.el-scrollbar {
+  overflow: hidden !important;
 }

@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'nestjs-app',
       script: 'dist/main.js',
-      instances: 'max',  // 根据需求设置实例数量
+      instances: 'max', // 根据需求设置实例数量
       exec_mode: 'cluster',
       autorestart: true,
       watch: false,

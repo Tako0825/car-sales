@@ -4,20 +4,24 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 
 @Injectable()
 export class RankingCarService {
-    constructor(
-        private readonly prisma: PrismaService,
-        private readonly commonService: CommonService
-    ) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly commonService: CommonService,
+  ) {}
 
-    // SERVICE - GET CAR RANKING(获取汽车热销榜)
-    async getCarRanking() {
-        return await this.commonService.handlePrismaExecution<Record<string, any>>(async () => {
-            const count = 7
-            const year = 10
-            const currentYear = new Date().getFullYear()
-            // Y轴刻度 - [..., 2020, 2021, ..., 至今]
-            const yList = new Array(year).fill(0).map((item, index) => currentYear - year + index + 1)
-            const products:Array<{ id: number, fullname: string }> = await this.prisma.$queryRaw`
+  // SERVICE - GET CAR RANKING(获取汽车热销榜)
+  async getCarRanking() {
+    return await this.commonService.handlePrismaExecution<Record<string, any>>(
+      async () => {
+        const count = 7;
+        const year = 10;
+        const currentYear = new Date().getFullYear();
+        // Y轴刻度 - [..., 2020, 2021, ..., 至今]
+        const yList = new Array(year)
+          .fill(0)
+          .map((item, index) => currentYear - year + index + 1);
+        const products: Array<{ id: number; fullname: string }> = await this
+          .prisma.$queryRaw`
                 SELECT Product.id,
                 CONCAT(Product.name,'-',Product.model) AS fullname
                 FROM \`Order\` AS o 
@@ -27,21 +31,21 @@ export class RankingCarService {
                 GROUP BY o.productId
                 ORDER BY count(*) DESC, productId ASC
                 LIMIT ${count}
-            `
-            // 近 year 年以来销量最高的 count 台汽车的 “id” 列表
-            const idList = products.map(product => product.id)
-            // 近 year 年以来销量最高的 count 台汽车的 “全称” 列表
-            const xList = products.map(product => product.fullname)
+            `;
+        // 近 year 年以来销量最高的 count 台汽车的 “id” 列表
+        const idList = products.map((product) => product.id);
+        // 近 year 年以来销量最高的 count 台汽车的 “全称” 列表
+        const xList = products.map((product) => product.fullname);
 
-            interface ISource {
-                productId: number
-                product: string
-                currentyear: number
-                sales: string
-            }
+        interface ISource {
+          productId: number;
+          product: string;
+          currentyear: number;
+          sales: string;
+        }
 
-            // 近 year 年以来销量最高的 count 台汽车的 “每年销量” 列表
-            const result:Array<ISource> = await this.prisma.$queryRaw`
+        // 近 year 年以来销量最高的 count 台汽车的 “每年销量” 列表
+        const result: Array<ISource> = await this.prisma.$queryRaw`
 					SELECT sub1.productId,
 					sub1.product,
 					sub1.currentyear,
@@ -75,18 +79,19 @@ export class RankingCarService {
 					ON sub1.productId = sub2.productId
 					HAVING sub1.currentyear > 2013
 					ORDER BY currentyear, sub2.sales DESC, productId ASC
-            `
-            const source:Array<[any, any, any]> = [["sales", "product", "year"]]
-            result.map(item => {
-                source.push([ +item.sales, item.product, item.currentyear ])
-            })
+            `;
+        const source: Array<[any, any, any]> = [['sales', 'product', 'year']];
+        result.map((item) => {
+          source.push([+item.sales, item.product, item.currentyear]);
+        });
 
-            return {
-                idList,
-                xList,
-                yList,
-                source
-            }
-        })
-    }
+        return {
+          idList,
+          xList,
+          yList,
+          source,
+        };
+      },
+    );
+  }
 }

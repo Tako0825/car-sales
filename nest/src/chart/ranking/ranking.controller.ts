@@ -6,17 +6,17 @@ import { RankingCarService } from './ranking.car.service';
 export class RankingController {
   constructor(
     private readonly rankingUserService: RankingUserService,
-    private readonly rankingCarService: RankingCarService
+    private readonly rankingCarService: RankingCarService,
   ) {}
-  
+
   // API - GET USERS RANKING(获取员工流水排行)
-  @Get("user")
+  @Get('user')
   async getUserRanking() {
-    return await this.rankingUserService.getUserRanking()
+    return await this.rankingUserService.getUserRanking();
   }
 
-  @Get("car")
+  @Get('car')
   async getCarRanking() {
-    return await this.rankingCarService.getCarRanking()
+    return await this.rankingCarService.getCarRanking();
   }
 }

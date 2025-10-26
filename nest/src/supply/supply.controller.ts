@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UsePipes, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  Query,
+  UsePipes,
+  UseGuards,
+} from '@nestjs/common';
 import { SupplyService } from './supply.service';
 import { CreateSupplyDto } from './dto/create-supply.dto';
 import { UpdateSupplyDto } from './dto/update-supply.dto';
@@ -8,7 +20,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ParseIdPipe } from 'src/common/pipe/parse-id.pipe';
 
 @Controller('supply')
-@UseGuards(AuthGuard("jwt"))
+@UseGuards(AuthGuard('jwt'))
 export class SupplyController {
   constructor(private readonly supplyService: SupplyService) {}
 
@@ -16,7 +28,7 @@ export class SupplyController {
   @Post()
   @UsePipes(Validation)
   async create(@Body(ParseIdPipe) createSupplyDto: CreateSupplyDto) {
-    return await this.supplyService.create(createSupplyDto)
+    return await this.supplyService.create(createSupplyDto);
   }
 
   // API - PAGING QUERY SUPPLY(分页查询供应记录)
@@ -24,8 +36,8 @@ export class SupplyController {
   @UsePipes(Validation)
   async findPage(
     @Query() pageDto: PageDto,
-    @Query("page", ParseIntPipe) page: number,
-    @Query("pageSize", ParseIntPipe) pageSize: number
+    @Query('page', ParseIntPipe) page: number,
+    @Query('pageSize', ParseIntPipe) pageSize: number,
   ) {
     return await this.supplyService.findPage(page, pageSize);
   }
@@ -39,7 +51,10 @@ export class SupplyController {
   // API - UPDATE SUPPLY(修改供应记录)
   @Patch(':id')
   @UsePipes(Validation)
-  async update(@Param('id', ParseIntPipe) id: number, @Body(ParseIdPipe) updateSupplyDto: UpdateSupplyDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ParseIdPipe) updateSupplyDto: UpdateSupplyDto,
+  ) {
     return await this.supplyService.update(id, updateSupplyDto);
   }
 

@@ -8,20 +8,20 @@ async function bootstrap() {
 
   // 跨域 - CORS
   app.enableCors({
-    origin: "*"
-  })
+    origin: '*',
+  });
 
   // 请求前缀 - api
-  app.setGlobalPrefix("api")
+  app.setGlobalPrefix('api');
 
   // 适配器 - ws库
   // app.useWebSocketAdapter(new WsAdapter(app));
 
   // 响应拦截器
-  app.useGlobalInterceptors(new ResponseInterceptor())
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   // 异常过滤器
-  app.useGlobalFilters(new HttpStatusFilter())
+  app.useGlobalFilters(new HttpStatusFilter());
 
   // 监听端口 - 3000
   await app.listen(3000);

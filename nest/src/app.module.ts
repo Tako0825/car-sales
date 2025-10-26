@@ -20,9 +20,9 @@ import { QiniuModule } from './qiniu/qiniu.module';
       useFactory: () => {
         return {
           secret: process.env.SECRET_OR_KEY,
-          signOptions: { expiresIn:'30d' },
-        }
-      }
+          signOptions: { expiresIn: '30d' },
+        };
+      },
     }),
     CommonModule,
     AuthModule,
@@ -34,7 +34,7 @@ import { QiniuModule } from './qiniu/qiniu.module';
     OrderModule,
     ChartModule,
     QiniuModule,
-],
+  ],
   controllers: [],
   providers: [JwtStrategy],
 })

@@ -1,13 +1,8 @@
-import home from "./home"
-import login from "./login"
-import space from "./space"
-import notice from "./notice"
+import home from "./home";
+import login from "./login";
+import space from "./space";
+import notice from "./notice";
 
 export default () => {
-    return [
-        ...home,
-        login,
-        space,
-        notice
-    ]
-}
+  return [...home, login, space, notice];
+};

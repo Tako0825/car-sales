@@ -4,6 +4,6 @@ import { QiniuController } from './qiniu.controller';
 
 @Module({
   providers: [QiniuService],
-  controllers: [QiniuController]
+  controllers: [QiniuController],
 })
 export class QiniuModule {}

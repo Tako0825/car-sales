@@ -1,15 +1,19 @@
 <template>
-    <main class="bg-white rounded-lg p-6 mx-auto" style="max-width: 900px;">
-        <el-page-header @back="$router.back()" class="py-4" content="公告"></el-page-header>
-        <v-md-preview :text="content"></v-md-preview>
-    </main>
+  <main class="bg-white rounded-lg p-6 mx-auto" style="max-width: 900px">
+    <el-page-header
+      @back="$router.back()"
+      class="py-4"
+      content="公告"
+    ></el-page-header>
+    <v-md-preview :text="content"></v-md-preview>
+  </main>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            content: `
+  data() {
+    return {
+      content: `
 # 汽车销售管理平台介绍
 
 ## 项目背景
@@ -178,8 +182,8 @@ Node.Js、MySQL
 
 
 
-            `
-        }
-    }
-}
+            `,
+    };
+  },
+};
 </script>
