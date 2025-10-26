@@ -32,7 +32,7 @@
 >
 > 密码：admin123
 
-![image.png](http://cdn.tako.top/markdown/login1.jpg)
+![image.png](../images/img.png)
 
 ## 运行环境
 
@@ -90,68 +90,68 @@ Node.Js、MySQL
 
 - 提供 Echarts 可视化图表来展示销售业务的相关数据
 
-![image.png](http://cdn.tako.top/markdown/dashboard1.jpg)
+![image.png](../images/img_1.png)
 
 ### 2. 员工模块
 
 - 实现员工信息管理，包括基本信息和权限控制。
 - 支持角色和权限系统，确保安全可控的员工管理。
 
-![image.png](http://cdn.tako.top/markdown/user1.jpg)
+![image.png](../images/img_2.png)
 
-![image.png](http://cdn.tako.top/markdown/user2.jpg)
+![image.png](../images/img_3.png)
 
-![image.png](http://cdn.tako.top/markdown/user3.jpg)
+![image.png](../images/img_4.png)
 
-![image.png](http://cdn.tako.top/markdown/user4.jpg)
+![image.png](../images/img_5.png)
 
 ### 3. 汽车产品模块
 
 - 提供详细的汽车信息，包括型号、售价、车型、简介等。
 
-![image.png](http://cdn.tako.top/markdown/product1.jpg)
+![image.png](../images/img_6.png)
 
-![image.png](http://cdn.tako.top/markdown/product2.jpg)
+![image.png](../images/img_7.png)
 
-![image.png](http://cdn.tako.top/markdown/product3.jpg)
+![image.png](../images/img_8.png)
 
 ### 4. 仓库模块
 
 - 追踪汽车库存情况，包括每辆汽车的状态和位置。
 
-![image.png](http://cdn.tako.top/markdown/warehouse1.jpg)
+![image.png](../images/img_9.png)
 
-![image.png](http://cdn.tako.top/markdown/warehouse2.jpg)
+![image.png](../images/img_10.png)
 
-![image.png](http://cdn.tako.top/markdown/warehouse3.jpg)
+![image.png](../images/img_11.png)
 
 ### 5. 供应商模块
 
 - 管理供应商信息，包括基本信息和联系方式。
 - 提供报表和统计功能，方便分析供应链表现。
 
-![image.png](http://cdn.tako.top/markdown/supplier1.jpg)
+![image.png](../images/img_12.png)
 
-![image.png](http://cdn.tako.top/markdown/supplier2.jpg)
+![image.png](../images/img_13.png)
 
-![image.png](http://cdn.tako.top/markdown/supplier3.jpg)
+![image.png](../images/img_14.png)
 
 ### 6. 订单模块
 
 - 管理订单生命周期，包括创建、编辑和取消订单。
 - 记录订单状态，确保对销售流水的完整掌控。
 
-![image.png](http://cdn.tako.top/markdown/order1.jpg)
+![image.png](../images/img_15.png)
 
-![image.png](http://cdn.tako.top/markdown/order2.jpg)
+![image.png](../images/img_16.png)
 
 ### 7. 供应记录模块
 
 - 记录与供应商之间的交易信息，包括供应数量、时间、产品等。
 
-![image.png](http://cdn.tako.top/markdown/supply1.jpg)
+![image.png](../images/img_19.png)
 
-![image.png](http://cdn.tako.top/markdown/supply2.jpg)
+![image.png](../images/img_20.png)
 
 ## 反馈与支持
 
