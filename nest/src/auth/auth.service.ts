@@ -70,7 +70,7 @@ export class AuthService {
             phone,
             password,
           },
-          sign: process.env.SECRET_OR_KEY,
+          sign: process.env.JWT_SECRET_OR_KEY,
         });
         return {
           tip: '登录成功',
