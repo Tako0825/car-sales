@@ -64,7 +64,9 @@ export class RankingUserService {
                 // todo - 在这里进行数据聚合
                 result.forEach((item) => {
                   // 计算年份在source数组中的索引
-                  const yearIndex = item.currentyear - (currentYear - year + 1);
+                  const yearIndex = Number(
+                    BigInt(item.currentyear) - BigInt(currentYear - year + 1),
+                  );
                   // 将每年的销售额数据按顺序添加到相应年份的位置
                   source[yearIndex][index] = item.total;
                 });
