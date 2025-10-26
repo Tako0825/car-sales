@@ -1,7 +1,7 @@
-import { Supply } from '@prisma/client';
+import { supply } from '@prisma/client';
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateSupplyDto implements Partial<Supply> {
+export class CreateSupplyDto implements Partial<supply> {
   @IsNotEmpty({ message: '供应数量不允许为空' })
   quantity: number;
   @IsNotEmpty({ message: '供应产品不允许为空' })

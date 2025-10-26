@@ -4,7 +4,7 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { createHash } from 'crypto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { user } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { ResponseData } from 'src/common/class/response.data';
 
@@ -56,7 +56,7 @@ export class AuthService {
   // SERVICE - LOGIN(登录)
   async login(loginDto: LoginDto) {
     try {
-      const user: User = await this.prisma.user.findUnique({
+      const user: user = await this.prisma.user.findUnique({
         where: {
           phone: loginDto.phone,
         },
@@ -95,7 +95,7 @@ export class AuthService {
   }
 
   // SEVICE - AUTOMATIC LOGIN(自动登录)
-  async autoLogin(user: User) {
+  async autoLogin(user: user) {
     return { user };
   }
 }

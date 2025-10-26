@@ -10,7 +10,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { User } from '@prisma/client';
+import { user } from '@prisma/client';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class RoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     // 当前登录用户信息
     const request = context.switchToHttp().getRequest();
-    const user: User = request.user;
+    const user: user = request.user;
     // 当前路由访问所需的角色信息
     const roles = this.reflector.get<string[]>('role', context.getHandler());
     // 判断当前用户是否可访问资源? 403

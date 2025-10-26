@@ -29,7 +29,7 @@ export class WarehouseController {
 
   // API - CREATE WAREHOUSE(创建仓库)
   @Post()
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async create(@Body() createWarehouseDto: CreateWarehouseDto) {
@@ -62,7 +62,7 @@ export class WarehouseController {
 
   // API - UPDATE WAREHOUSE(修改仓库信息)
   @Patch(':id')
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(
@@ -74,7 +74,7 @@ export class WarehouseController {
 
   // API - REMOVE WAREHOUSE(删除仓库)
   @Delete(':id')
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.warehouseService.remove(id);

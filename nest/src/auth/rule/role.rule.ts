@@ -11,6 +11,6 @@ export class RoleRule implements ValidatorConstraintInterface {
     value: any,
     validationArguments?: ValidationArguments,
   ): boolean | Promise<boolean> {
-    return value in $Enums.Role || !value;
+    return value in $Enums.user_role || !value;
   }
 }

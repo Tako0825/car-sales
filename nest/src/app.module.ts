@@ -11,9 +11,14 @@ import { SupplyModule } from './supply/supply.module';
 import { OrderModule } from './order/order.module';
 import { ChartModule } from './chart/chart.module';
 import { QiniuModule } from './qiniu/qiniu.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    // 加载 .env 并注入 ConfigService
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     // 异步注册 - JWT
     JwtModule.registerAsync({
       global: true,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from '@prisma/client';
+import { product } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -89,16 +89,16 @@ export class ProductService {
   async findOne(id: number) {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
-        const product = await this.commonService.getEntityById<Product>(
+        const product = await this.commonService.getEntityById<product>(
           PrismaModel.product,
           id,
         );
         const pie = await this.prisma.$queryRaw`
         SELECT CONCAT(Inventory.quantity, '') AS value, 
-        Warehouse.location AS name 
+        warehouse.location AS name 
         FROM Inventory 
-        INNER JOIN Warehouse 
-        ON Inventory.warehouseId = Warehouse.id 
+        INNER JOIN warehouse 
+        ON Inventory.warehouseId = warehouse.id 
         WHERE Inventory.productId = ${id}
         AND Inventory.quantity > 0;
       `;
@@ -106,7 +106,7 @@ export class ProductService {
           .prisma.$queryRaw`
         SELECT YEAR(createtime) AS year,
         CONCAT(COUNT(*), '') AS total
-        FROM \`Order\` AS o
+        FROM \`order\` AS o
         GROUP BY productId, YEAR(createtime)
         HAVING productId = ${id}
         ORDER BY year ASC
@@ -123,16 +123,16 @@ export class ProductService {
 
   // SERVICE - QUERY SPECIFIED PRODUCT'S INVENTORY(查询指定的产品库存)
   async findInventory(id: number) {
-    await this.commonService.getEntityById<Product>(PrismaModel.product, id);
+    await this.commonService.getEntityById<product>(PrismaModel.product, id);
     return await this.commonService.handlePrismaExecution<any>(async () => {
       const productList = await this.prisma.$queryRaw` 
-        SELECT Warehouse.id, Warehouse.location 
+        SELECT warehouse.id, warehouse.location 
         FROM Inventory 
-        INNER JOIN Warehouse 
-        ON Inventory.warehouseId = Warehouse.id 
+        INNER JOIN warehouse 
+        ON Inventory.warehouseId = warehouse.id 
         WHERE Inventory.productId = ${id} 
         AND Inventory.quantity > 0 
-        ORDER BY Warehouse.id ASC 
+        ORDER BY warehouse.id ASC 
       `;
       return productList;
     });
@@ -140,7 +140,7 @@ export class ProductService {
 
   // SERVICE - UPDATE PRODUCT(修改产品信息)
   async update(id: number, updateProductDto: UpdateProductDto) {
-    await this.commonService.getEntityById<Product>(PrismaModel.product, id);
+    await this.commonService.getEntityById<product>(PrismaModel.product, id);
     const { name, model, price, introduce } = updateProductDto;
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
@@ -165,7 +165,7 @@ export class ProductService {
 
   // SERVICE - DELETE PRODUCT(删除产品)
   async remove(id: number) {
-    await this.commonService.getEntityById<Product>(PrismaModel.product, id);
+    await this.commonService.getEntityById<product>(PrismaModel.product, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
         const result = await this.prisma.$transaction(async () => {

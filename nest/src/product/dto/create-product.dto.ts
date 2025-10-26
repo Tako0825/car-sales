@@ -1,7 +1,7 @@
-import { Product } from '@prisma/client';
+import { product } from '@prisma/client';
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateProductDto implements Partial<Product> {
+export class CreateProductDto implements Partial<product> {
   @IsNotEmpty({ message: '汽车名称不允许为空' })
   name: string;
   @IsNotEmpty({ message: '汽车型号不允许为空' })

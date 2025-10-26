@@ -22,11 +22,11 @@ export class RankingCarService {
           .map((item, index) => currentYear - year + index + 1);
         const products: Array<{ id: number; fullname: string }> = await this
           .prisma.$queryRaw`
-                SELECT Product.id,
-                CONCAT(Product.name,'-',Product.model) AS fullname
-                FROM \`Order\` AS o 
-                INNER JOIN Product 
-                ON o.productId = Product.id
+                SELECT product.id,
+                CONCAT(product.name,'-',product.model) AS fullname
+                FROM \`order\` AS o 
+                INNER JOIN product 
+                ON o.productId = product.id
                 WHERE year(o.createtime) > ${currentYear - year}
                 GROUP BY o.productId
                 ORDER BY count(*) DESC, productId ASC
@@ -55,14 +55,14 @@ export class RankingCarService {
 						CONCAT(p.name,"-",p.model) AS product,
 						y.year AS currentyear,
 						IFNULL(o.yearsales, 0) AS yearsales
-						FROM Product AS p
+						FROM product AS p
 						CROSS JOIN (
 						    SELECT DISTINCT YEAR(createtime) AS year
-						    FROM \`Order\`
+						    FROM \`order\`
 						) AS y
 						LEFT JOIN (
 						    SELECT productId, YEAR(createtime) AS year, COUNT(*) AS yearsales
-						    FROM \`Order\`
+						    FROM \`order\`
 						    GROUP BY productId, year
 						) AS o
 						ON p.id = o.productId AND y.year = o.year
@@ -70,7 +70,7 @@ export class RankingCarService {
 					) AS sub1
 					INNER JOIN (
 							SELECT o.productId, COUNT(*) AS sales
-							FROM \`Order\` AS o 
+							FROM \`order\` AS o 
 							WHERE YEAR(o.createtime) > 2013
 							GROUP BY o.productId
 							ORDER BY sales DESC, productId ASC

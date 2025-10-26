@@ -1,8 +1,8 @@
-import { Supplier } from '@prisma/client';
+import { supplier } from '@prisma/client';
 import { IsNotEmpty, Validate } from 'class-validator';
 import { PhoneRule } from 'src/auth/rule/phone.rule';
 
-export class CreateSupplierDto implements Partial<Supplier> {
+export class CreateSupplierDto implements Partial<supplier> {
   @IsNotEmpty({ message: '供应商联系人不允许为空' })
   name: string;
   @Validate(PhoneRule, {

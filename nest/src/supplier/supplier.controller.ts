@@ -29,7 +29,7 @@ export class SupplierController {
 
   // API - CREATE SUPPLIER(创建供应商)
   @Post()
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async create(@Body() createSupplierDto: CreateSupplierDto) {
@@ -56,7 +56,7 @@ export class SupplierController {
 
   // API - UPDATE SUPPLIER(修改供应商信息)
   @Patch(':id')
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(
@@ -68,7 +68,7 @@ export class SupplierController {
 
   // API - REMOVE SUPPLIER(删除供应商)
   @Delete(':id')
-  @SetMetadata('role', [$Enums.Role.ADMIN, $Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ADMIN, $Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.supplierService.remove(id);

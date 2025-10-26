@@ -1,10 +1,10 @@
 import { IsNotEmpty, IsPhoneNumber, Validate } from 'class-validator';
-import { $Enums, User } from '@prisma/client';
+import { $Enums, user } from '@prisma/client';
 import { PhoneRule } from '../rule/phone.rule';
 import { RoleRule } from '../rule/role.rule';
 import { ConfirmedRule } from '../rule/confirmed.rule';
 
-export class RegisterDto implements Partial<User> {
+export class RegisterDto implements Partial<user> {
   @IsNotEmpty({ message: '员工姓名不允许为空' })
   username: string;
   @Validate(PhoneRule, {
@@ -19,7 +19,7 @@ export class RegisterDto implements Partial<User> {
   passwordConfirmed: string;
   @Validate(RoleRule, { message: '不存在该职位' })
   @IsNotEmpty({ message: '员工职位不允许为空' })
-  role: $Enums.Role;
+  role: $Enums.user_role;
   joined_date?: Date;
   address?: string;
   avatar?: string;

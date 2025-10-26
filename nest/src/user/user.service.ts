@@ -3,7 +3,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
-import { User } from '@prisma/client';
+import { user } from '@prisma/client';
 import { ResponseData } from 'src/common/class/response.data';
 import { createHash } from 'crypto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
@@ -61,11 +61,11 @@ export class UserService {
 
   // SERVICE - QUERY SPECIFIED USER(查询指定的用户)
   async findOne(id: number) {
-    await this.commonService.getEntityById<User>(PrismaModel.user, id);
+    await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
         const { avatar, username, phone, role, joined_date, address } =
-          await this.commonService.getEntityById<User>(PrismaModel.user, id);
+          await this.commonService.getEntityById<user>(PrismaModel.user, id);
         return {
           user: {
             id,
@@ -95,7 +95,7 @@ export class UserService {
 
   // SERVICE - UPDATE USER(修改用户信息)
   async update(id: number, updateUserDto: UpdateUserDto) {
-    await this.commonService.getEntityById<User>(PrismaModel.user, id);
+    await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
         const { phone, username, role, address, joined_date } = updateUserDto;
@@ -119,7 +119,7 @@ export class UserService {
   }
   // SERVICE - UPDATE PASSWORD(修改用户密码)
   async updateAvatar(id: number, updateUserDto: UpdateUserDto) {
-    await this.commonService.getEntityById<User>(PrismaModel.user, id);
+    await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
         const { avatar } = updateUserDto;
@@ -140,7 +140,7 @@ export class UserService {
 
   // SERVICE - UPDATE PASSWORD(修改用户密码)
   async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
-    await this.commonService.getEntityById<User>(PrismaModel.user, id);
+    await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<any>(async () => {
       // 情况 1
       if (updatePasswordDto.password !== updatePasswordDto.passwordConfirmed) {
@@ -181,7 +181,7 @@ export class UserService {
 
   // SERVICE - DELETE USER(删除用户)
   async remove(id: number) {
-    await this.commonService.getEntityById<User>(PrismaModel.user, id);
+    await this.commonService.getEntityById<user>(PrismaModel.user, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
         // 1.删除 USER - 前置条件: 删除 ORDER

@@ -14,10 +14,10 @@ export class TotalService {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
         const result = await this.prisma.$queryRaw`
-                SELECT ROUND(SUM(Product.price),2) AS income
-                FROM \`Order\`
-                LEFT JOIN Product
-                ON \`Order\`.productId = Product.id
+                SELECT ROUND(SUM(product.price),2) AS income
+                FROM \`order\`
+                LEFT JOIN product
+                ON \`order\`.productId = product.id
             `;
         return {
           total: result[0].income,

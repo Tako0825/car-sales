@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
-import { Warehouse } from '@prisma/client';
+import { warehouse } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -69,7 +69,7 @@ export class WarehouseService {
 
   // SERVICE - QUERY SPECIFIED WAREHOUSE(查询指定的仓库)
   async findOne(id: number) {
-    const warehouse = await this.commonService.getEntityById<Warehouse>(
+    const warehouse = await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       id,
     );
@@ -78,19 +78,19 @@ export class WarehouseService {
 
   // SERVICE - QUERY SPECIFIED WAREHOUSE'S INVENTORY(查询指定的仓库库存)
   async findInventory(id: number) {
-    await this.commonService.getEntityById<Warehouse>(
+    await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       id,
     );
     return await this.commonService.handlePrismaExecution<any>(async () => {
       const warehouseList = await this.prisma.$queryRaw`
-        SELECT Product.id, Product.name, Product.model
+        SELECT product.id, product.name, product.model
         FROM Inventory 
-        INNER JOIN Product 
-        ON Inventory.productId = Product.id 
+        INNER JOIN product 
+        ON Inventory.productId = product.id 
         WHERE Inventory.warehouseId = ${id} 
         AND Inventory.quantity > 0 
-        ORDER BY Product.id ASC
+        ORDER BY product.id ASC
       `;
       return warehouseList;
     });
@@ -98,7 +98,7 @@ export class WarehouseService {
 
   // SERVICE - UPDATE WAREHOUSE(修改仓库信息)
   async update(id: number, updateWarehouseDto: UpdateWarehouseDto) {
-    await this.commonService.getEntityById<Warehouse>(
+    await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       id,
     );
@@ -123,7 +123,7 @@ export class WarehouseService {
 
   // SERVICE - DELETE WAREHOUSE(删除仓库)
   async remove(id: number) {
-    await this.commonService.getEntityById<Warehouse>(
+    await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       id,
     );

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSupplyDto } from './dto/create-supply.dto';
 import { UpdateSupplyDto } from './dto/update-supply.dto';
-import { Product, Supplier, Supply, Warehouse } from '@prisma/client';
+import { product, supplier, supply, warehouse } from '@prisma/client';
 import { CommonService } from 'src/common/common.service';
 import { PrismaModel } from 'src/common/enum/PrismaModel';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -18,15 +18,15 @@ export class SupplyService {
   async create(createSupplyDto: CreateSupplyDto) {
     const { quantity, supplierId, productId, warehouseId, createtime } =
       createSupplyDto;
-    await this.commonService.getEntityById<Supplier>(
+    await this.commonService.getEntityById<supplier>(
       PrismaModel.supplier,
       supplierId,
     );
-    await this.commonService.getEntityById<Product>(
+    await this.commonService.getEntityById<product>(
       PrismaModel.product,
       productId,
     );
-    await this.commonService.getEntityById<Warehouse>(
+    await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       warehouseId,
     );
@@ -108,7 +108,7 @@ export class SupplyService {
   // SERVICE - QUERY SPECIFIED SUPPLY(查询指定的供应记录)
   async findOne(id: number) {
     const { quantity, supplierId, productId, warehouseId } =
-      await this.commonService.getEntityById<Supply>(PrismaModel.supply, id);
+      await this.commonService.getEntityById<supply>(PrismaModel.supply, id);
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
         const supplier = await this.prisma.supplier.findUnique({
@@ -140,16 +140,16 @@ export class SupplyService {
   // SERVICE - UPDATE SUPPLY(修改仓库信息)
   async update(id: number, updateSupplyDto: UpdateSupplyDto) {
     const { quantity, supplierId, productId, warehouseId } = updateSupplyDto;
-    await this.commonService.getEntityById<Supply>(PrismaModel.supply, id);
-    await this.commonService.getEntityById<Supplier>(
+    await this.commonService.getEntityById<supply>(PrismaModel.supply, id);
+    await this.commonService.getEntityById<supplier>(
       PrismaModel.supplier,
       supplierId,
     );
-    await this.commonService.getEntityById<Product>(
+    await this.commonService.getEntityById<product>(
       PrismaModel.product,
       productId,
     );
-    await this.commonService.getEntityById<Warehouse>(
+    await this.commonService.getEntityById<warehouse>(
       PrismaModel.warehouse,
       warehouseId,
     );
@@ -176,7 +176,7 @@ export class SupplyService {
 
   // SERVICE - DELETE SUPPLY(删除供应记录)
   async remove(id: number) {
-    await this.commonService.getEntityById<Supply>(PrismaModel.supply, id);
+    await this.commonService.getEntityById<supply>(PrismaModel.supply, id);
     return await this.commonService.handlePrismaExecution<ResponseData>(
       async () => {
         await this.prisma.supply.delete({

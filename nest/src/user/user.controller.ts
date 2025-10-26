@@ -56,7 +56,7 @@ export class UserController {
 
   // API - UPDATE USER(修改用户信息)
   @Patch(':id')
-  @SetMetadata('role', [$Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   @UsePipes(Validation)
   async update(
@@ -89,7 +89,7 @@ export class UserController {
 
   // API - REMOVE USER(删除用户)
   @Delete(':id')
-  @SetMetadata('role', [$Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ROOT])
   @UseGuards(RoleGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.remove(id);

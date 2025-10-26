@@ -13,7 +13,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Validation } from 'src/common/validation/validation';
 import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { $Enums, User } from '@prisma/client';
+import { $Enums, user } from '@prisma/client';
 import { RoleGuard } from 'src/common/guard/role.guard';
 
 // CONTROLLER - AUTH
@@ -23,7 +23,7 @@ export class AuthController {
 
   // API - REGISTER(注册)
   @Post('register')
-  @SetMetadata('role', [$Enums.Role.ROOT])
+  @SetMetadata('role', [$Enums.user_role.ROOT])
   @UseGuards(AuthGuard('jwt'), RoleGuard)
   @UsePipes(Validation)
   async register(@Body() registerDto: RegisterDto) {
@@ -41,7 +41,7 @@ export class AuthController {
   @Get('login')
   @UseGuards(AuthGuard('jwt'))
   async autoLogin(@Req() req: any) {
-    const user: User = req.user;
+    const user: user = req.user;
     return await this.authService.autoLogin(user);
   }
 }
