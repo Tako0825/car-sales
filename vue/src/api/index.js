@@ -2,8 +2,8 @@
  * ----- 使用教程 -----
  *
  * 1.导入
- *      import api from "@/api/api" 或
- *      import * as api from "@/api/api"
+ *      import api from "@/api" 或
+ *      import * as api from "@/api"
  *
  * 2.GET 用法
  *      api.get("http://hostname:port/api/...")
