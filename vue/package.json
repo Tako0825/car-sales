@@ -13,6 +13,7 @@
     "@tailwindcss/postcss7-compat": "^2.2.17",
     "autoprefixer": "^9",
     "core-js": "^3.8.3",
+    "crypto-js": "^4.2.0",
     "echarts": "^5.4.3",
     "element-ui": "^2.15.14",
     "postcss": "^7",

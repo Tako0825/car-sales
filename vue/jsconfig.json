@@ -11,5 +11,6 @@
     "checkJs": false,
     "skipLibCheck": true,
     "noImplicitAny": false
-  }
+  },
+  "skipLibCheck": true,
 }
