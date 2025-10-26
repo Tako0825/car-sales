@@ -7,6 +7,9 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "checkJs": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false
   }
 }
