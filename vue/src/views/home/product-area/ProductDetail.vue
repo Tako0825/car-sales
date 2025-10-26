@@ -51,7 +51,7 @@
         >
           <el-image
             v-if="getProduct"
-            :src="getProduct?.poster"
+            :src="generateDownloadURL(getProduct?.poster)"
             fit="cover"
             class="w-full h-full"
           ></el-image>
@@ -78,6 +78,8 @@
 import PieChart from "./PieChart.vue";
 import GradientBarChart from "./GradientBarChart.vue";
 import { createNamespacedHelpers } from "vuex";
+import { generateDownloadURL } from "@/util/upload";
+
 const { mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers("productArea");
 export default {
@@ -95,6 +97,7 @@ export default {
     },
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations(["setDrawer", "setChartSource"]),
     ...mapActions(["fetchProduct"]),
     // 处理打开抽屉

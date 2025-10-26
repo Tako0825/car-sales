@@ -6,7 +6,7 @@
       style="background-color: #a162f7"
     >
       <el-image
-        :src="'http://cdn.tako.top/CarSale%20Poster.png'"
+        :src="generateDownloadURL(process.env.VUE_APP_LOGIN_PAGE_POSTER)"
         fit="cover"
         class="transform -translate-y-20"
       ></el-image>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { generateDownloadURL } from "@/util/upload";
 import LoginForm from "./LoginForm";
 export default {
   name: "LoginPage",
@@ -42,6 +43,9 @@ export default {
       title: "Car Sale",
       introduce: "汽车销售管理平台",
     };
+  },
+  methods: {
+    generateDownloadURL,
   },
 };
 </script>

@@ -19,7 +19,7 @@
           <template slot-scope="scope">
             <section class="flex gap-6 items-center">
               <img
-                :src="scope.row.avatar"
+                :src="scope.row?.avatar ? generateDownloadURL(scope.row?.avatar) : defaultAvatar"
                 class="w-12 h-12 rounded-full object-cover align-middle"
                 alt="用户头像"
               />
@@ -109,6 +109,7 @@
 
 <script>
 import { sleep } from "@/util/sleep";
+import { generateDownloadURL } from "@/util/upload";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers("userArea");
@@ -121,6 +122,11 @@ export default {
     this.setUserTotal(userTotal);
     await sleep();
     this.setDataReady(true);
+  },
+  data() {
+    return {
+      defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR,
+    }
   },
   computed: {
     ...mapGetters([
@@ -135,6 +141,7 @@ export default {
     ]),
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations([
       "setUser",
       "setPage",

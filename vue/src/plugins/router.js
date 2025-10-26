@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "@/routes/index";
-import api from "@/api/api";
+import api from "@/api";
 import { store } from "./index";
 
 export const RegisterRouter = () => {

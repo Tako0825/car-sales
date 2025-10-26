@@ -11,11 +11,10 @@
 </template>
 
 <script>
-import { hostname } from "@/api/upload";
-import { uploadQiniuImage } from "@/api/upload";
 import { mapGetters, mapMutations } from "vuex";
 import UploadAvatar from "@/views/home/user-area/UploadAvatar.vue";
 import { createNamespacedHelpers } from "vuex";
+import { uploadFile } from "@/util/upload";
 const {
   mapGetters: mapUserGetters,
   mapMutations: mapUserMutations,
@@ -35,13 +34,13 @@ export default {
     // 处理 - 上传头像
     async handleUploadAvatar() {
       if (this.getFile) {
-        const { key } = await uploadQiniuImage(this.getFile);
+        const { key } = await uploadFile(this.getFile);
         this.setFile(null);
         // 1. 更换头像
         await this.updateAvatar({
           id: this.getUser.id,
           data: {
-            avatar: `${hostname}/${key}`,
+            avatar: `${process.env.VUE_APP_QINIU_CDN_URL}/${key}`,
           },
         });
         // 2. 刷新头像状态

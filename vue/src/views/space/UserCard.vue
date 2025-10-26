@@ -5,7 +5,11 @@
       <el-card v-loading="!getUser" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的头像</h1>
         <el-image
-          :src="getUser?.avatar"
+          :src="
+            getUser?.avatar
+              ? generateDownloadURL(getUser?.avatar)
+              : defaultAvatar
+          "
           fit="cover"
           class="w-full rounded-lg"
           style="aspect-ratio: 1"
@@ -13,7 +17,7 @@
       </el-card>
 
       <!-- 我的信息 -->
-      <el-card v-loading="!getUser || !count || !sales" shadow="never">
+      <el-card v-loading="!getUser" shadow="never">
         <h1 slot="header" class="clearfix text-xl font-bold">我的信息</h1>
         <el-descriptions
           :border="true"
@@ -42,17 +46,17 @@
             >
           </el-descriptions-item>
           <el-descriptions-item label="出货量">{{
-            count
+            count || "-"
           }}</el-descriptions-item>
           <el-descriptions-item label="营业额">{{
-            sales
+            sales || "-"
           }}</el-descriptions-item>
         </el-descriptions>
       </el-card>
     </aside>
 
     <!-- 我的订单 -->
-    <el-card v-loading="!source?.length" shadow="nnever" class="w-full h-auto">
+    <el-card v-loading="loading" shadow="nnever" class="w-full h-auto">
       <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
       <article
         class="w-full flex flex-col justify-start items-start p-4 rounded-lg relative overflow-hidden"
@@ -89,8 +93,9 @@
 </template>
 
 <script>
-import api from "@/api/api";
+import api from "@/api";
 import { sleep } from "@/util/sleep";
+import { generateDownloadURL } from "@/util/upload";
 import { mapGetters } from "vuex";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions: mapUserActions } = createNamespacedHelpers("userArea");
@@ -101,6 +106,7 @@ export default {
     const response = await api.get(`/api/user/${this.getUser?.id}/order`, {
       token: localStorage.getItem("token"),
     });
+    this.loading = false;
     this.source = response?.source || [];
     this.average_count = response?.average_count;
     this.average_sales = response?.average_sales;
@@ -109,6 +115,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       source: [],
       average_count: "",
       average_sales: "",
@@ -123,6 +130,7 @@ export default {
     },
   },
   methods: {
+    generateDownloadURL,
     ...mapUserActions(["fetchUserDetail"]),
     // 格式化 - createtime
     formatCreatetime(row) {

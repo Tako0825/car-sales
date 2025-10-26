@@ -8,7 +8,8 @@
     <!-- 我的头像 -->
     <el-dropdown @command="handleCommand" trigger="click">
       <img
-        :src="getUser?.avatar"
+        :src="getUser?.avatar ? generateDownloadURL(getUser?.avatar) : defaultAvatar"
+        
         alt="我的头像"
         class="w-12 h-12 rounded-full object-cover align-middle"
       />
@@ -21,13 +22,20 @@
 </template>
 
 <script>
+import { generateDownloadURL } from "@/util/upload";
 import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "UserBar",
+  data() {
+    return {
+      defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR,
+    }
+  },
   computed: {
     ...mapGetters(["getUser"]),
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations(["clearUser"]),
     // 处理下拉菜单的激活指令
     handleCommand(command) {

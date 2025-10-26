@@ -18,7 +18,12 @@
       class="flex flex-col items-start"
     >
       <!-- 修改用户头像 -->
-      <UploadAvatar :avatar="getUser.avatar" class="self-center mb-6" />
+      <UploadAvatar
+        :avatar="
+          getUser?.avatar ? generateDownloadURL(getUser?.avatar) : defaultAvatar
+        "
+        class="self-center mb-6"
+      />
       <el-form-item label="姓名" prop="username">
         <el-input v-model="getUser.username" class="max-w-xs"></el-input>
       </el-form-item>
@@ -61,7 +66,7 @@
 
 <script>
 import UploadAvatar from "./UploadAvatar.vue";
-import { uploadQiniuImage, hostname } from "@/api/upload";
+import { generateDownloadURL, uploadFile } from "@/util/upload";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers("userArea");
@@ -72,6 +77,7 @@ export default {
   },
   data() {
     return {
+      defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR,
       rules: {
         username: [
           { required: true, message: "请输入姓名", trigger: "blur" },
@@ -101,6 +107,7 @@ export default {
     },
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations([
       "setDialogFormVisible",
       "setSource",
@@ -125,8 +132,8 @@ export default {
       let avatar;
       // 判断有没有修改头像
       if (this.getFile) {
-        const { key } = await uploadQiniuImage(this.getFile);
-        avatar = `${hostname}/${key}`;
+        const { key } = await uploadFile(this.getFile);
+        avatar = key;
         this.setFile(null);
       }
       await this.updateUser({

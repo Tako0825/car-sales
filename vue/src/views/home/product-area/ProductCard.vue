@@ -6,7 +6,7 @@
     <!-- 品牌 & 型号 -->
     <h1 class="text-lg">{{ product.model }}</h1>
     <p style="color: #a162f7">{{ product.name }}</p>
-    <el-image class="w-full flex-1" :src="product.poster" fit="cover">
+    <el-image class="w-full flex-1" :src="generateDownloadURL(product.poster)" fit="cover">
       <!-- 加载图片失败 -->
       <div slot="error" class="image-slot">
         <i class="el-icon-picture-outline"></i>
@@ -32,6 +32,7 @@
 
 <script>
 import { sleep } from "@/util/sleep";
+import { generateDownloadURL } from "@/util/upload";
 import { createNamespacedHelpers } from "vuex";
 const { mapMutations, mapActions } = createNamespacedHelpers("productArea");
 export default {
@@ -40,6 +41,7 @@ export default {
   methods: {
     ...mapMutations(["setDrawer", "setProduct", "setDataReady", "setSource"]),
     ...mapActions(["fetchSource", "fetchProduct", "deleteProduct"]),
+    generateDownloadURL,
     // 处理产品详情
     async handleDetail() {
       const { id } = this.product;

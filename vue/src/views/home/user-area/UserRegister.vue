@@ -81,7 +81,7 @@
 
 <script>
 import { sleep } from "@/util/sleep";
-import { uploadQiniuImage, hostname } from "@/api/upload";
+import { uploadFile } from "@/util/upload";
 import UploadAvatarVue from "./UploadAvatar.vue";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapMutations, mapActions } =
@@ -210,12 +210,11 @@ export default {
             minutes,
             seconds,
           );
-          let avatar =
-            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
+          let avatar = process.env.VUE_APP_DEFAULT_AVATAR;
           // 判断有没有上传头像
           if (this.getFile) {
-            const { key } = await uploadQiniuImage(this.getFile);
-            avatar = `${hostname}/${key}`;
+            const { key } = await uploadFile(this.getFile);
+            avatar = `${process.env.VUE_APP_QINIU_CDN_URL}/${key}`;
             this.setFile(null);
           }
           await this.registerUser({

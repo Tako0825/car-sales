@@ -20,10 +20,10 @@
       <section class="w-80 h-36 my-6 self-center">
         <el-image
           v-if="form.poster"
-          :src="form.poster"
+          :src="generateDownloadURL('/' + form.poster)"
           fit="cover"
           class="w-full h-full"
-          :preview-src-list="[form.poster]"
+          :preview-src-list="[generateDownloadURL('/' + form.poster)]"
         ></el-image>
         <el-empty v-if="!form.poster" class="w-full h-full"></el-empty>
       </section>
@@ -51,7 +51,7 @@
             >
               <el-image
                 class="float-left w-10 h-full"
-                :src="item.poster"
+                :src="generateDownloadURL('/' + item.poster)"
                 fit="cover"
               ></el-image>
               <span class="float-right text-gray-500 font-bold">{{
@@ -74,6 +74,7 @@
 
 <script>
 import { sleep } from "@/util/sleep";
+import { generateDownloadURL } from "@/util/upload";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapMutations, mapActions } =
   createNamespacedHelpers("productArea");
@@ -128,50 +129,50 @@ export default {
         ],
       },
       types: [
-        { poster: "http://cdn.tako.top/product/product01.png", label: "卡车" },
-        { poster: "http://cdn.tako.top/product/product02.png", label: "客车" },
+        { poster: process.env.VUE_APP_PRODUCT_1, label: "卡车" },
+        { poster: process.env.VUE_APP_PRODUCT_2, label: "客车" },
         {
-          poster: "http://cdn.tako.top/product/product03.png",
+          poster: process.env.VUE_APP_PRODUCT_3,
           label: "中型轿车",
         },
         {
-          poster: "http://cdn.tako.top/product/product04.png",
+          poster: process.env.VUE_APP_PRODUCT_4,
           label: "旅行车",
         },
         {
-          poster: "http://cdn.tako.top/product/product05.png",
+          poster: process.env.VUE_APP_PRODUCT_5,
           label: "敞篷跑车",
         },
         {
-          poster: "http://cdn.tako.top/product/product06.png",
+          poster: process.env.VUE_APP_PRODUCT_6,
           label: "商务轿车",
         },
-        { poster: "http://cdn.tako.top/product/product07.png", label: "房车" },
+        { poster: process.env.VUE_APP_PRODUCT_7, label: "房车" },
         {
-          poster: "http://cdn.tako.top/product/product08.png",
+          poster: process.env.VUE_APP_PRODUCT_8,
           label: "大型拖车",
         },
         {
-          poster: "http://cdn.tako.top/product/product09.png",
+          poster: process.env.VUE_APP_PRODUCT_9,
           label: "两厢式轿车",
         },
         {
-          poster: "http://cdn.tako.top/product/product10.png",
+          poster: process.env.VUE_APP_PRODUCT_10,
           label: "双门轿车",
         },
         {
-          poster: "http://cdn.tako.top/product/product11.png",
+          poster: process.env.VUE_APP_PRODUCT_11,
           label: "越野车",
         },
-        { poster: "http://cdn.tako.top/product/product12.png", label: "跑车" },
+        { poster: process.env.VUE_APP_PRODUCT_12, label: "跑车" },
         {
-          poster: "http://cdn.tako.top/product/product13.png",
+          poster: process.env.VUE_APP_PRODUCT_13,
           label: "紧凑型轿车",
         },
-        { poster: "http://cdn.tako.top/product/product14.png", label: "拖车" },
-        { poster: "http://cdn.tako.top/product/product15.png", label: "货车" },
+        { poster: process.env.VUE_APP_PRODUCT_14, label: "拖车" },
+        { poster: process.env.VUE_APP_PRODUCT_15, label: "货车" },
         {
-          poster: "http://cdn.tako.top/product/product16.png",
+          poster: process.env.VUE_APP_PRODUCT_16,
           label: "冰淇淋车",
         },
       ],
@@ -189,6 +190,7 @@ export default {
     },
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations([
       "setDialogFormVisible",
       "setPage",

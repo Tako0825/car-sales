@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { hostname, action } from "@/api/upload";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapMutations } = createNamespacedHelpers("userArea");
 export default {
@@ -32,8 +31,8 @@ export default {
   props: ["avatar"],
   data() {
     return {
-      action,
-      hostname,
+      action: process.env.VUE_APP_QINIU_ACTION_URL,
+      hostname: process.env.VUE_APP_QINIU_CDN_URL,
     };
   },
   computed: {
