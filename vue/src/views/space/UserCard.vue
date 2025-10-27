@@ -30,9 +30,6 @@
           <el-descriptions-item label="手机号">{{
             getUser?.phone
           }}</el-descriptions-item>
-          <el-descriptions-item label="居住地">{{
-            getUser?.address
-          }}</el-descriptions-item>
           <el-descriptions-item label="入职时间">{{
             joined_date
           }}</el-descriptions-item>
@@ -60,7 +57,7 @@
       <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
       <article
         class="w-full flex flex-col justify-start items-start p-4 rounded-lg relative overflow-hidden"
-        style="min-height: 500px"
+        style="min-height: 700px"
       >
         <section class="w-full h-full overflow-auto absolute top-0 left-0">
           <el-table
