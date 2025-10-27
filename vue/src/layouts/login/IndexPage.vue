@@ -6,7 +6,7 @@
       style="background-color: #a162f7"
     >
       <el-image
-        :src="generateDownloadURL(process.env.VUE_APP_LOGIN_PAGE_POSTER)"
+        :src="generateDownloadURL('/' + poster)"
         fit="cover"
         class="transform -translate-y-20"
       ></el-image>
@@ -42,6 +42,7 @@ export default {
     return {
       title: "Car Sale",
       introduce: "汽车销售管理平台",
+      poster: process.env.VUE_APP_LOGIN_PAGE_POSTER
     };
   },
   methods: {

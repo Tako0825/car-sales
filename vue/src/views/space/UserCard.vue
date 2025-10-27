@@ -60,11 +60,12 @@
       <h1 slot="header" class="clearfix text-xl font-bold">我的订单</h1>
       <article
         class="w-full flex flex-col justify-start items-start p-4 rounded-lg relative overflow-hidden"
-        style="height: 960px"
+        style="min-height: 500px"
       >
         <section class="w-full h-full overflow-auto absolute top-0 left-0">
           <el-table
             :data="source"
+            v-if="!loading && source.length > 0"
             stripe
             style="width: 100%"
             header-cell-class-name="text-black"
@@ -86,6 +87,7 @@
               :formatter="formatCreatetime"
             ></el-table-column>
           </el-table>
+          <el-empty v-else>空空如也</el-empty>
         </section>
       </article>
     </el-card>

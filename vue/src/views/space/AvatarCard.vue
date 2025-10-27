@@ -3,7 +3,7 @@
   <main
     class="w-full h-auto bg-white p-6 rounded-lg flex flex-col items-center gap-6"
   >
-    <UploadAvatar :avatar="getUser?.avatar" />
+    <UploadAvatar :avatar="getUser?.avatar ? generateDownloadURL(getUser?.avatar) : defaultAvatar" />
     <el-button @click="handleUploadAvatar" type="primary" :disabled="!getFile"
       >点击上传</el-button
     >
@@ -14,7 +14,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import UploadAvatar from "@/views/home/user-area/UploadAvatar.vue";
 import { createNamespacedHelpers } from "vuex";
-import { uploadFile } from "@/util/upload";
+import { generateDownloadURL, uploadFile } from "@/util/upload";
 const {
   mapGetters: mapUserGetters,
   mapMutations: mapUserMutations,
@@ -23,11 +23,17 @@ const {
 export default {
   name: "AvatarCard",
   components: { UploadAvatar },
+  data() {
+    return {
+      defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR
+    }
+  },
   computed: {
     ...mapGetters(["getUser"]),
     ...mapUserGetters(["getFile"]),
   },
   methods: {
+    generateDownloadURL,
     ...mapMutations(["setUser"]),
     ...mapUserMutations(["setFile"]),
     ...mapUserActions(["updateAvatar", "fetchUser"]),
@@ -40,7 +46,7 @@ export default {
         await this.updateAvatar({
           id: this.getUser.id,
           data: {
-            avatar: `${process.env.VUE_APP_QINIU_CDN_URL}/${key}`,
+            avatar: key,
           },
         });
         // 2. 刷新头像状态
