@@ -57,7 +57,7 @@ export default {
             type: "filter",
             config: {
               and: [
-                { dimension: "year", gte: 2013 },
+                { dimension: "year", gte: new Date().getFullYear() - 9 },
                 { dimension: "product", "=": product },
               ],
             },

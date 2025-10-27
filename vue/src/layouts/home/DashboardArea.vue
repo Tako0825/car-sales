@@ -34,7 +34,7 @@
         class="flex-1 h-auto bg-white rounded-xl py-10 flex flex-col gap-10"
       >
         <h1 class="text-left font-bold text-xl pl-10">
-          员工销售榜 (近 5 年榜单, 前 7 名数据)
+          员工销售榜
         </h1>
         <HistogramChart class="w-full h-96" />
       </section>
@@ -43,7 +43,7 @@
         class="flex-1 h-auto bg-white rounded-xl py-10 flex flex-col gap-10"
       >
         <h1 class="text-left font-bold text-xl pl-10">
-          汽车热销榜 (近 10 年榜单, 前 7 名数据)
+          汽车热销榜
         </h1>
         <LineChart class="w-full h-96" />
       </section>

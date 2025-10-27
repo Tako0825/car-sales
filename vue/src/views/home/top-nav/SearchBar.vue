@@ -3,9 +3,10 @@
   <main class="w-80">
     <el-input
       v-model="input"
-      placeholder="You can search here"
+      placeholder="敬请期待"
       maxlength="20"
       size="medium"
+      disabled
     >
       <template slot="prepend"
         ><i class="el-icon-search transform scale-150"></i

@@ -13,8 +13,8 @@ export class RankingUserService {
   async getUserRanking() {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
-        const count = 7;
-        const year = 5;
+        const count = 5;
+        const year = 10;
         const currentYear = new Date().getFullYear();
         // Y轴刻度 - [..., 2020, 2021, ..., 至今]
         const xList = new Array(year)

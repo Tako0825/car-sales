@@ -13,7 +13,7 @@ export class RankingCarService {
   async getCarRanking() {
     return await this.commonService.handlePrismaExecution<Record<string, any>>(
       async () => {
-        const count = 7;
+        const count = 5;
         const year = 10;
         const currentYear = new Date().getFullYear();
         // Y轴刻度 - [..., 2020, 2021, ..., 至今]
