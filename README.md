@@ -26,10 +26,6 @@
 
 ## 立即体验
 
-> 账号：10000000000（11位）
->
-> 密码：admin123
-
 ![image.png](./images/img.png)
 
 ## 运行环境
@@ -40,45 +36,44 @@ Node.Js、MySQL
 
 1. 源代码（通过 zip 解压或 git 拉取）
 
-```shell
+\`\`\`shell
     git clone https://github.com/Tako0825/car-sales.git
-```
+\`\`\`
 
 2. 配置 .env.example 示例文件为 .env 文件（补充数据库、七牛云等配置信息）
 
 3. 安装 pnpm
 
-```shell
+\`\`\`shell
     npm install pnpm -g
-```
+\`\`\`
 
-4. 安装依赖（根目录和 vue 目录下分别执行）
+4. 安装依赖（nest 目录和 vue 目录下分别执行）
 
-```shell
+\`\`\`shell
     pnpm install
-```
+\`\`\`
 
 5. 数据库迁徙
+\`\`\`shell
+    npx prisma db pull
+\`\`\`
 
-```shell
+\`\`\`shell
     npx prisma generate
-```
+\`\`\`
 
-```shell
-    npx prisma migrate dev
-```
+6. 运行 nest 后台（nest 目录下执行）
 
-6. 运行 nest 后台（根目录下执行）
-
-```shell
+\`\`\`shell
     pnpm dev
-```
+\`\`\`
 
 7. 运行 vue 前台（vue 目录下执行）
 
-```shell
-    pnpm run serve
-```
+\`\`\`shell
+    pnpm run dev
+\`\`\`
 
 8. 访问项目（http://localhost:8080）
 
