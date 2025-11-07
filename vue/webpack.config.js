@@ -1,7 +1,8 @@
+/* eslint-env node */
 const { resolve } = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = webpackConfig = {
+const webpackConfig = {
   mode: "development",
   resolve: {
     alias: {
@@ -30,3 +31,5 @@ module.exports = webpackConfig = {
     // 其他插件
   ],
 };
+
+module.exports = webpackConfig

@@ -1,3 +1,4 @@
+/* eslint-env node */
 const { defineConfig } = require("@vue/cli-service");
 const { webpackConfig } = require("./webpack.config");
 
