@@ -1,6 +1,5 @@
 import App from "./App.vue";
 import { store, router } from "./plugins";
-import "../theme/message.css";
 
 // IGNORE WARNING(忽略警告)
 Vue.config.productionTip = false;

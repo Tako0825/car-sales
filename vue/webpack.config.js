@@ -1,6 +1,7 @@
 /* eslint-env node */
 const { resolve } = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionPlugin = require('compression-webpack-plugin')
 
 const webpackConfig = {
   mode: "development",
@@ -28,8 +29,14 @@ const webpackConfig = {
     new MiniCssExtractPlugin({
       filename: "css/chunk-vendors.[contenthash].css", // 使用 contenthash 提高缓存命中率
     }),
-    // 其他插件
+    new CompressionPlugin({
+      algorithm: 'gzip', // 指定压缩算法
+      test: /\.(css|js|html|svg)$/, // 匹配需要压缩的文件类型
+      threshold: 8192, // 文件大小超过 8KB 才压缩（可选）
+      minRatio: 0 // 压缩率小于 0.8 才保留（可选）
+    })
   ],
+  productionGzip: true
 };
 
 module.exports = webpackConfig
