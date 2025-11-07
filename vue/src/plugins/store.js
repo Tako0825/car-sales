@@ -1,4 +1,3 @@
-import Vue from "vue";
 import Vuex from "vuex";
 import getStore from "@/store/index";
 

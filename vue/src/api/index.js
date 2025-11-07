@@ -15,8 +15,6 @@
  *      .then(data => {})
  *      .catch(error => {})
  */
-import { Message } from "element-ui";
-
 const hostname = "localhost";
 const port = 3000;
 async function request(url, options = {}) {
@@ -24,14 +22,14 @@ async function request(url, options = {}) {
   const { code, message, data } = await response.json();
   // 200 - 请求成功并弹出相应成功提示, 如果 data.tip 存在
   if (response.ok && data.tip?.length) {
-    Message.success(data.tip);
+    Vue.prototype.$message.success(data.tip);
   }
   // !200 - 请求失败并弹出相应错误提示
   else if (!response.ok && data?.tip) {
-    Message.error(data.tip);
+    Vue.prototype.$message.error(data.tip);
     console.log({ code, message, data });
   } else if (!response.ok) {
-    Message.error(message);
+    Vue.prototype.$message.error(message);
   }
   return data;
 }

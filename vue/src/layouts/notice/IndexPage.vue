@@ -5,14 +5,26 @@
       class="py-4"
       content="公告"
     ></el-page-header>
-    <v-md-preview :text="content"></v-md-preview>
+    <v-md-preview :text="text" />
   </main>
 </template>
 
 <script>
+import VMdPreview from "@kangc/v-md-editor/lib/preview";
+import "@kangc/v-md-editor/lib/style/preview.css";
+import "@kangc/v-md-editor/lib/theme/style/github.css";
+import githubTheme from "@kangc/v-md-editor/lib/theme/github.js";
+
 export default {
+  async created() {
+    const hljs = await import("highlight.js/lib/core");
+    VMdPreview.use(githubTheme, { Hljs: hljs });
+    Vue.use(VMdPreview);
+    this.text = this.content;
+  },
   data() {
     return {
+      text: "",
       content: `
 # 汽车销售管理平台介绍
 

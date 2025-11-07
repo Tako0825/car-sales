@@ -1,0 +1,109 @@
+.el-message__closeBtn:focus,
+.el-message__content:focus {
+  outline-width: 0;
+}
+.el-message {
+  user-select: none;
+  min-width: 380px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 1px solid #ebeef5;
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #edf2fc;
+  -webkit-transition:
+    opacity 0.3s,
+    top 0.4s,
+    -webkit-transform 0.4s;
+  transition:
+    opacity 0.3s,
+    transform 0.4s,
+    top 0.4s,
+    -webkit-transform 0.4s;
+  overflow: hidden;
+  padding: 15px 15px 15px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 700;
+  font-style: italic;
+}
+.el-message.is-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.el-message.is-closable .el-message__content {
+  padding-right: 16px;
+}
+.el-message p {
+  margin: 0;
+}
+.el-message--info .el-message__content {
+  color: #bdc3c7;
+}
+.el-message--success {
+  background-color: #f1faf5;
+  border-color: #e2f5ea;
+}
+.el-message--success .el-message__content {
+  color: #70cf97;
+}
+.el-message--warning {
+  background-color: #fefae7;
+  border-color: #fdf5cf;
+}
+.el-message--warning .el-message__content {
+  color: #f6cc0d;
+}
+.el-message--error {
+  background-color: #ffeff1;
+  border-color: #ffe0e2;
+}
+.el-message .el-icon-error,
+.el-message--error .el-message__content {
+  color: #ff6370;
+}
+.el-message__icon {
+  margin-right: 10px;
+}
+.el-message__content {
+  padding: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+.el-message__closeBtn {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #808191;
+  font-size: 18px;
+}
+.el-message__closeBtn:hover {
+  color: #fff;
+}
+.el-message .el-icon-success {
+  color: #70cf97;
+}
+.el-message .el-icon-info {
+  color: #bdc3c7;
+}
+.el-message .el-icon-warning {
+  color: #f6cc0d;
+}
+.el-message-fade-enter,
+.el-message-fade-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%);
+}
