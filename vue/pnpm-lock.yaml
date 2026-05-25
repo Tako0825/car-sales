@@ -38,6 +38,9 @@ importers:
       tailwindcss:
         specifier: npm:@tailwindcss/postcss7-compat@^2.2.17
         version: '@tailwindcss/postcss7-compat@2.2.17'
+      tako-tracker:
+        specifier: ^0.1.0
+        version: 0.1.0
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -57,6 +60,9 @@ importers:
       '@babel/eslint-parser':
         specifier: ^7.12.16
         version: 7.28.5(@babel/core@7.28.5)(eslint@7.32.0)
+      '@types/minimatch':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@vue/cli-plugin-babel':
         specifier: ~5.0.0
         version: 5.0.9(@vue/cli-service@5.0.9(@vue/compiler-sfc@3.5.22)(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)(webpack-sources@3.3.3))(core-js@3.46.0)(vue@2.7.16)
@@ -4361,6 +4367,9 @@ packages:
   table@6.9.0:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
+
+  tako-tracker@0.1.0:
+    resolution: {integrity: sha512-rxkeWFFBgW0iZZFHBtbUYOj3oGrCyxPQoikyA/4wtcllg7/fRU4H51u2XgwYLTaZzJ08u3fuL307dcffYL4ahg==}
 
   tapable@2.3.0:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
@@ -9729,6 +9738,8 @@ snapshots:
       slice-ansi: 4.0.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
+
+  tako-tracker@0.1.0: {}
 
   tapable@2.3.0: {}
 

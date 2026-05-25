@@ -12,6 +12,7 @@ import { OrderModule } from './order/order.module';
 import { ChartModule } from './chart/chart.module';
 import { QiniuModule } from './qiniu/qiniu.module';
 import { ConfigModule } from '@nestjs/config';
+import { TrackModule } from './track/track.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ConfigModule } from '@nestjs/config';
     OrderModule,
     ChartModule,
     QiniuModule,
+    TrackModule,
   ],
   controllers: [],
   providers: [JwtStrategy],

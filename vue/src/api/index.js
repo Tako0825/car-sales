@@ -15,23 +15,50 @@
  *      .then(data => {})
  *      .catch(error => {})
  */
+import tracker from "@/tracker";
+
 const hostname = "localhost";
 const port = 3000;
 async function request(url, options = {}) {
-  const response = await fetch(`http://${hostname}:${port}${url}`, options);
-  const { code, message, data } = await response.json();
-  // 200 - 请求成功并弹出相应成功提示, 如果 data.tip 存在
-  if (response.ok && data.tip?.length) {
-    Vue.prototype.$message.success(data.tip);
+  const requestUrl = `http://${hostname}:${port}${url}`;
+  const span = tracker.startRequest({
+    url: requestUrl,
+    method: options.method || "GET",
+  });
+
+  try {
+    const response = await fetch(requestUrl, options);
+    const { code, message, data } = await response.json();
+
+    tracker.endRequest(span, {
+      status: response.status,
+      ok: response.ok,
+      errMsg: message,
+    });
+
+    // 200 - 请求成功并弹出相应成功提示, 如果 data.tip 存在
+    if (response.ok && data.tip?.length) {
+      Vue.prototype.$message.success(data.tip);
+    }
+    // !200 - 请求失败并弹出相应错误提示
+    else if (!response.ok && data?.tip) {
+      Vue.prototype.$message.error(data.tip);
+      console.log({ code, message, data });
+    } else if (!response.ok) {
+      Vue.prototype.$message.error(message);
+    }
+
+    return data;
+  } catch (error) {
+    tracker.endRequest(span, {
+      status: 0,
+      ok: false,
+      error,
+    });
+
+    Vue.prototype.$message.error("网络请求失败");
+    throw error;
   }
-  // !200 - 请求失败并弹出相应错误提示
-  else if (!response.ok && data?.tip) {
-    Vue.prototype.$message.error(data.tip);
-    console.log({ code, message, data });
-  } else if (!response.ok) {
-    Vue.prototype.$message.error(message);
-  }
-  return data;
 }
 
 export default {

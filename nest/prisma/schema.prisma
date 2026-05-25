@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["typedSql"] // modelCase 打开
+  provider        = "prisma-client-js"
+  previewFeatures = ["typedSql"]
 }
 
 datasource db {
@@ -96,6 +96,32 @@ model warehouse {
   inventory inventory[]
   order     order[]
   supply    supply[]
+}
+
+model track_event {
+  id         Int      @id @default(autoincrement())
+  eventId    String   @unique(map: "TrackEvent_eventId_key") @db.VarChar(64)
+  category   String   @db.VarChar(20)
+  type       String   @db.VarChar(50)
+  level      String   @db.VarChar(10)
+  appId      String   @db.VarChar(100)
+  appName    String?  @db.VarChar(100)
+  release    String?  @db.VarChar(50)
+  env        String?  @db.VarChar(20)
+  uid        String?  @db.VarChar(64)
+  sid        String   @db.VarChar(64)
+  url        String   @db.VarChar(500)
+  route      String?  @db.VarChar(255)
+  ua         String?  @db.VarChar(500)
+  deviceType String?  @db.VarChar(50)
+  eventTime  DateTime
+  payload    Json
+  createdAt  DateTime @default(now())
+
+  @@index([type], map: "TrackEvent_type_idx")
+  @@index([appId, type], map: "TrackEvent_appId_type_idx")
+  @@index([eventTime], map: "TrackEvent_eventTime_idx")
+  @@index([createdAt], map: "TrackEvent_createdAt_idx")
 }
 
 enum user_role {

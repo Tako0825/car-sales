@@ -90,4 +90,43 @@ export default [
       },
     ],
   },
+  {
+    path: "/tracker-test",
+    meta: { title: "埋点测试", icon: "el-icon-warning-outline" },
+    component: () => import("@/layouts/home/IndexPage.vue"),
+    children: [
+      {
+        path: "",
+        name: "tracker-test",
+        meta: { auth: true, role: ["USER", "ADMIN", "ROOT"] },
+        component: () => import("@/layouts/home/TrackerTestArea.vue"),
+      },
+    ],
+  },
+  {
+    path: "/tracker-dashboard",
+    redirect: "/tracker-dashboard/track",
+    meta: { title: "埋点分析", icon: "el-icon-data-analysis" },
+    component: () => import("@/layouts/home/IndexPage.vue"),
+    children: [
+      {
+        path: "track",
+        name: "tracker-track",
+        meta: { title: "埋点", auth: true, role: ["USER", "ADMIN", "ROOT"] },
+        component: () => import("@/layouts/home/TrackerTrackArea.vue"),
+      },
+      {
+        path: "monitor",
+        name: "tracker-monitor",
+        meta: { title: "监控", auth: true, role: ["USER", "ADMIN", "ROOT"] },
+        component: () => import("@/layouts/home/TrackerMonitorArea.vue"),
+      },
+      {
+        path: "performance",
+        name: "tracker-performance",
+        meta: { title: "性能", auth: true, role: ["USER", "ADMIN", "ROOT"] },
+        component: () => import("@/layouts/home/TrackerPerformanceArea.vue"),
+      },
+    ],
+  },
 ];

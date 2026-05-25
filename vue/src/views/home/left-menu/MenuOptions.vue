@@ -1,10 +1,29 @@
 <template>
   <el-row>
-    <!-- 选项 -->
-    <el-menu-item v-for="(item, index) in home" :key="index" :index="item.path">
-      <i :class="item.meta.icon"></i>
-      <span slot="title">{{ item.meta.title }}</span>
-    </el-menu-item>
+    <template v-for="(item, index) in home">
+      <el-submenu
+        v-if="hasSubMenu(item)"
+        :key="`${index}-${item.path}`"
+        :index="item.path"
+      >
+        <template slot="title">
+          <i :class="item.meta.icon"></i>
+          <span>{{ item.meta.title }}</span>
+        </template>
+        <el-menu-item
+          v-for="(child, childIndex) in item.children"
+          :key="`${index}-${childIndex}-${child.path}`"
+          :index="resolveChildPath(item.path, child.path)"
+        >
+          {{ child.meta.title }}
+        </el-menu-item>
+      </el-submenu>
+
+      <el-menu-item v-else :key="`${index}-${item.path}`" :index="item.path">
+        <i :class="item.meta.icon"></i>
+        <span slot="title">{{ item.meta.title }}</span>
+      </el-menu-item>
+    </template>
   </el-row>
 </template>
 
@@ -16,6 +35,14 @@ export default {
     return {
       home,
     };
+  },
+  methods: {
+    hasSubMenu(item) {
+      return item.children?.length > 1;
+    },
+    resolveChildPath(parentPath, childPath) {
+      return childPath ? `${parentPath}/${childPath}` : parentPath;
+    },
   },
 };
 </script>
